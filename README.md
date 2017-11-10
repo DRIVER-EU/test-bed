@@ -1,9 +1,11 @@
 [![Stories in Ready](https://badge.waffle.io/DRIVER-EU/WP923-test-bed.png?label=ready&title=Ready)](http://waffle.io/DRIVER-EU/test-bed)
 
+![test-bed](https://raw.githubusercontent.com/DRIVER-EU/test-bed/master/img/Common%20Information%20and%20Simulation%20Space.gif)
+
 # Test-bed
 This repository combines tools and data to quickly setup an environment for testing new solutions in the crisis domain, either standalone or in collaborative trials and experiments.
 
-Our work is funded by the DRIVER+ EU project as part of the Horizon 2020 program, which runs till 2020. However, we are commited to find sustainable solutions well beyond this date.
+Our work is funded by the [DRIVER+](http://driver-project.eu) EU project as part of the Horizon 2020 program, which runs till 2020. However, we are commited to find sustainable solutions well beyond this date.
 
 # Design Guidelines of the DRIVER+ Test-bed
 
