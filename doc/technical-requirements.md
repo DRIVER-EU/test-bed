@@ -1,4 +1,5 @@
-6.	Technical requirements and constraints 
+# Technical requirements and constraints 
+
 [Add introduction text about aims and structure of chapter here]
 
 ## Technical requirements on the Common Information Space
