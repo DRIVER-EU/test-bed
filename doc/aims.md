@@ -5,7 +5,7 @@
 - Creation of simulated situations to omit ethical and practical real world issues
 - Standardization of Trial infrastructure, consisting of the physical infrastructure (buildings and such), the IT infrastructure (hardware & software) and user profiles of trial staff and participants
 
-![testbed-platform-participants-trial](../img/testbed-platform-participants-trial.png)
+![testbed-platform-participants-trial](https://github.com/DRIVER-EU/test-bed/blob/master/img/testbed-platform-participants-trial.png)
 
 ## High-level functional design
 Divide between (1) Platform (the buildings and hardware), (2) Software and (3) Staff and Participants. Pictures in this paragraph are draft versions. 
