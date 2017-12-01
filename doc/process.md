@@ -8,3 +8,5 @@ This chapter explains how we came up with the specs stated in this document:
 -	Consultation with solutions coordinators and development partners
 -	Market research of technologies already out there
 -	Experience from custom-made and off-the-shelve developments and implementation projects conducted by the Test-bed’s development partners
+
+To be continued.
