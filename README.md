@@ -7,6 +7,10 @@ This repository combines tools and data to quickly setup an environment for test
 
 Our work is funded by the [DRIVER+](http://driver-project.eu) EU project as part of the Horizon 2020 program, which runs till 2020. However, we are commited to find sustainable solutions well beyond this date.
 
+## Running the test-bed
+
+Assuming you have installed `docker`, you can either go to `docker/local` and run `docker-compose up -d`, or from the root folder, you can start the test-bed with `yarn local` or `npm run local` (in this case, you also need to have `yarn` and `npm` installed).
+
 # Design Guidelines of the DRIVER+ Test-bed
 
 ## 1. The test-bed shall consist of open source software.
