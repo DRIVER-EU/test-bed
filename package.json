@@ -8,6 +8,8 @@
   },
   "scripts": {
     "local": "docker-compose -f docker/local/docker-compose.yml up -d",
+    "up": "docker-compose -f docker/local/docker-compose.yml up -d",
+    "down": "docker-compose -f docker/local/docker-compose.yml down",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
