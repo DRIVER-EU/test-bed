@@ -2,6 +2,8 @@
 
 ![test-bed](https://raw.githubusercontent.com/DRIVER-EU/test-bed/master/img/Common%20Information%20and%20Simulation%20Space.gif)
 
+For the specification document, please go [here](https://driver-eu.gitbooks.io/test-bed-specification/content).
+
 # Test-bed
 This repository combines tools and data to quickly setup an environment for testing new solutions in the crisis domain, either standalone or in collaborative trials and experiments.
 
