@@ -44,7 +44,7 @@ The Zookeeper instance is running and available at `zookeeper:3500`.
 
 ## Kafka Broker
 
-A single Kafka Broker is running and available at `PLAINTEXT://broker:9092`.
+A single Kafka Broker is running and available at `PLAINTEXT://broker:3501`.
 
 ## Schema Registry
 
