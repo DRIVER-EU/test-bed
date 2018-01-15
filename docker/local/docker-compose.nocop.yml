@@ -120,16 +120,3 @@ services:
       CONNECT_INTERNAL_KEY_CONVERTER: org.apache.kafka.connect.json.JsonConverter
       CONNECT_INTERNAL_VALUE_CONVERTER: org.apache.kafka.connect.json.JsonConverter
       CONNECT_ZOOKEEPER_CONNECT: 'zookeeper:3500'
-
-  cscop:
-    build: https://github.com/DRIVER-EU/csCOP.git#test-bed:website
-    hostname: cscop
-    depends_on:
-      - schema_registry
-      - zookeeper
-      - broker
-    ports:
-      - "8003:8003"
-    environment:
-      SCHEMAREGISTRY_URL: 'http://schema_registry:3502'
-      PROXY: 'true'
