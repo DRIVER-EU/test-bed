@@ -7,7 +7,7 @@ For the specification document, please go [here](https://driver-eu.gitbooks.io/t
 # Test-bed
 This repository combines tools and data to quickly setup an environment for testing new solutions in the crisis domain, either standalone or in collaborative trials and experiments.
 
-Our work is funded by the [DRIVER+](http://driver-project.eu) EU project as part of the Horizon 2020 program, which runs till 2020. However, we are commited to find sustainable solutions well beyond this date.
+Our work is funded by the [DRIVER+](http://www.driver-project.eu) EU project as part of the Seventh Framework program, and runs till 2020. However, we are commited to find sustainable solutions well beyond this date.
 
 ## Running the test-bed
 
@@ -21,12 +21,13 @@ Crisis management affects us all, and therefore we want to achieve a broad adopt
 ## 2. The test-bed shall be open for commercial organisations
 Commercial organisations can help you to integrate the test-bed in your organisation, offer software solutions that exceed the capabilities of the offered tools, of provide support in maintaining the test-bed.
 
-## 3. The test-bed shall consist of support and simulation tools, as well as data
+## 3. The test-bed shall consist of support and simulation tools, as well as data and scenario's
 Similar to websites like [Ninite](https://ninite.com/), where you can *"Install and Update All Your Programs at Once"*, we will create a similar experience for the test-bed. Users of the test-bed can select the components that they need, and they receive a test-bed fitted to their needs. They can pick from:
 
 - Support tools, which allow system administrators to quickly setup the test-bed, add or remove components, inspect its status, inject test messages, verify received messages, record and replay a session, trial or experiment. Support tools also covers authentication and authorization management, geo servers to share a map or other information layers, or observer tools. Additionally, it also includes tools to manage a trial, or a mailserver that allows participants to exchange messages with each other that can be easily recorded and re-examined later.
 - Simulation tools, which allow the solution developers or trial managers to start a previously recorded flow of messages, e.g. a police car driving around, a flooding or earthquake simulation, or a sequence of tweets or email messages. It may also include simulation software, e.g. a traffic simulator that provides background traffic. In this way, they can create different virtual incidents for testing their solution standalone, or during a trial or experiment.
 - Data sets representing virtual (or real) incident areas, e.g. a flooding simulation in The Netherlands or an earthquake in Italy, combined with relevant information static and dynamic layers. For example, static layers like background maps, census information, and critical infrastructure. Or dynamic layers, e.g. crowd simulations or sensor networks.
+- Scenario's, e.g. a flooding or earthquake scenario, so end-users can quickly test solutions before setting up a trial themselves.
 
 We also invite other parties to create (open or commercial) tools and data that are compatible, so they can swap out functionality or extend it.
 
@@ -55,8 +56,10 @@ As a consequence, for the moment most of the supplied tools will run in a Unix e
 
 ## 6. The core of the test-bed is based on Apache Kafka
 In order to integrate different tools within the test-bed, and to make it easy to connect them with other solutions, we have selected an integration platform based on [Apache Kafka](https://kafka.apache.org). Although there are many good open-source messaging systems available, Kafka has a number of distinct advantages:
-- It is supported by the Apache organisation, and used by a number of major commercial organisations. This means that it will not go away quickly, and it has many client connectors to ease integration.
+- It is supported by the Apache organisation, and used actively by a number of major commercial organisations. This means that it will not go away quickly, and it has many client connectors to ease integration.
 - It is simple to setup and run, and performs very well. Where similar software systems cannot deal with more than 10.000 messages per second, Kafka can process a tenfold.
+
+Although there are other environments that could satisfy our needs, this current reference implementation relies on Kafka, as we want to create a good reference implementation leveraging the efforts of the Kafka community, and by being more generic, i.e. supporting multiple backends, would require a lot more work, as well as not being able to leverage the particular strengths of the backend.
 
 
 
