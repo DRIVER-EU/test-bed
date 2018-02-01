@@ -1,0 +1,17 @@
+---
+version: '2'
+services:
+  cscop:
+    build: https://github.com/DRIVER-EU/csCOP.git#1.0.2:website
+    hostname: cscop
+    depends_on:
+      - schema_registry
+      - zookeeper
+      - broker
+    command: ["/src/scripts/wait-for.sh", "schema_registry:3502", "-t", "120", "--", "node", "/src/server.js"]
+    ports:
+      - "8003:8003"
+    volumes:
+      - ./config/cscop/:/src/config/
+    environment:
+      CSCOP_PORT: '8003'
