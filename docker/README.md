@@ -21,7 +21,7 @@ This command removes all containers and thus data and configuration that was pre
 
 # Available Testbed Services
 
-## Local Test Bed
+## Local Test Bed (localhost)
 
 * Zookeeper: `localhost:3500`
 * Kafka Broker: `localhost:3501` or `PLAINTEXT://localhost:3501` depending on your adapter
@@ -32,7 +32,7 @@ This command removes all containers and thus data and configuration that was pre
 * Kafka Schema Browser UI: [http://localhost:3601](http://localhost:3601)
 * Kafka Connect Browser uI: [http://localhost:3602](http://localhost:3602)
 
-## TNO Hosted Test Bed
+## TNO Hosted Test Bed (driver-testbed.eu)
 
 * Zookeeper: `driver-testbed.eu:3500`
 * Kafka Broker: `driver-testbed.eu:3501` or `PLAINTEXT://driver-testbed.eu:3501` depending on your adapter
