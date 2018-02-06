@@ -24,63 +24,52 @@ In order to achieve these objectives, five sub-projects \(SPs\) have been establ
 
 The DRIVER+ trials and the Final Demonstration will benefit from the DRIVER+ Test-bed, providing the technological infrastructure, the necessary supporting methodology and adequate support tools to prepare, conduct and evaluate the trials. All results from the trails will be stored and made available in the Portfolio of Solutions, being a central platform to present innovative solutions from consortium partners and third parties and to share experiences and best practices with respect to their application. In order to enhance the current European cooperation framework within the Crisis Management domain and to facilitate a shared understanding of Crisis Management across Europe, DRIVER+ will carry out a wide range of activities, whose most important will be to build and structure a dedicated Community of Practice in Crisis Management \(CoPCM\), thereby connecting and fostering the exchange on lessons learnt and best practices between Crisis Management practitioners as well as technological solution providers.
 
-Introduction
+# 1.   Introduction
 
 This document provides:
 
-The high-over use-cases of the entire DRIVER+ Test-bed in the environment it is used in, in the different phases of use and the different user-types \(ADD CHAPTER HYPERLINK\),
-
-The functional specifications of this Test-bed and the components it therefore exists of \(ADD CHAPTER HYPERLINK for high-over use-cases and ADD CHAPTER HYPERLINK for functional specifications per component\), The latter chapter also provides links for each component to separate, more detailed specification documents of each component,
-
-The process how these specifications were drafted \(ADD CHAPTER HYPERLINK\)
-
-The lessons learned from the Test-beds as developed and used in experiments in the former Driver-project \(ADD CHAPTER HYPERLINK\)
+* The high-over use-cases of the entire DRIVER+ Test-bed in the environment it is used in, in the different phases of use and the different user-types \(ADD CHAPTER HYPERLINK\),
+* The functional specifications of this Test-bed and the components it therefore exists of \(ADD CHAPTER HYPERLINK for high-over use-cases and ADD CHAPTER HYPERLINK for functional specifications per component\), The latter chapter also provides links for each component to separate, more detailed specification documents of each component,
+* The process how these specifications were drafted \(ADD CHAPTER HYPERLINK\)
+* The lessons learned from the Test-beds as developed and used in experiments in the former Driver-project \(ADD CHAPTER HYPERLINK\)
 
 What can be concluded from the functional specifications of the DRIVER+ Test-bed, the high-over development cycle and the development dependencies of these Test-bed components with regards to other WPs and SPs.
 
-
-
-Targeted reading audience
+## 1.1   Targeted reading audience
 
 This document is targeted at readers who know the DRIVER+ aims and project-contents at least at a high-over level. They should also have a minimal level of understanding of functional design and software development.
 
 Primary target audiences of this document are:
 
-Software designers, developers and testers from within the DRIVER+ consortium and from external Solution and Simulator providers
-
-Trial Committee members
-
-DRIVER+ Guidance Methodology developers
-
-Reviewers of this document as deliverable D923.11
-
-
+* Software designers, developers and testers from within the DRIVER+ consortium and from external Solution and Simulator providers
+* Trial Committee members
+* DRIVER+ Guidance Methodology developers
+* Reviewers of this document as deliverable D923.11
 
 For reading this document, one must have an internet connection capable of reaching the GitBook website. For editing and reviewing this document, a personal GitHub-account is required with which one can request and be given access to the DRIVER+-GitHub group.
 
-Online living document on GitBook
+## 1.2   Online living document on GitBook
 
 The documentation of the Test-bed’s functional specifications is completely done in the online developer tool GitBook, a website linked to the popular developer community GitHub. The decision to use GitBook instead of documenting all functional specifications in MS Word on the DRIVER+ COW , is based on the considerations that:
 
-GitHub and its affiliative GitBook is targeted specifically for software development  
- The overall majority of man-months spend on the Test-bed’s development is in fact software development,
+**GitHub and its affiliative GitBook is targeted specifically for software development**  
+The overall majority of man-months spend on the Test-bed’s development is in fact software development,
 
-Specifications are living documents  
- All the Test-bed’s specification documents are foreseen to be living documents to include progressing knowledge on the Test-bed and practical considerations and decisions made during the development and use of the Test-bed, like common in any software development project. This requires a documentation process and tooling that can deal with these ongoing updates/changes to the specifications. 
+**Specifications are living documents**  
+All the Test-bed’s specification documents are foreseen to be living documents to include progressing knowledge on the Test-bed and practical considerations and decisions made during the development and use of the Test-bed, like common in any software development project. This requires a documentation process and tooling that can deal with these ongoing updates/changes to the specifications.
 
-Parallel, agile development  
- GitHub and GitBook are developed specifically for parallel \(agile\) software development and easy sharing of documents and their updates amongst developers. GitBook is a well proven documentation tool.
+**Parallel, agile development**  
+GitHub and GitBook are developed specifically for parallel \(agile\) software development and easy sharing of documents and their updates amongst developers. GitBook is a well proven documentation tool.
 
-Versioning and tracking  
- GitHub and GitBook contain an elaborate versioning and tracking system known by the overall majority of European software developers, where the Track-changes and multiple simultaneous document update functions as available in MS Word are less known to them. 
+**Versioning and tracking**  
+GitHub and GitBook contain an elaborate versioning and tracking system known by the overall majority of European software developers, where the Track-changes and multiple simultaneous document update functions as available in MS Word are less known to them.
 
-Share open-source code on GitHub  
- GitHub is a platform to share software code and work on this code by multiple developers at different locations. This sharing of code is required because:
+**Share open-source code on GitHub**  
+GitHub is a platform to share software code and work on this code by multiple developers at different locations. This sharing of code is required because:
 
-Different D+ partners from around Europe work on the Test-bed’s development,
+* Different D+ partners from around Europe work on the Test-bed’s development,
+* And all software created specifically for the Test-bed should be open source and thus sharable on a platform like GitHub.
 
-And all software created specifically for the Test-bed should be open source and thus sharable on a platform like GitHub.
-
-Documentation and code together  
- Having the code and the specifications documents together on one online repository, makes development work and sharing of this work much easier, findable and understandable for all involved and for external parties. GitBook and GitHub originate from the same platform and are already linked to each other. Using GitBook next to GitHub is thus the most logical choice.
+**Documentation and code together**  
+Having the code and the specifications documents together on one online repository, makes development work and sharing of this work much easier, findable and understandable for all involved and for external parties. GitBook and GitHub originate from the same platform and are already linked to each other. Using GitBook next to GitHub is thus the most logical choice.
 
