@@ -1,0 +1,15 @@
+{
+	"kafkaHost": "broker:3501",
+	"schemaRegistry": "http://schema_registry:3502",
+	"wrapUnions": false,
+	"fetchAllSchemas": false,
+	"autoRegisterSchemas": true,
+	"schemaFolder": "./data/schemas",
+	"consume": [{
+			"topic": "cap"
+		}, {
+			"topic": "css-demo-geojson2"
+		}
+	],
+	"produce": ["cap"]
+}
