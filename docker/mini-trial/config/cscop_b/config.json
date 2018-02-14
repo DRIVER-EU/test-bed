@@ -1,7 +1,7 @@
 {
-	"kafkaHost": "broker:3501",
+	"kafkaHost": "broker:9092",
 	"schemaRegistry": "http://schema_registry:3502",
-	"wrapUnions": false,
+	"wrapUnions": true,
 	"fetchAllSchemas": false,
 	"autoRegisterSchemas": true,
 	"schemaFolder": "./data/schemas",
