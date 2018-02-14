@@ -13,6 +13,23 @@ Our work is funded by the [DRIVER+](http://www.driver-project.eu) EU project as 
 
 Assuming you have installed `docker`, you can either go to `docker/local` and run `docker-compose up -d`, or from the root folder, you can start the test-bed with `yarn local` or `npm run local` (in this case, you also need to have `yarn` and `npm` installed).
 
+# Integration process
+
+To get your simulation or solution integrated with the test-bed:
+-	Get the test-bed up and running locally: see [here](https://github.com/DRIVER-EU/test-bed/tree/master/docker), or alternatively, in the near future, use the [GUI](https://driver-eu.github.io/docker-composer/#/). 
+-	Define your input/output messages as AVRO: already supported messages can be found here. 
+If your message is not available, first talk to Pieter.
+-	Choose the adapter, and install it locally: the repositories as linked above should contain a description of how to do that
+-	Define some input and output messages (in [AVRO](https://avro.apache.org), see also [here](https://github.com/DRIVER-EU/avro-schemas)): Register the AVRO schema with the test-bed via the [schema registry](http://localhost:3601/#/) (only available after running the test-bed locally). You can do that manually, or alternatively, the adapter will do this for you. The registration procedure is a bit different for each adapter.
+-	Use the adapter to send messages to the test-bed. You can use the [test-bed topics UI](http://localhost:3600/#/) (only available after running the test-bed locally) to see whether they have arrived correctly.
+-	Define some input messages (manually): we are currently working on a [replay-service](https://github.com/DRIVER-EU/kafka-replay-service), which allows you to play these messages, basically producing a sequence of messages. In the near future, you should also have a message injector web app, comparable to [Swagger](https://swagger.io), in which you will be able to create your own messages. You can use the test-bed topics UI to see whether they have arrived correctly.
+-	When your message contains time, you need to query the adapter to get the local trial time. We are currently working on the [time service](https://github.com/DRIVER-EU/test-bed-time-service), and soon after it is finished, the adapter will offer an interface to it. So there is no need to query the test-bed yourself to get these messages. 
+In case no time messages are available, I.e. we are not running a trial, it should return the system time. 
+-	For validation/integration testing, the two main tests are currently:
+    - The test-bed’s COP tool will display (popular) messages on a map (e.g. the ones described below). This allows you to manually/visually check the expected output.
+    - The test-bed will have a validation service, which will examine the messages in more detail. For example, in AVRO, we will only check that a polygon consists of a coordinate array, the validation service will check that it is properly closed.
+
+
 # Design Guidelines of the DRIVER+ Test-bed
 
 ## 1. The test-bed shall consist of open source software.
