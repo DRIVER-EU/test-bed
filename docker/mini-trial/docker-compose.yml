@@ -133,6 +133,7 @@ services:
       - "8003:8003"
     volumes:
       - ./config/cscop_a/:/src/config/
+      - ./projects/projects-a.json:/src/public/data/projects/projects.json
     environment:
       CSCOP_PORT: '8003'
       
@@ -147,6 +148,7 @@ services:
       - "8004:8004"
     volumes:
       - ./config/cscop_b/:/src/config/
+      - ./projects/projects-b.json:/src/public/data/projects/projects.json
     environment:
       CSCOP_PORT: '8004'
       
