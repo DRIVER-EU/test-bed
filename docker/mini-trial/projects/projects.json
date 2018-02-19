@@ -147,8 +147,8 @@
         "preview": "http://134.221.20.240:3344/the-hague-test/10/522/336.png"
     }],
     "projects": [{
-        "title": "Team B",
-        "url": "data/projects/Roden/project-b.json",
+        "title": "csCOP",
+        "url": "data/projects/Roden/project-a.json",
         "dynamic": true
     }]
 }

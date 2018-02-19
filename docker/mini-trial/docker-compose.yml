@@ -122,9 +122,9 @@ services:
       CONNECT_INTERNAL_VALUE_CONVERTER: org.apache.kafka.connect.json.JsonConverter
       CONNECT_ZOOKEEPER_CONNECT: 'zookeeper:3500'
 
-  cscop_a:
+  cscop:
     build: https://github.com/DRIVER-EU/csCOP.git#master:website
-    hostname: cscop_a
+    hostname: cscop
     depends_on:
       - schema_registry
       - zookeeper
@@ -132,24 +132,9 @@ services:
     ports:
       - "8003:8003"
     volumes:
-      - ./config/cscop_a/:/src/config/
-      - ./projects/projects-a.json:/src/public/data/projects/projects.json
+      - ./config/cscop/config.json:/src/config/dynamic-config.json
+      - ./projects/projects.json:/src/public/data/projects/projects.json
     environment:
       CSCOP_PORT: '8003'
-      
-  cscop_b:
-    build: https://github.com/DRIVER-EU/csCOP.git#master:website
-    hostname: cscop_b
-    depends_on:
-      - schema_registry
-      - zookeeper
-      - broker
-    ports:
-      - "8004:8004"
-    volumes:
-      - ./config/cscop_b/:/src/config/
-      - ./projects/projects-b.json:/src/public/data/projects/projects.json
-    environment:
-      CSCOP_PORT: '8004'
       
       
