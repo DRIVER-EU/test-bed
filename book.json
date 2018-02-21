@@ -2,6 +2,5 @@
     "root": "./doc",
     "title": "Functional specification of the test-bed",
     "author": "Steven van Campen, Erik Vullings",
-    "plugins": {
-    }
+    "plugins": []
 }
