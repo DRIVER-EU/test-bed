@@ -20,7 +20,7 @@ services:
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:3500'
-      KAFKA_ADVERTISED_LISTENERS: 'EXTERNAL://localhost:3501,PLAINTEXT://broker:9092'
+      KAFKA_ADVERTISED_LISTENERS: 'EXTERNAL://driver-testbed.eu:3501,PLAINTEXT://broker:9092'
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: 'EXTERNAL:PLAINTEXT,PLAINTEXT:PLAINTEXT'
       KAFKA_LISTENERS: 'EXTERNAL://0.0.0.0:3501,PLAINTEXT://0.0.0.0:9092'
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
@@ -123,7 +123,8 @@ services:
       CONNECT_ZOOKEEPER_CONNECT: 'zookeeper:3500'
 
   cscop:
-    build: https://github.com/DRIVER-EU/csCOP.git#master:website
+#    build: https://github.com/DRIVER-EU/csCOP.git#master:website
+    image: rinzeb/cscop:latest
     hostname: cscop
     depends_on:
       - schema_registry
@@ -133,8 +134,25 @@ services:
       - "8003:8003"
     volumes:
       - ./config/cscop/config.json:/src/config/dynamic-config.json
-      - ./projects/projects.json:/src/public/data/projects/projects.json
+#      - ./projects/projects.json:/src/public/data/projects/projects.json
     environment:
       CSCOP_PORT: '8003'
-      
-      
+
+  download-mbtiles:
+    image: rinzeb/download-mbtiles:latest
+    hostname: download-mbtiles
+    command: ./scripts/check_mbtiles_folder.sh -d mbtiles
+    volumes: 
+      - ./mbtiles:/mbtiles
+    environment: 
+      MBTILES_URL: 'https://github.com/DRIVER-EU/test-bed-mbtiles-service/raw/master/mbtiles/the-hague-test.mbtiles'
+
+  tileserver-gl:
+    image: klokantech/tileserver-gl:latest
+    hostname: tileserver-gl
+    depends_on:
+      - download-mbtiles
+    ports:
+      - "3344:80"
+    volumes:
+      - ./mbtiles:/data
