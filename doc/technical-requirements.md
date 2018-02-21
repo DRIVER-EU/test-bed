@@ -8,10 +8,10 @@ _This paragraph is to document the functional specifications on max 2 pages (A4)
 
 _Remove this text when you have completed your paragraph._
 
-add max 3 lines of introduction text here
+_Add max 3 lines of introduction text here_
 
-| **Test-bed component** |
-|----|----|
+|   | **Test-bed component** |
+| ---- |:---- |
 | **Short description** | MAX 5 LINES, EXCL SPECIFIC FUNCTIONS AND USERS |
 | **Who will use it** | LIST OF DIFFERENT TYPES OF USERS |
 | **Main functions** | LIST OF MAIN FUNCTIONS AND WHICH NEED EACH FUNCTION FULFILLS |
