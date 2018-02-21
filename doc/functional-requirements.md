@@ -1,4 +1,5 @@
-# Aims of the Test-bed in Driver+ and high-over functional desi
+# Aims of the Test-bed in DRIVER+ & high-over Functional Design
+_[Add introduction text about aims and structure of chapter here]_
 
 ## What the Test-bed should provide
 
@@ -60,7 +61,7 @@ And finally, the Guidance Methodology, the tools to use this methodology and the
 
 ## The environment the Test-bed is used in
 
-ADD PICTURE OF ENTIRE TEST-BED ENVIRONMENT
+![Test-bed environment](../img/test-bed-environment.jpg)
 Figure 4.1: The Test-bed in its environment
 
 The Test-bed is not just a stand-alone collection of software applications. It is used within a larger environment of DRIVER+ entities, as visualized in ADD FIGURE REFERENCE.
@@ -77,7 +78,7 @@ The Test-bed is not just a stand-alone collection of software applications. It i
 
 ## High-level functional design
 
-ADD PICTURE OF TESTBED INFRASTRUCTURE
+![Test-bed design](../img/test-bed-design.jpg)
 Figure 4.2: All components of the Test-bed
 
 Zooming in on the Test-Bed, as shown in ADD FIGURE REFERENCE, the following components can be distinguished:
@@ -119,7 +120,7 @@ The Test-bed is used throughout 3 phases and next to that in Development-mode (i
 
 Table 4.1: Use-modes of the Test-bed
 
-| Use-mode | Description |
+|**Use-mode** | **Description** |
 |----------|-------------|
 |**Preparation phase**|In which all Solutions and Simulators are connected to the Test-bed, the Scenario is built and the entire set-up is tested to assure a good run of the Trial.|
 |**Execution phase**|In which one or more sessions are run in with Participants use the Solutions according to the evolving Scenario.|
@@ -132,7 +133,7 @@ Throughout all use-modes, the following user-types can be distinguished. Note th
 
 Table 4.2: User-types of the Test-bed
 
-| User-type | Description |
+| **User-type** | **Description** |
 | --- | --- |
 | **Participants** | Persons (usually CM practitioners) actively using the Solutions and performing CM-operations based on which information they receive from the Solutions and directly from the Simulators about the fictive crisis. |
 | **Trial Scenario Builders**   | Persons from the Trial Staff who are configuring the Trial Scenario in the Test-bed&#39;s components (i.e. Trial Scenario Manager, Simulators, Observation Support Tool, Test-bed Admin Tool and potentially also by configuring Solutions). |
