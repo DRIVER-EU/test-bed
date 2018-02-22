@@ -4,22 +4,22 @@ The current project, DRIVER+ (D+), is a continuation of the old DRIVER project, 
 
 ## Summary of the lessons learned
 
-1. A generic guidance methodology is needed for analysing the need, and preparing, executing and reviewing an experiment [link](#the_organisation_of_each_experiment_was_ad_hoc).
-2. Create one test-bed and use it for each and every trial [link](#each_trial_created_its_own_test-bed).
-3. The test-bed should be open source [link](#test-beds_were_not_open_source).
-4. The test-bed should have a message-oriented architecture [link](#all_test-beds_used_a_message-oriented_architecture).
-5. The test-bed should use well-defined, easily accessible, syntactically correct messages, and close to common standards [link](#each_test-bed_used_its_own_set_of_message_standards).
-6. The test-bed should be clearly scoped, i.e. what it is, and what it is not [link](#the_definition_of_test-bed_was_confusing).
-7. The test-bed must be easily reproducible, and offer administrative as well as supporting tools and services [link](#test-bed_management_was_complex).
+1. A generic [guidance methodology](#guidance_methodology) is needed for analysing the need, and preparing, executing and reviewing an experiment.
+2. Create [one test-bed](#one_testbed) and use it for each and every trial.
+3. The test-bed should be [open source](#open_source).
+4. The test-bed should have a [message-oriented architecture](#message_oriented).
+5. The test-bed should use [well-defined, easily accessible, syntactically correct messages, and close to common standards](#standard).
+6. The test-bed should be clearly [defined and scoped](#definition), i.e. what it is, and what it is not.
+7. The test-bed must be [easily reproducible, and offer administrative as well as supporting tools and services](#complete).
 
 All of these aspects have been addressed in D+.
 
-## The organisation of each experiment was ad hoc
+## The organisation of each experiment was ad hoc {#guidance_methodology}
 In D-, there was no clear overall process to perform an experiment, or determine whether you even need one: how to prepare, execute and review an experiment, which questions to ask, how to look for existing solutions, etc. Different partners had different ways of doing things, and there was no clear guidance or manual to steer them all. This leads to miscommunications, discussions, inefficiency, stress and less than optimal experiments.
 
 **Lesson learned:** A generic guidance methodology is needed for analysing the need, and preparing, executing and reviewing an experiment.
 
-## Each trial created its own test-bed
+## Each trial created its own test-bed {#one_testbed}
 
 Each of the organised trials in D- created his own, unique, test-bed to perform the trial, i.e. the test-bed was based on:
 - A legacy system owned by one of the D- partners
@@ -33,7 +33,7 @@ Each of the organised trials in D- created his own, unique, test-bed to perform 
 
 **Lesson learned:** Each trial should use the same test-bed (*one test-bed to rule them all*).
 
-## Test-beds were not open source
+## Test-beds were not open source {#open_source}
 
 As already stated in the previous chapter, none of the used test-beds were completely open source. Again, this does not matter within the scope of one project, were partners could use these test-beds license free, but if you want to remain sustainable *after* the project, and be attractive to *outside* parties, this will be a serious roadblock. Besides obvious aspects as costs for getting a license, it would create a strong dependency on the owning party: each change you would like to make would have to be approved. And after an approval, it would take time to implement the change request, potentially leading to serious delays.
 
@@ -41,13 +41,13 @@ In addition, from a developer's point of view, dealing with a large and complex 
 
 **Lesson learned:** The test-bed should be fully open source.
 
-## All test-beds used a message-oriented architecture
+## All test-beds used a message-oriented architecture {#message_oriented}
 
 Each trial needed to connect many, quite different, software systems: end-user solutions, incident simulators, 3D visualisations etc. But although each test-bed was different, they all used a message-based infrastructure. The reasoning behind that is simple: when you have *n* systems, the number of connections between different systems will quickly explode (*#connections* = &sum; *n-i*, where *i*=1..*n*-1). So it is better that the test-bed uses a kind of mail service or *message broker*: if you want to communicate something, tell it to the broker and he will make sure that your message is delivered to the right person at the right time.
 
 **Lesson learned:** The test-bed should have a message-oriented architecture.
 
-## Each test-bed used its own set of message standards
+## Each test-bed used its own set of message standards {#standard}
 
 When different systems need to talk to each other, the messages they exchange must be well understood, at least at a syntactic level (*I can read your message*), and preferably also on a semantic level (*I understand your message*). The latter, however, has implications beyond what this project tries to solve here, as it would entail a universal translator (*the 'Babel fish' for those who have read 'The Hitchhikers guide to the Galaxy'*). To further complicate matters, in a crisis management environment a test-bed has to deal with two types of systems: solutions and simulators, each with their own set of messages.
 
@@ -63,7 +63,7 @@ To deal with these issues, the test-bed should have:
 
 **Lesson learned:** The test-bed should use well-defined, easily accessible, syntactically correct messages, and close to common standards.
 
-## The definition of test-bed was confusing
+## The definition of test-bed was confusing {#definition}
 
 In D-, participants had no clear picture of the scope of the test-bed. To perform an experiment, you often need most of the following components:
 - Operational systems: either legacy systems, or new systems that you wish to evaluate
@@ -77,7 +77,7 @@ So for some participants, the test-bed was only the gateway between operational 
 
 **Lesson learned:** The test-bed should be clearly scoped, i.e. what it is, and what it is not
 
-## Test-bed management was complex
+## Test-bed management was complex {#complete}
 
 The complexity is partially related to the previous observation that each experiment created its own test-bed enviroment. However, the problem goes deeper than this, since an experiment also needs:
 - Administration of all systems: are all systems up-and-running; is everyone connected correctly, so they receive the expected messages; are some messages secured properly.
