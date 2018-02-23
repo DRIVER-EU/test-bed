@@ -26,17 +26,17 @@ The Common Simulation Space (CSS) describes the concept of information exchange 
 
 |   | **Common Simulation Space** |
 | ---- |:---- |
-| **Short description** | MAX 5 LINES, EXCL SPECIFIC FUNCTIONS AND USERS |
-| **Who will use it** | LIST OF DIFFERENT TYPES OF USERS |
-| **Main functions** | LIST OF MAIN FUNCTIONS AND WHICH NEED EACH FUNCTION FULFILLS |
-| **Functions it does not do** | LIST OF SPECIFIC THINGS THIS COMPONENT IS NOT INTENDED FOR |
-| **Links with other components** | LIST OF ALL OTHER COMPONENTS IT IS LINKED TO, INCLUDING THE DIRECTION OF THE LINK |
-| **(Technical) conditions** | LIST OF TECHNICAL REQUIREMENTS / BOUNDARY CONDITIONS |
-| **Reference to repository/details** | HYPERLINK TO COMPONENT&#39;S OWN GITBOOK/COW-REPORT |
+| **Short description** | The Common Simulation Space (CSS) describes the concept of information exchange between simulators that are connected to the test-bed. Also, information provided by simulations are forwarded and distributed to the solutions via the CIS, and vice versa, messages sent from the CIS are transmitted to the CSS. |
+| **Who will use it** | Developers (of simulations and gateway services) |
+| **Main functions** | The CSS will connect the simulators to each other |
+| **Functions it does not do** | Deal with security: simulators don't have secrets  |
+| **Links with other components** | Admin tool for configuration of the CSS; CIS-CSS gateways; perhaps also the [AAR](#aar) in case we want to use the data for analysis|
+| **(Technical) conditions** | Apache Kafka is needed |
+| **Reference to repository/details** |  |
 
 ## CIS-CSS gateways {#cis-css-gateways}
 
-The CSS-CIS gateways are the interface between the Common Simulations Space (CSS) and the Common Information Space (CIS). Data from the simulations is translated into data that can be understood by the tools connected to the CIS and vice-versa.
+The CSS-CIS gateways are the interface between the Common Simulations Space (CSS) and the Common Information Space (CIS). Data from the simulations is translated into data that can be understood by the tools connected to the CIS and vice-versa. Since they translate specific message types, there may be many of them.
 
 |   | **CIS-CSS gateways** |
 | ---- |:---- |
@@ -45,8 +45,8 @@ The CSS-CIS gateways are the interface between the Common Simulations Space (CSS
 | **Main functions** | The CSS-CIS gateways will account for:<br>- Aggregating messages coming from the CSS<br>- Translating between CSS topics and CIS topics |
 | **Functions it does not do** | The CSS-CIS gateways will NOT account for: Semantic translation |
 | **Links with other components** | - [CIS](#cis) & [CSS](#css): the gateways are the bridge between them<br>Validation service: the validation service is a gateway service that validates messages going through the gateway |
-| **(Technical) conditions** | LIST OF TECHNICAL REQUIREMENTS / BOUNDARY CONDITIONS |
-| **Reference to repository/details** | HYPERLINK TO COMPONENT&#39;S OWN GITBOOK/COW-REPORT |
+| **(Technical) conditions** | Must run in a Docker environment |
+| **Reference to repository/details** |  |
 
 ## Test-bed manager (Admin tool) {#admin-tool}
 
@@ -102,20 +102,8 @@ The message injector is used for debugging purposes, similar to [Postman](https:
 | **Main functions** | The main functionality is to inject (prepared or on the fly) messages into the test-bed for testing purposes |
 | **Functions it does not do** |  |
 | **Links with other components** | It will use one of the existing adapters, most likely, the Java one, to send its messages to the test-bed |
-| **(Technical) conditions** | LIST OF TECHNICAL REQUIREMENTS / BOUNDARY CONDITIONS |
-| **Reference to repository/details** | HYPERLINK TO COMPONENT&#39;S OWN GITBOOK/COW-REPORT |
-
-## Security concept
-
-|   | **Security** |
-| ---- |:---- |
-| **Short description** | MAX 5 LINES, EXCL SPECIFIC FUNCTIONS AND USERS |
-| **Who will use it** | LIST OF DIFFERENT TYPES OF USERS |
-| **Main functions** | LIST OF MAIN FUNCTIONS AND WHICH NEED EACH FUNCTION FULFILLS |
-| **Functions it does not do** | LIST OF SPECIFIC THINGS THIS COMPONENT IS NOT INTENDED FOR |
-| **Links with other components** | LIST OF ALL OTHER COMPONENTS IT IS LINKED TO, INCLUDING THE DIRECTION OF THE LINK |
-| **(Technical) conditions** | LIST OF TECHNICAL REQUIREMENTS / BOUNDARY CONDITIONS |
-| **Reference to repository/details** | HYPERLINK TO COMPONENT&#39;S OWN GITBOOK/COW-REPORT |
+| **(Technical) conditions** | Must run in a Docker enviroment |
+| **Reference to repository/details** |  |
 
 ## Data services
 
@@ -161,7 +149,7 @@ In addition, it shares the server's time using the Network Time Protocol (NTP), 
 | **Main functions** | Publish the fictive scenario time, play/pause/stop/speed up/slow down the time |
 | **Functions it does not do** | |
 | **Links with other components** | [Scenario manager](#sm) and all adapters |
-| **(Technical) conditions** | Should run in a Docker environment |
+| **(Technical) conditions** | Must run in a Docker environment |
 | **Reference to repository/details** | [GitHub repository](https://github.com/DRIVER-EU/test-bed-time-service) |
 
 ## After-Action-Review (AAR) {#aar}
@@ -229,6 +217,18 @@ Questions have different purposes, which are indicated in Observation Types. Gre
 | **Links with other components** | OST is linked with Test-bed, which is responsible for providing simulation phases – data about events and simulation time. Package of data is sent to OST Server, events and set of questions are generated. When the new event is displayed, OST Server notifies the user and set of questions changes. |
 | **(Technical) conditions** | Observer Support Tool (Mobile):<br>- Web browser<br>- Android (tablet and smartphone)<br>- iOS (tablet and smartphone)<br><br>Observer Management Tool (Desktop):<br>- Web browser |
 | **Reference to repository/details** | [https://github.com/DRIVER-EU/ost](https://github.com/DRIVER-EU/ost) or [specifications](https://driver-eu.gitbooks.io/specification-of-the-online-observer-support-tool) |
+
+## Security concept
+
+|   | **Security** |
+| ---- |:---- |
+| **Short description** | MAX 5 LINES, EXCL SPECIFIC FUNCTIONS AND USERS |
+| **Who will use it** | LIST OF DIFFERENT TYPES OF USERS |
+| **Main functions** | LIST OF MAIN FUNCTIONS AND WHICH NEED EACH FUNCTION FULFILLS |
+| **Functions it does not do** | LIST OF SPECIFIC THINGS THIS COMPONENT IS NOT INTENDED FOR |
+| **Links with other components** | LIST OF ALL OTHER COMPONENTS IT IS LINKED TO, INCLUDING THE DIRECTION OF THE LINK |
+| **(Technical) conditions** | LIST OF TECHNICAL REQUIREMENTS / BOUNDARY CONDITIONS |
+| **Reference to repository/details** | HYPERLINK TO COMPONENT&#39;S OWN GITBOOK/COW-REPORT |
 
 ## Name of Test-bed component
 
