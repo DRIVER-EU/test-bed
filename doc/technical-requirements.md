@@ -158,34 +158,6 @@ The Play service  describes the concept of information exchange between tools th
 | **(Technical) conditions** | LIST OF TECHNICAL REQUIREMENTS / BOUNDARY CONDITIONS |
 | **Reference to repository/details** | HYPERLINK TO COMPONENT&#39;S OWN GITBOOK/COW-REPORT |
 
-## Data services
-
-The Trial scenario manager describes ...
-
-|   | **Data services** |
-| ---- |:---- |
-| **Short description** | MAX 5 LINES, EXCL SPECIFIC FUNCTIONS AND USERS |
-| **Who will use it** | LIST OF DIFFERENT TYPES OF USERS |
-| **Main functions** | LIST OF MAIN FUNCTIONS AND WHICH NEED EACH FUNCTION FULFILLS |
-| **Functions it does not do** | LIST OF SPECIFIC THINGS THIS COMPONENT IS NOT INTENDED FOR |
-| **Links with other components** | LIST OF ALL OTHER COMPONENTS IT IS LINKED TO, INCLUDING THE DIRECTION OF THE LINK |
-| **(Technical) conditions** | LIST OF TECHNICAL REQUIREMENTS / BOUNDARY CONDITIONS |
-| **Reference to repository/details** | HYPERLINK TO COMPONENT&#39;S OWN GITBOOK/COW-REPORT |
-
-## Docker environment
-
-The Docker environment...
-
-|   | **Docker environment** |
-| ---- |:---- |
-| **Short description** | MAX 5 LINES, EXCL SPECIFIC FUNCTIONS AND USERS |
-| **Who will use it** | LIST OF DIFFERENT TYPES OF USERS |
-| **Main functions** | LIST OF MAIN FUNCTIONS AND WHICH NEED EACH FUNCTION FULFILLS |
-| **Functions it does not do** | LIST OF SPECIFIC THINGS THIS COMPONENT IS NOT INTENDED FOR |
-| **Links with other components** | LIST OF ALL OTHER COMPONENTS IT IS LINKED TO, INCLUDING THE DIRECTION OF THE LINK |
-| **(Technical) conditions** | LIST OF TECHNICAL REQUIREMENTS / BOUNDARY CONDITIONS |
-| **Reference to repository/details** | HYPERLINK TO COMPONENT&#39;S OWN GITBOOK/COW-REPORT |
-
 ## Observer Support Tool {#ost}
 
 The Observer Support Tool’s aim is to collect observations, inform observers about trial progress and visualize collected data. There are different perspective to look at this tool. Main user, who uses the mobile version of a tool to send his observations is called Observer. From the other side there exists Trial Manager, he focuses on collected data and analysing it on desktop. Each of them has their own functionalities provided by OST. There are also these functionalities which are connected with non-functional requirements.
