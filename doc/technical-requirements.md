@@ -59,8 +59,23 @@ The admin tool can be used to configure parts of the test-bed. Also, it provides
 | **Main functions** | The Admin tool will account for:<br>- An interface to configure the CSS-CIS gateways<br>- An interface to configure the adapters<br>- Loading the KAFKA topic configurations<br>- Providing a Watch dog |
 | **Functions it does not do** | The Admin tool will NOT account for:<br>- Setting up topics after initialization<br>- Modifying topics after initialization |
 | **Links with other components** | - [CIS-CSS gateways](#cis-css-gateways) and adapters: they are configured using the admin tool |
-| **(Technical) conditions** | LIST OF TECHNICAL REQUIREMENTS / BOUNDARY CONDITIONS |
-| **Reference to repository/details** | HYPERLINK TO COMPONENT&#39;S OWN GITBOOK/COW-REPORT |
+| **(Technical) conditions** | Must run in a docker environment |
+| **Reference to repository/details** | [GitHub repository](https://github.com/DRIVER-EU/test-bed-admin) |
+
+## Scenario Manager
+
+The scenario manager can be used to create scenarios (master event lists) that are injected, via the test-bed, into.
+For example, it injects a message to start a flooding, to send out emails to participants, or to instruct a role-player to perform an act. Naturally, it can also control the time, and (re-)start/pause/stop a scenario.
+
+|   | **Scenario Manager** |
+| ---- |:---- |
+| **Short description** |  |
+| **Who will use it** | Trial manager, scenario writers |
+| **Main functions** | Publish messages, often intended for simulators, but can also be used to directly show a message inside a solution. |
+| **Functions it does not do** | Record messages |
+| **Links with other components** | Can be used to send messages to simulators, but also to solutions, via the adapter. It's strongest connection is with the [time service](#time-service) in order to control the fictive scenario time.|
+| **(Technical) conditions** | Must run in a docker environment |
+| **Reference to repository/details** | [GitHub repository](https://github.com/DRIVER-EU/scenario-editor) |
 
 ## Validation Service {#validation-service}
 
@@ -104,59 +119,82 @@ The message injector is used for debugging purposes, similar to [Postman](https:
 
 ## Data services
 
-The Data services describes the concept of information exchange between tools that are connected to the test-bed.  Also, information provided by simulations are forwarded and distributed to the tools via the CIS.
+The Data services is not a single service, but a group of non-essential, but very practical services to complement the test-bed. Their main purpose is to share data to enrich the trial, such as map data, height data, census layers, weather information, etc..
 
-|   | **Data services ** |
+|   | **Data services** |
 | ---- |:---- |
-| **Short description** | MAX 5 LINES, EXCL SPECIFIC FUNCTIONS AND USERS |
-| **Who will use it** | LIST OF DIFFERENT TYPES OF USERS |
-| **Main functions** | LIST OF MAIN FUNCTIONS AND WHICH NEED EACH FUNCTION FULFILLS |
-| **Functions it does not do** | LIST OF SPECIFIC THINGS THIS COMPONENT IS NOT INTENDED FOR |
-| **Links with other components** | LIST OF ALL OTHER COMPONENTS IT IS LINKED TO, INCLUDING THE DIRECTION OF THE LINK |
-| **(Technical) conditions** | LIST OF TECHNICAL REQUIREMENTS / BOUNDARY CONDITIONS |
-| **Reference to repository/details** | HYPERLINK TO COMPONENT&#39;S OWN GITBOOK/COW-REPORT |
+| **Short description** | The Data services is not a single service, but a group of non-essential, but very practical services to complement the test-bed. Their main purpose is to share data to enrich the trial, such as map data, height data, census layers, weather information, etc.. |
+| **Who will use it** | Trial staff |
+| **Main functions** | Share map data, height data, vector data |
+| **Functions it does not do** | Create or edit this data |
+| **Links with other components** | Can be used by solutions as well as simulators as a data backend |
+| **(Technical) conditions** | Must run in a Docker environment |
+| **Reference to repository/details** | [WMS service](https://github.com/DRIVER-EU/test-bed-wms-service), [MBtiles service](https://github.com/DRIVER-EU/test-bed-mbtiles-service) |
+
+Related to these data services is the [AVRO schemas](https://github.com/DRIVER-EU/avro-schemas) repository, which contains all the schema's that have been used (so far).
+
+## Docker-composer
+
+All of the test-bed's core functionality run inside a Docker environment (*virtual machines*). The Docker-composer website allows you to select the test-bed components you actually need, and it creates a dedicated Docker-compose file for you. This file can be easily run (`docker-compose up -d`), and the test-bed is started using a single command, linking together services and data.
+
+|   | **Docker-composer** |
+| ---- |:---- |
+| **Short description** | All of the test-bed's core functionality run inside a Docker environment (*virtual machines*). The Docker-composer website allows you to select the test-bed components you actually need, and it creates a dedicated Docker-compose file for you. |
+| **Who will use it** | End users wishing to try out a solution, Developers and Sysops to setup the test-bed |
+| **Main functions** | Tie many different Docker images together |
+| **Functions it does not do** | Create a Docker image for you |
+| **Links with other components** | All Dockerized services, including the Dockerized solutions available in the Portfolio of Solutions |
+| **(Technical) conditions** | Must run in a Docker environment |
+| **Reference to repository/details** | [Website](https://driver-eu.github.io/docker-composer), [GitHub repository](https://github.com/DRIVER-EU/docker-composer),  |
+
 
 ## Time service
 
-The Time service  describes the concept of information exchange between tools that are connected to the test-bed.  Also, information provided by simulations are forwarded and distributed to the tools via the CIS.
+The Time service is the single source of truth of the fictive time during a trial. It listens to the scenario manager in order to play/pause/stop a scenario, and it may speed up or slow down the simulation. Each adapter will subscribe to the time service, and offer its users the fictive time. When sending messages containing time information, each service should use this fictive time.
 
-|   | **Time service  ** |
+In addition, it shares the server's time using the Network Time Protocol (NTP), so all services in the test-bed can use it to sync their clocks.
+
+|   | **Time service** |
 | ---- |:---- |
-| **Short description** | MAX 5 LINES, EXCL SPECIFIC FUNCTIONS AND USERS |
-| **Who will use it** | LIST OF DIFFERENT TYPES OF USERS |
-| **Main functions** | LIST OF MAIN FUNCTIONS AND WHICH NEED EACH FUNCTION FULFILLS |
-| **Functions it does not do** | LIST OF SPECIFIC THINGS THIS COMPONENT IS NOT INTENDED FOR |
-| **Links with other components** | LIST OF ALL OTHER COMPONENTS IT IS LINKED TO, INCLUDING THE DIRECTION OF THE LINK |
-| **(Technical) conditions** | LIST OF TECHNICAL REQUIREMENTS / BOUNDARY CONDITIONS |
-| **Reference to repository/details** | HYPERLINK TO COMPONENT&#39;S OWN GITBOOK/COW-REPORT |
+| **Short description** | The Time service is the single source of truth of the fictive time during a trial. It listens to the scenario manager in order to play/pause/stop a scenario, and it may speed up or slow down the simulation. Each adapter will subscribe to the time service, and offer its users the fictive time. When sending messages containing time information, each service should use this fictive time. |
+| **Who will use it** | It is an internal service |
+| **Main functions** | Publish the fictive scenario time, play/pause/stop/speed up/slow down the time |
+| **Functions it does not do** | |
+| **Links with other components** | [Scenario manager](#sm) and all adapters |
+| **(Technical) conditions** | Should run in a Docker environment |
+| **Reference to repository/details** | [GitHub repository](https://github.com/DRIVER-EU/test-bed-time-service) |
 
 ## After-Action-Review (AAR) {#aar}
 
 The After-Action Review (AAR) tool provides the possibility to collect data after a trial has finished and analyse it. Its main purpose is to facilitate the evaluation of the trialed solutions, and to help the participants determine how well they functioned. It collects messages (exchanged during trial), observation reports and takes screen-shots.
 
-|   | **After-Action-Review ** |
+|   | **After-Action-Review** |
 | ---- |:---- |
 | **Short description** |The After-Action Review (AAR) tool provides the possibility to collect data after a trial has finished and analyse it. Its main purpose is to facilitate the evaluation of the trialed solutions, and to help the participants determine how well they functioned. It collects messages (exchanged during trial), observation reports and takes screen-shots.|
 | **Who will use it** | Facilitator |
 | **Main functions** | The AAR tool will account for:<br>- Storing relevant data <br>- Reviewing a trial completely or parts of it<br>- Jump to specific point in time |
 | **Functions it does not do** | The AAR tool will NOT account for: Changing the course of the trial afterwards in any way |
-| **Links with other components** | [CIS](#cis), [CSS](#css), [Scenario Manager]{#sm}, [Observer Support Tool](#ost): The AAR tool uses the messages exchanged inside the CIS, CSS, Scenario Manager, and the observations to provide the review capability.|
+| **Links with other components** | [CIS](#cis), [CSS](#css), [Scenario Manager](#sm), [Observer Support Tool](#ost): The AAR tool uses the messages exchanged inside the CIS, CSS, Scenario Manager, and the observations to provide the review capability.|
 | **(Technical) conditions** | The Security Service may have to grant the access to all secured topics to the AAR backend service to give the service the possibility to collect the data.|
-| **Reference to repository/details** | HYPERLINK TO COMPONENT&#39;S OWN GITBOOK/COW-REPORT |
+| **Reference to repository/details** | [GitHub repository](https://github.com/DRIVER-EU/test-bed-admin) |
 
-## Play service
+## Play service {#play}
 
-The Play service  describes the concept of information exchange between tools that are connected to the test-bed.  Also, information provided by simulations are forwarded and distributed to the tools via the CIS.
+The Play service acts as a mini-scenario editor: it can either publish one recorded message, or play a sequence of recorded (timed) messages. Besides being useful for debugging, where a developer can replay a recorder scenario, it is also useful for testing solutions standalone, where the play service can play a simple scenario so the solution can shine.
+
+The recorded messages can be obtained using [Landoop's Kafka Topics UI](https://github.com/Landoop/kafka-topics-ui/tree/master/docker), which allows you to download all messages in a topic to a single JSON file with key-value messages.
 
 |   | **Play service** |
 | ---- |:---- |
-| **Short description** | MAX 5 LINES, EXCL SPECIFIC FUNCTIONS AND USERS |
-| **Who will use it** | LIST OF DIFFERENT TYPES OF USERS |
-| **Main functions** | LIST OF MAIN FUNCTIONS AND WHICH NEED EACH FUNCTION FULFILLS |
-| **Functions it does not do** | LIST OF SPECIFIC THINGS THIS COMPONENT IS NOT INTENDED FOR |
-| **Links with other components** | LIST OF ALL OTHER COMPONENTS IT IS LINKED TO, INCLUDING THE DIRECTION OF THE LINK |
-| **(Technical) conditions** | LIST OF TECHNICAL REQUIREMENTS / BOUNDARY CONDITIONS |
-| **Reference to repository/details** | HYPERLINK TO COMPONENT&#39;S OWN GITBOOK/COW-REPORT |
+| **Short description** | The Play service acts as a mini-scenario editor: it can either publish one message, or play a sequence of (timed) messages. Besides being useful for debugging, where a developer can replay a recorder scenario, it is also useful for testing solutions standalone, where the play service can play a simple scenario so the solution can shine. |
+| **Who will use it** | Developers; Participants; Solution owners/evaluators |
+| **Main functions** | Publish a single recorded message, or a sequence of messages, to the test-bed |
+| **Functions it does not do** | Create messages from scrap, or record messages |
+| **Links with other components** | It is connected to the test-bed via an adapter, and it is related to the message injector |
+| **(Technical) conditions** | Should run in a Docker environment, can get recorded messages from a mounted Docker volume |
+| **Reference to repository/details** | [GitHub repository](https://github.com/DRIVER-EU/kafka-replay-service) |
+
+Related to this service is the open source [csCOP](https://github.com/DRIVER-EU/csCOP) (Common Operational Picture) tool, which can be used as a COP during a trial, but which can also be used to test the messages published by simulators and solutions.
 
 ## Observer Support Tool {#ost}
 
