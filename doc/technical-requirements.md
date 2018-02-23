@@ -2,9 +2,9 @@
 
 This chapter contains for each component an overview of what it is aimed at, who uses it and in which phase of the Trial it is used, in the form of a table per component. The table also contains a hyperlink to the detailed specification of this component.
 
-## Common Information Space (CIS)
+## Common Information Space (CIS) {#cis}
 
-The Common Information Space (CIS) describes the concept of information exchange between tools that are connected to the test-bed.  Also, information provided by simulations are forwarded and distributed to the tools via the CIS.
+The Common Information Space (CIS) describes the concept of information exchange between solutions that are connected to the test-bed. Also, information provided by simulations are forwarded and distributed to the solutions via the CIS, and vice versa, messages sent from the CIS are transmitted to the CSS.
 
 |   | **Common Information Space** |
 | ---- |:---- |
@@ -16,11 +16,15 @@ The Common Information Space (CIS) describes the concept of information exchange
 | **(Technical) conditions** | Apache Kafka is needed |
 | **Reference to repository/details** |  |
 
-## Common Information Space (CIS)
+**NOTE**
 
-The Common Information Space (CIS) describes the concept of information exchange between tools that are connected to the test-bed.  Also, information provided by simulations are forwarded and distributed to the tools via the CIS.
+The CIS itself is visible only to developers, not end-users. However, end-users may configure the CIS (or parts of it) to a certain extend using the Admin tool described in ADD_LINK.
 
-|   | **Common Information Space** |
+## Common Simulation Space (CSS) {#css}
+
+The Common Simulation Space (CSS) describes the concept of information exchange between simulators that are connected to the test-bed. Also, information provided by simulations are forwarded and distributed to the solutions via the CIS, and vice versa, messages sent from the CIS are transmitted to the CSS.
+
+|   | **Common Simulation Space** |
 | ---- |:---- |
 | **Short description** | MAX 5 LINES, EXCL SPECIFIC FUNCTIONS AND USERS |
 | **Who will use it** | LIST OF DIFFERENT TYPES OF USERS |
@@ -30,11 +34,65 @@ The Common Information Space (CIS) describes the concept of information exchange
 | **(Technical) conditions** | LIST OF TECHNICAL REQUIREMENTS / BOUNDARY CONDITIONS |
 | **Reference to repository/details** | HYPERLINK TO COMPONENT&#39;S OWN GITBOOK/COW-REPORT |
 
-## Common Information Space (CIS)
+## CIS-CSS gateways {#cis-css-gateways}
 
-The Common Information Space (CIS) describes the concept of information exchange between tools that are connected to the test-bed.  Also, information provided by simulations are forwarded and distributed to the tools via the CIS.
+The CSS-CIS gateways are the interface between the Common Simulations Space (CSS) and the Common Information Space (CIS). Data from the simulations is translated into data that can be understood by the tools connected to the CIS and vice-versa.
 
-|   | **Common Information Space** |
+|   | **CIS-CSS gateways** |
+| ---- |:---- |
+| **Short description** | The CSS-CIS gateways are the interface between the Common Simulations Space (CSS) and the Common Information Space (CIS). Data from the simulations is translated into data that can be understood by the tools connected to the CIS and vice-versa. |
+| **Who will use it** | Developers |
+| **Main functions** | The CSS-CIS gateways will account for:<br>- Aggregating messages coming from the CSS<br>- Translating between CSS topics and CIS topics |
+| **Functions it does not do** | The CSS-CIS gateways will NOT account for: Semantic translation |
+| **Links with other components** | - [CIS](#cis) & [CSS](#css): the gateways are the bridge between them<br>Validation service: the validation service is a gateway service that validates messages going through the gateway |
+| **(Technical) conditions** | LIST OF TECHNICAL REQUIREMENTS / BOUNDARY CONDITIONS |
+| **Reference to repository/details** | HYPERLINK TO COMPONENT&#39;S OWN GITBOOK/COW-REPORT |
+
+## Test-bed manager (Admin tool) {#admin-tool}
+
+The admin tool can be used to configure parts of the test-bed. Also, it provides test-bed information (i.e. existing topics) as well as status information of the connected tools.
+
+|   | **Test-bed manager (Admin tool)** |
+| ---- |:---- |
+| **Short description** |The admin tool can be used to configure parts of the test-bed. Also, it provides test-bed information (i.e. existing topics) as well as status information of the connected tools. |
+| **Who will use it** | Trial manager |
+| **Main functions** | The Admin tool will account for:<br>- An interface to configure the CSS-CIS gateways<br>- An interface to configure the adapters<br>- Loading the KAFKA topic configurations<br>- Providing a Watch dog |
+| **Functions it does not do** | The Admin tool will NOT account for:<br>- Setting up topics after initialization<br>- Modifying topics after initialization |
+| **Links with other components** | - [CIS-CSS gateways](#cis-css-gateways) and adapters: they are configured using the admin tool |
+| **(Technical) conditions** | LIST OF TECHNICAL REQUIREMENTS / BOUNDARY CONDITIONS |
+| **Reference to repository/details** | HYPERLINK TO COMPONENT&#39;S OWN GITBOOK/COW-REPORT |
+
+## Validation Service {#validation-service}
+
+The message validation service serves the purpose of validating the syntax of messages to match a certain standard. Only successfully validated messages are distributed further into the system. It is an extra step with respect to the default validation that is carried out by all adapters, and mainly required when testing new solutions or during a dry-run.
+
+|   | **Validation Service** |
+| ---- |:---- |
+| **Short description** | The message validation service serves the purpose of validating the syntax of messages to match a certain standard. Only successfully validated messages are distributed further inside the system.  |
+| **Who will use it** | It is internally used by the adapters, and configured via the [Admin tool](#admin-tool) |
+| **Main functions** | The validation service will account for:<br>- Checking if the syntax of the message fulfils a certain standard<br>- Listening to a specific TOPIC (e.g. validation-cap-topic). if it validates, the messages will be forwarded to the corresponding standard topic (e.g. cap-topic).<br>|
+| **Functions it does not do** | The validation service will NOT account for: Semantic validation of messages |
+| **Links with other components** | - [CIS-CSS gateways](#cis-css-gateways): the message validation is a gateway service<br>CIS: only messages that fulfil a certain standard are forwarded to the rest of the system |
+| **(Technical) conditions** | Use of Apache AVRO schemas to represent standards |
+| **Reference to repository/details** | HYPERLINK TO COMPONENT&#39;S OWN GITBOOK/COW-REPORT |
+
+## Message Injector
+
+The message injector is used for debugging purposes, similar to [Postman](https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop), and it is used to inject messages manually into the test-bed in order to generate a certain response.
+
+|   | **Message Injector** |
+| ---- |:---- |
+| **Short description** | The message injector is used for debugging purposes, similar to [Postman](https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop), and it is used to inject messages manually into the test-bed in order to generate a certain response.|
+| **Who will use it** | Developers |
+| **Main functions** | The main functionality is to inject (prepared or on the fly) messages into the test-bed for testing purposes |
+| **Functions it does not do** |  |
+| **Links with other components** | It will use one of the existing adapters, most likely, the Java one, to send its messages to the test-bed |
+| **(Technical) conditions** | LIST OF TECHNICAL REQUIREMENTS / BOUNDARY CONDITIONS |
+| **Reference to repository/details** | HYPERLINK TO COMPONENT&#39;S OWN GITBOOK/COW-REPORT |
+
+## Security concept
+
+|   | **Security** |
 | ---- |:---- |
 | **Short description** | MAX 5 LINES, EXCL SPECIFIC FUNCTIONS AND USERS |
 | **Who will use it** | LIST OF DIFFERENT TYPES OF USERS |
@@ -44,11 +102,11 @@ The Common Information Space (CIS) describes the concept of information exchange
 | **(Technical) conditions** | LIST OF TECHNICAL REQUIREMENTS / BOUNDARY CONDITIONS |
 | **Reference to repository/details** | HYPERLINK TO COMPONENT&#39;S OWN GITBOOK/COW-REPORT |
 
-## Common Information Space (CIS)
+## Data services
 
-The Common Information Space (CIS) describes the concept of information exchange between tools that are connected to the test-bed.  Also, information provided by simulations are forwarded and distributed to the tools via the CIS.
+The Data services describes the concept of information exchange between tools that are connected to the test-bed.  Also, information provided by simulations are forwarded and distributed to the tools via the CIS.
 
-|   | **Common Information Space** |
+|   | **Data services ** |
 | ---- |:---- |
 | **Short description** | MAX 5 LINES, EXCL SPECIFIC FUNCTIONS AND USERS |
 | **Who will use it** | LIST OF DIFFERENT TYPES OF USERS |
@@ -58,11 +116,11 @@ The Common Information Space (CIS) describes the concept of information exchange
 | **(Technical) conditions** | LIST OF TECHNICAL REQUIREMENTS / BOUNDARY CONDITIONS |
 | **Reference to repository/details** | HYPERLINK TO COMPONENT&#39;S OWN GITBOOK/COW-REPORT |
 
-## Common Information Space (CIS)
+## Time service
 
-The Common Information Space (CIS) describes the concept of information exchange between tools that are connected to the test-bed.  Also, information provided by simulations are forwarded and distributed to the tools via the CIS.
+The Time service  describes the concept of information exchange between tools that are connected to the test-bed.  Also, information provided by simulations are forwarded and distributed to the tools via the CIS.
 
-|   | **Common Information Space** |
+|   | **Time service  ** |
 | ---- |:---- |
 | **Short description** | MAX 5 LINES, EXCL SPECIFIC FUNCTIONS AND USERS |
 | **Who will use it** | LIST OF DIFFERENT TYPES OF USERS |
@@ -72,11 +130,25 @@ The Common Information Space (CIS) describes the concept of information exchange
 | **(Technical) conditions** | LIST OF TECHNICAL REQUIREMENTS / BOUNDARY CONDITIONS |
 | **Reference to repository/details** | HYPERLINK TO COMPONENT&#39;S OWN GITBOOK/COW-REPORT |
 
-## Common Information Space (CIS)
+## After-Action-Review (AAR) {#aar}
 
-The Common Information Space (CIS) describes the concept of information exchange between tools that are connected to the test-bed.  Also, information provided by simulations are forwarded and distributed to the tools via the CIS.
+The After-Action Review (AAR) tool provides the possibility to collect data after a trial has finished and analyse it. Its main purpose is to facilitate the evaluation of the trialed solutions, and to help the participants determine how well they functioned. It collects messages (exchanged during trial), observation reports and takes screen-shots.
 
-|   | **Common Information Space** |
+|   | **After-Action-Review ** |
+| ---- |:---- |
+| **Short description** |The After-Action Review (AAR) tool provides the possibility to collect data after a trial has finished and analyse it. Its main purpose is to facilitate the evaluation of the trialed solutions, and to help the participants determine how well they functioned. It collects messages (exchanged during trial), observation reports and takes screen-shots.|
+| **Who will use it** | Facilitator |
+| **Main functions** | The AAR tool will account for:<br>- Storing relevant data <br>- Reviewing a trial completely or parts of it<br>- Jump to specific point in time |
+| **Functions it does not do** | The AAR tool will NOT account for: Changing the course of the trial afterwards in any way |
+| **Links with other components** | [CIS](#cis), [CSS](#css), [Scenario Manager]{#sm}, [Observer Support Tool](#ost): The AAR tool uses the messages exchanged inside the CIS, CSS, Scenario Manager, and the observations to provide the review capability.|
+| **(Technical) conditions** | The Security Service may have to grant the access to all secured topics to the AAR backend service to give the service the possibility to collect the data.|
+| **Reference to repository/details** | HYPERLINK TO COMPONENT&#39;S OWN GITBOOK/COW-REPORT |
+
+## Play service
+
+The Play service  describes the concept of information exchange between tools that are connected to the test-bed.  Also, information provided by simulations are forwarded and distributed to the tools via the CIS.
+
+|   | **Play service** |
 | ---- |:---- |
 | **Short description** | MAX 5 LINES, EXCL SPECIFIC FUNCTIONS AND USERS |
 | **Who will use it** | LIST OF DIFFERENT TYPES OF USERS |
@@ -86,9 +158,37 @@ The Common Information Space (CIS) describes the concept of information exchange
 | **(Technical) conditions** | LIST OF TECHNICAL REQUIREMENTS / BOUNDARY CONDITIONS |
 | **Reference to repository/details** | HYPERLINK TO COMPONENT&#39;S OWN GITBOOK/COW-REPORT |
 
-## Observer Support Tool
+## Data services
 
-Observer Support Tool’s aim is to  collect observations, inform observers about trial progress and visualize collected data. There are different perspective to look at this tool.  Main user, who uses the mobile version of a tool to send his observations is called Observer. From the other side there exists Trial Manager, he focuses on collected data and analysing it on desktop.  Each of them has their own functionalities provided by OST. There are also these functionalities which are connected with non-functional requirements.
+The Trial scenario manager describes ...
+
+|   | **Data services** |
+| ---- |:---- |
+| **Short description** | MAX 5 LINES, EXCL SPECIFIC FUNCTIONS AND USERS |
+| **Who will use it** | LIST OF DIFFERENT TYPES OF USERS |
+| **Main functions** | LIST OF MAIN FUNCTIONS AND WHICH NEED EACH FUNCTION FULFILLS |
+| **Functions it does not do** | LIST OF SPECIFIC THINGS THIS COMPONENT IS NOT INTENDED FOR |
+| **Links with other components** | LIST OF ALL OTHER COMPONENTS IT IS LINKED TO, INCLUDING THE DIRECTION OF THE LINK |
+| **(Technical) conditions** | LIST OF TECHNICAL REQUIREMENTS / BOUNDARY CONDITIONS |
+| **Reference to repository/details** | HYPERLINK TO COMPONENT&#39;S OWN GITBOOK/COW-REPORT |
+
+## Docker environment
+
+The Docker environment...
+
+|   | **Docker environment** |
+| ---- |:---- |
+| **Short description** | MAX 5 LINES, EXCL SPECIFIC FUNCTIONS AND USERS |
+| **Who will use it** | LIST OF DIFFERENT TYPES OF USERS |
+| **Main functions** | LIST OF MAIN FUNCTIONS AND WHICH NEED EACH FUNCTION FULFILLS |
+| **Functions it does not do** | LIST OF SPECIFIC THINGS THIS COMPONENT IS NOT INTENDED FOR |
+| **Links with other components** | LIST OF ALL OTHER COMPONENTS IT IS LINKED TO, INCLUDING THE DIRECTION OF THE LINK |
+| **(Technical) conditions** | LIST OF TECHNICAL REQUIREMENTS / BOUNDARY CONDITIONS |
+| **Reference to repository/details** | HYPERLINK TO COMPONENT&#39;S OWN GITBOOK/COW-REPORT |
+
+## Observer Support Tool {#ost}
+
+The Observer Support Tool’s aim is to collect observations, inform observers about trial progress and visualize collected data. There are different perspective to look at this tool. Main user, who uses the mobile version of a tool to send his observations is called Observer. From the other side there exists Trial Manager, he focuses on collected data and analysing it on desktop. Each of them has their own functionalities provided by OST. There are also these functionalities which are connected with non-functional requirements.
 
 Observer Support Tool provides different views for each user. Observer sees name and description of a trial, events that have already happened and observation templates which he can fill in, whereas Trial Manager have displayed summary of all observations that have been sent, what is more he can even see summary of observations in time and messages he sent to Observers. Trial Manager is responsible for assigning role to the user which can be an Observer or Participant of a Trial.
 
