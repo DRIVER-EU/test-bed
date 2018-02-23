@@ -62,7 +62,7 @@ The admin tool can be used to configure parts of the test-bed. Also, it provides
 | **(Technical) conditions** | Must run in a docker environment |
 | **Reference to repository/details** | [GitHub repository](https://github.com/DRIVER-EU/test-bed-admin) |
 
-## Scenario Manager
+## Scenario Manager {#sm}
 
 The scenario manager can be used to create scenarios (master event lists) that are injected, via the test-bed, into.
 For example, it injects a message to start a flooding, to send out emails to participants, or to instruct a role-player to perform an act. Naturally, it can also control the time, and (re-)start/pause/stop a scenario.
