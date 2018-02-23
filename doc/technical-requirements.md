@@ -2,21 +2,105 @@
 
 This chapter contains for each component an overview of what it is aimed at, who uses it and in which phase of the Trial it is used, in the form of a table per component. The table also contains a hyperlink to the detailed specification of this component.
 
-## Observer Support Tool 
+## Common Information Space (CIS)
 
-Observer Support Tool’s aim is to  collect observations, inform observers about trial progress and visualize collected data. There are different perspective to look at this tool.  Main user, who uses the mobile version of a tool to send his observations is called Observer. From the other side there exists Trial Manager, he focuses on collected data and analysing it on desktop.  Each of them has their own functionalities provided by OST. There are also these functionalities which are connected with non-functional requirements. 
+The Common Information Space (CIS) describes the concept of information exchange between tools that are connected to the test-bed.  Also, information provided by simulations are forwarded and distributed to the tools via the CIS.
+
+|   | **Common Information Space** |
+| ---- |:---- |
+| **Short description** | The Common Information Space (CIS) describes the concept of information exchange between tools that are connected to the test-bed.  Also, information provided by simulations are forwarded and distributed to the tools via the CIS. |
+| **Who will use it** | Directly:<br>- Developers<br>Indirectly<br>- Everyone using a solution connected to the test-bed |
+| **Main functions** | The CIS will account for:<br>- Connecting the tools to the test-bed via CIS adapters<br>- Distribution of messages<br>- Security regarding access rights (They have not been defined)|
+| **Functions it does not do** | The CIS will NOT account for: <br>- Validation of messages |
+| **Links with other components** |- Admin tool – to configure (parts of) the CIS<br>- AAR – re-uses messages sent via the CIS<br>- CIS-CSS Gateways – data exchange between CIS and CSS in both directions<br>- Validation Service – messages coming from the CSS to the CIS are syntax validated|
+| **(Technical) conditions** | Apache Kafka is needed |
+| **Reference to repository/details** |  |
+
+## Common Information Space (CIS)
+
+The Common Information Space (CIS) describes the concept of information exchange between tools that are connected to the test-bed.  Also, information provided by simulations are forwarded and distributed to the tools via the CIS.
+
+|   | **Common Information Space** |
+| ---- |:---- |
+| **Short description** | MAX 5 LINES, EXCL SPECIFIC FUNCTIONS AND USERS |
+| **Who will use it** | LIST OF DIFFERENT TYPES OF USERS |
+| **Main functions** | LIST OF MAIN FUNCTIONS AND WHICH NEED EACH FUNCTION FULFILLS |
+| **Functions it does not do** | LIST OF SPECIFIC THINGS THIS COMPONENT IS NOT INTENDED FOR |
+| **Links with other components** | LIST OF ALL OTHER COMPONENTS IT IS LINKED TO, INCLUDING THE DIRECTION OF THE LINK |
+| **(Technical) conditions** | LIST OF TECHNICAL REQUIREMENTS / BOUNDARY CONDITIONS |
+| **Reference to repository/details** | HYPERLINK TO COMPONENT&#39;S OWN GITBOOK/COW-REPORT |
+
+## Common Information Space (CIS)
+
+The Common Information Space (CIS) describes the concept of information exchange between tools that are connected to the test-bed.  Also, information provided by simulations are forwarded and distributed to the tools via the CIS.
+
+|   | **Common Information Space** |
+| ---- |:---- |
+| **Short description** | MAX 5 LINES, EXCL SPECIFIC FUNCTIONS AND USERS |
+| **Who will use it** | LIST OF DIFFERENT TYPES OF USERS |
+| **Main functions** | LIST OF MAIN FUNCTIONS AND WHICH NEED EACH FUNCTION FULFILLS |
+| **Functions it does not do** | LIST OF SPECIFIC THINGS THIS COMPONENT IS NOT INTENDED FOR |
+| **Links with other components** | LIST OF ALL OTHER COMPONENTS IT IS LINKED TO, INCLUDING THE DIRECTION OF THE LINK |
+| **(Technical) conditions** | LIST OF TECHNICAL REQUIREMENTS / BOUNDARY CONDITIONS |
+| **Reference to repository/details** | HYPERLINK TO COMPONENT&#39;S OWN GITBOOK/COW-REPORT |
+
+## Common Information Space (CIS)
+
+The Common Information Space (CIS) describes the concept of information exchange between tools that are connected to the test-bed.  Also, information provided by simulations are forwarded and distributed to the tools via the CIS.
+
+|   | **Common Information Space** |
+| ---- |:---- |
+| **Short description** | MAX 5 LINES, EXCL SPECIFIC FUNCTIONS AND USERS |
+| **Who will use it** | LIST OF DIFFERENT TYPES OF USERS |
+| **Main functions** | LIST OF MAIN FUNCTIONS AND WHICH NEED EACH FUNCTION FULFILLS |
+| **Functions it does not do** | LIST OF SPECIFIC THINGS THIS COMPONENT IS NOT INTENDED FOR |
+| **Links with other components** | LIST OF ALL OTHER COMPONENTS IT IS LINKED TO, INCLUDING THE DIRECTION OF THE LINK |
+| **(Technical) conditions** | LIST OF TECHNICAL REQUIREMENTS / BOUNDARY CONDITIONS |
+| **Reference to repository/details** | HYPERLINK TO COMPONENT&#39;S OWN GITBOOK/COW-REPORT |
+
+## Common Information Space (CIS)
+
+The Common Information Space (CIS) describes the concept of information exchange between tools that are connected to the test-bed.  Also, information provided by simulations are forwarded and distributed to the tools via the CIS.
+
+|   | **Common Information Space** |
+| ---- |:---- |
+| **Short description** | MAX 5 LINES, EXCL SPECIFIC FUNCTIONS AND USERS |
+| **Who will use it** | LIST OF DIFFERENT TYPES OF USERS |
+| **Main functions** | LIST OF MAIN FUNCTIONS AND WHICH NEED EACH FUNCTION FULFILLS |
+| **Functions it does not do** | LIST OF SPECIFIC THINGS THIS COMPONENT IS NOT INTENDED FOR |
+| **Links with other components** | LIST OF ALL OTHER COMPONENTS IT IS LINKED TO, INCLUDING THE DIRECTION OF THE LINK |
+| **(Technical) conditions** | LIST OF TECHNICAL REQUIREMENTS / BOUNDARY CONDITIONS |
+| **Reference to repository/details** | HYPERLINK TO COMPONENT&#39;S OWN GITBOOK/COW-REPORT |
+
+## Common Information Space (CIS)
+
+The Common Information Space (CIS) describes the concept of information exchange between tools that are connected to the test-bed.  Also, information provided by simulations are forwarded and distributed to the tools via the CIS.
+
+|   | **Common Information Space** |
+| ---- |:---- |
+| **Short description** | MAX 5 LINES, EXCL SPECIFIC FUNCTIONS AND USERS |
+| **Who will use it** | LIST OF DIFFERENT TYPES OF USERS |
+| **Main functions** | LIST OF MAIN FUNCTIONS AND WHICH NEED EACH FUNCTION FULFILLS |
+| **Functions it does not do** | LIST OF SPECIFIC THINGS THIS COMPONENT IS NOT INTENDED FOR |
+| **Links with other components** | LIST OF ALL OTHER COMPONENTS IT IS LINKED TO, INCLUDING THE DIRECTION OF THE LINK |
+| **(Technical) conditions** | LIST OF TECHNICAL REQUIREMENTS / BOUNDARY CONDITIONS |
+| **Reference to repository/details** | HYPERLINK TO COMPONENT&#39;S OWN GITBOOK/COW-REPORT |
+
+## Observer Support Tool
+
+Observer Support Tool’s aim is to  collect observations, inform observers about trial progress and visualize collected data. There are different perspective to look at this tool.  Main user, who uses the mobile version of a tool to send his observations is called Observer. From the other side there exists Trial Manager, he focuses on collected data and analysing it on desktop.  Each of them has their own functionalities provided by OST. There are also these functionalities which are connected with non-functional requirements.
 
 Observer Support Tool provides different views for each user. Observer sees name and description of a trial, events that have already happened and observation templates which he can fill in, whereas Trial Manager have displayed summary of all observations that have been sent, what is more he can even see summary of observations in time and messages he sent to Observers. Trial Manager is responsible for assigning role to the user which can be an Observer or Participant of a Trial.
 
-First, user selects trial he is interested in. He sees its name, description and list with events that have already happened. User can send his Observation by answering questions that are connected with events – each new event is a trigger and can change the set of questions. 
+First, user selects trial he is interested in. He sees its name, description and list with events that have already happened. User can send his Observation by answering questions that are connected with events – each new event is a trigger and can change the set of questions.
 
-OST Server does not provide data about events, it is responsible for data exchange but not for preparing them. It receives data packages about events and simulation time from Test – bed and reacts on triggers. Events can be also sent directly to users by Trial Manager. 
+OST Server does not provide data about events, it is responsible for data exchange but not for preparing them. It receives data packages about events and simulation time from Test – bed and reacts on triggers. Events can be also sent directly to users by Trial Manager.
 
 If events are sent from Trial Manager, OST Server publishes them both to Test-bed and to the user. Trial Manager not only manages the trial and user but also prepares environment to obtain information that are needed. He is responsible for projecting questions and question types. Contents of questions and number of them are optional, only the form is imposed.
 
 When Test-bed sends package with data about events and time, OST Server notifies Trial Manager and users about new event.
-OST Server reacts on triggers and matches proper set of questions, which are sent to Trial Manger and then published to Observer. 
-When Observer sends his Observations, Trial Manager collects obtained data and has displayed reports about them and if he needs it he can generate it in CSV. 
+OST Server reacts on triggers and matches proper set of questions, which are sent to Trial Manger and then published to Observer.
+When Observer sends his Observations, Trial Manager collects obtained data and has displayed reports about them and if he needs it he can generate it in CSV.
 
 Questions have different purposes, which are indicated in Observation Types. Great advantage of it is getting better criteria of comparison. Database with observations is more varied but it also connects categories, so analysing is more efficient. Correctly prepared questions and labels lead to most efficient results and better conclusion. Questions can have also different answer type such as slider, checkboxes, radio buttons and text field. With sending Observation user can also add some extra material such as additional description, voice record, picture or location. Each observation refers to participant and enables change of time.
  
