@@ -50,11 +50,11 @@ The CSS-CIS gateways are the interface between the Common Simulations Space (CSS
 
 ## Test-bed manager (Admin tool) {#admin-tool}
 
-The admin tool can be used to configure parts of the test-bed. Also, it provides test-bed information (i.e. existing topics) as well as status information of the connected tools.
+The admin tool can be used to configure parts of the test-bed, e.g. which tools are connected to each other (via the topics). Also, it provides test-bed information (i.e. existing topics) as well as status information (heartbeat, configuration, logging) of the connected tools. Furthermore, it is the main interface to the security services.
 
 |   | **Test-bed manager (Admin tool)** |
 | ---- |:---- |
-| **Short description** |The admin tool can be used to configure parts of the test-bed. Also, it provides test-bed information (i.e. existing topics) as well as status information of the connected tools. |
+| **Short description** |The admin tool can be used to configure parts of the test-bed, e.g. which tools are connected to each other (via the topics). Also, it provides test-bed information (i.e. existing topics) as well as status information (heartbeat, configuration, logging) of the connected tools. Furthermore, it is the main interface to the security services.|
 | **Who will use it** | Trial manager |
 | **Main functions** | The Admin tool will account for:<br>- An interface to configure the CSS-CIS gateways<br>- An interface to configure the adapters<br>- Loading the KAFKA topic configurations<br>- Providing a Watch dog |
 | **Functions it does not do** | The Admin tool will NOT account for:<br>- Setting up topics after initialization<br>- Modifying topics after initialization |
