@@ -28,7 +28,7 @@ The Common Simulation Space (CSS) describes the concept of information exchange 
 | ---- |:---- |
 | **Short description** | The Common Simulation Space (CSS) describes the concept of information exchange between Simulators that are connected to the Test-Bed. These Simulators jointly generate and maintain a simulation world needed for providing a ground truth of the fictive crisis, feed the Solutions with fictive data via the CIS – and vice versa – receive messages sent from the CIS, and the deliver to the participants a good enough image of the fictive crisis for them to be assessed. |
 | **Who will use it** | Implementers, Solution Owner, Simulator Owner, Test-bed Component Developers |
-| **Main functions** | The CSS will connect the simulators to each other and link to the gateways to exchange data CIS<->CSS |
+| **Main functions** | The CSS will connect the simulators to each other and link to the gateways to exchange data CIS-CSS (dual-way) |
 | **Functions it does not do** | Deal with security: simulators don't have secrets.   |
 | **Links with other components** | Admin tool for configuration of the CSS; CIS-CSS gateways; perhaps also the [AAR](#aar) in case we want to use the data for analysis|
 | **(Technical) conditions** | Apache Kafka is needed |
