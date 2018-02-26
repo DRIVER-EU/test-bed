@@ -134,7 +134,7 @@ services:
       - "8003:8003"
     volumes:
       - ./config/cscop/config.json:/src/config/dynamic-config.json
-#      - ./projects/projects.json:/src/public/data/projects/projects.json
+      - ./projects/projects.json:/src/public/data/projects/projects.json
     environment:
       CSCOP_PORT: '8003'
 
@@ -145,7 +145,7 @@ services:
     volumes: 
       - ./mbtiles:/mbtiles
     environment: 
-      MBTILES_URL: 'https://github.com/DRIVER-EU/test-bed-mbtiles-service/raw/master/mbtiles/the-hague-test.mbtiles'
+      MBTILES_URL: 'http://driver-testbed.eu:8642/netherlands_2017.mbtiles'
 
   tileserver-gl:
     image: klokantech/tileserver-gl:latest
