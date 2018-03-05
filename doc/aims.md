@@ -1,6 +1,6 @@
 # Aims of the Test-bed in DRIVER+ & high-over Functional Design
 
-This chapter first gives the overall aims of the Test-Bed in relation to the objectives of DRIVER+ as a whole. It describes the environment in which the Test-Bed should functions and thereby the high-level functional design of the Test-Bed. In the last, fourth paragraph the different types of users actively operating \(i.e. using\) the Test\_bed are described and a high-level use-case for each use-mode. 
+This chapter first gives the overall aims of the Test-Bed in relation to the objectives of DRIVER+ as a whole. It describes the environment in which the Test-Bed should functions and thereby the high-level functional design of the Test-Bed. In the last, fourth paragraph the different types of users actively operating \(i.e. using\) the Test\_bed are described and a high-level use-case for each use-mode.
 
 ## 4.1   What the Test-bed should provide
 
@@ -137,7 +137,7 @@ Table 4.1: Use-modes of the Test-bed
 
 ### 4.4.2   User-types
 
-Throughout all use-modes, the following user-types can be distinguished. Note that 1 member of a Trial Committee \(i.e. the group of people principally responsible for setting-up, running and evaluating a Trial\) can take up the roles of several user-types \(e.g. 1 person being a Trial Scenario Builder and the Trial Director and one of the Trial Evaluators\). Also note that the entire set of roles to be included in the preparation and execution of a Trial \(as listed in the Trial Action Plan template\) is longer than the list provided in this paragraph. This paragraph focusses the user-types only on those roles actively using one or more components of the Test-Bed. 
+Throughout all use-modes, the following user-types can be distinguished. Note that 1 member of a Trial Committee \(i.e. the group of people principally responsible for setting-up, running and evaluating a Trial\) can take up the roles of several user-types \(e.g. 1 person being a Trial Scenario Builder and the Trial Director and one of the Trial Evaluators\). Also note that the entire set of roles to be included in the preparation and execution of a Trial \(as listed in the Trial Action Plan template\) is longer than the list provided in this paragraph. This paragraph focusses the user-types only on those roles actively using one or more components of the Test-Bed.
 
 Table 4.2: User-types of the Test-bed
 
@@ -149,14 +149,14 @@ Table 4.2: User-types of the Test-bed
 | **Operators** | Persons from the Trial Staff who are operating the Test-bed's components during the execution of the session\(s\), with a primary focus on the Trial Scenario Manager \(i.e. how the Scenario evolves\), the Test-bed Admin Tool \(i.e. whether everything is working correctly and controlling information flow to/from Solutions and Simulators\) and directly in the Simulators \(i.e. how the Scenario evolves\). |
 | **Role-players** | Persons from the Trial Staff who are supporting the Operators by providing role-play towards the Participants, thereby simulating stakeholders not present \(e.g. performing phone-calls as minister or King of the Netherlands\). |
 | **Observer Manager** | Person of the Trial Staff \(i.e. usually 1 person, but can be multiple\) to operates the Observer Support Tool both in the preparation phase \(configuring the tool for a specific Trial\) and in the execution phase \(i.e. managing the Observers\). |
-| **Observers** | Persons from the Trial Staff who take observations during the Trial's session\(s\) by using the Observation Support Tool. |
+| **Observers** | Persons who take observations during the Trial’s session\(s\) by using the Observation Support Tool. Observers belong to the Trial Staff, independent whether they are employed by D+ internal organisations or externals.  |
 | **Trial Evaluators** | Persons from the Trial Staff who analyse the Trial's session\(s\) during the evaluation phase, using the After Action Review component. |
 | **Implementers** | Technical support staff who install and test the one or more of the Test-bed's components at a Platform location. |
 | **Solution Owner** | An organisation who has developed a Solution which is to be trialled using the Test-bed. For this, technical developers of that organisation have to link their Solution with the Test-bed via a CIS Adapter, thereby using \(a sub-set of\) the Test-bed's components, including the extra developer components. |
 | **Simulator Owner** | An organisation who has developed a Simulator which is used during a Trial to provide information from a fictive crisis. For this, technical developers of that organisation have to link their Simulator with the Test-bed via a CSS Adapter, thereby using \(not all\) Test-bed's components, including the extra developer components. |
 | **Test-bed Component Developers** | Persons working within the organisations creating the Test-bed's components. These developers also use other components of the Test-bed to develop and test their own component. |
 
-### High-level use-case: Set-up and testing of the Test-bed
+### 4.4.3   High-level use-case: Set-up and testing of the Test-bed
 
 _This use-case is executed at every location where the Test-bed is \(partly\) installed or updated, so before the Trial's preparation phase starts._
 
@@ -168,7 +168,7 @@ _This use-case is executed at every location where the Test-bed is \(partly\) in
 
 _These steps are repeated until the installation of all components, Solutions and Simulators is successful, such that the Trial can be prepared and run._
 
-### High-level use-case: Starting-up the Test-bed
+### 4.4.4   High-level use-case: Starting-up the Test-bed
 
 _This use-case is executed at the start of every use-mode of the Test-bed._
 
@@ -177,7 +177,7 @@ _This use-case is executed at the start of every use-mode of the Test-bed._
 3. Operator or Implementer checks correctness of start-up of all needed components via the Test-bed Admin Tool
 4. Operator or Implementer restarts components and/or reloads Scenario if some start-ups were unsuccessful.
 
-### High-level use-case: Scenario creation
+### 4.4.5   High-level use-case: Scenario creation
 
 _This use-case is executed in the preparation phase of each Trial._
 
@@ -193,7 +193,7 @@ _This use-case is executed in the preparation phase of each Trial._
 
 _The last step is repeated until all involved feel comfortable with the set-up and Scenario to run successful Trial sessions._
 
-### High-level use-case: Training \(extra\) Trial Staff and Participants
+### 4.4.6   High-level use-case: Training \(extra\) Trial Staff and Participants
 
 _This use-case is executed just before the execution phase of each Trial._
 
@@ -204,7 +204,7 @@ _This use-case is executed just before the execution phase of each Trial._
 5. Scenario Builders and/or Simulator Owners instruct Participants about how to use the applicable Simulator interfaces
 6. Trial Director gives a briefing to all Participants and Trial Staff about the upcoming session.
 
-### High-level use-case: Running a Trial session
+### 4.4.7   High-level use-case: Running a Trial session
 
 _This use-case is the execution phase of each Trial, focussed on a single session \(i.e. 1 time a Scenario is run\)._
 
@@ -227,7 +227,7 @@ _These steps can also be repeated from a point half-way the same Scenario to tri
 
 _One can also load another Scenario and repeat the steps above, thereby creating a new session and trialling the Solutions under completely other conditions._
 
-### High-level use-case: Evaluating a Trial
+### 4.4.8   High-level use-case: Evaluating a Trial
 
 _This use-case is the evaluation phase of each Trial.  _
 
@@ -237,7 +237,7 @@ _This use-case is the evaluation phase of each Trial.  _
 4. Evaluators can contact Participants to gather more information about specific moments during a session.
 5. Evaluators draw conclusions about these analyses into the usefulness of the Solutions, the way the Trial was set-up and executed and refer back to the Trial's objectives. All this is documented in the Trial's evaluation report.
 
-### High-level use-case: Developing the Test-bed's components
+### 4.4.9   High-level use-case: Developing the Test-bed's components
 
 _This use-case is executed in Development mode, up front of \(i.e. initial development\) and parallel to \(i.e. component updates\) the set-up, execution and evaluation of the Trials._
 
@@ -247,7 +247,7 @@ _This use-case is executed in Development mode, up front of \(i.e. initial devel
 4. Developers test their own component stand-alone and in combination of the other components it is linked to.
 5. Developers create a docker image of their component and upload it together with documentation to the Docker Environment.
 
-### High-level use-case: Developing the connection of a Solution/Simulator
+### 4.4.10   High-level use-case: Developing the connection of a Solution/Simulator
 
 _This use-case is executed in Development mode, up front of the execution and evaluation of the Trials, and for bug-fixing during the preparation phase of a Trial._
 
