@@ -31,10 +31,11 @@ Each of the organised experiments in the old DRIVER created his own, unique, Tes
   This may have made sense for a small one-off project that does not need to be repeated, but for a pan-European project, a lot of resources were wasted. In particular, this meant that:
 
 * Every solution or simulator provider had to connect his system to different test-beds, using different protocols
+
 * Every solution or simulator provider had to deal with different message types
 * Setting up and managing the Test-Bed was difficult, and offered little learning opportunity as in practice the Test-Bed used differed for each experiment
 
-**Lesson learned:** Each trial should use the same test-bed \(_one test-bed to rule them all_\).
+**Lesson learned:** Each trial should use the same Test-Bed. 
 
 ## 3.4   Test-Beds were not open source {#open_source}
 
@@ -78,9 +79,9 @@ In the old DRIVER, participants had no clear picture of the scope of the Test-Be
 * Location, i.e. the place where the trial or experiment takes place
 * Services, like sharing maps, census data, etc.
 
-So for some people involved in experiments, the Test-Bed was only the gateway between operational systems. For others, it contained all of the above. 
+So for some people involved in experiments, the Test-Bed was only the gateway between operational systems. For others, it contained all of the above.
 
-**Lesson learned:** The test-bed should be clearly scoped, i.e. what it is, and what it is not
+**Lesson learned:** The test-bed should be clearly scoped, i.e. what it is, and what it is not. 
 
 ## 3.8   Test-Bed management was complex {#complete}
 
@@ -91,5 +92,5 @@ The complexity is partially related to the previous observation that each experi
 * Data services: Maps, map layers, weather reports, census data, etc. need to be shared between operational systems and simulators
 * Reproducing a Test-Bed: In case an experiment is to be repeated
 
-**Lesson learned:** The Test-Bed must be easily reproducible, and offer administrative as well as supporting tools and services
+**Lesson learned:** The Test-Bed must be easily reproducible, and offer administrative as well as supporting tools and services. 
 
