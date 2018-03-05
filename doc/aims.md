@@ -1,4 +1,4 @@
-# Aims of the Test-bed in DRIVER+ & high-over Functional Design
+# 4.   Aims of the Test-bed in DRIVER+ & high-over Functional Design
 
 This chapter first gives the overall aims of the Test-Bed in relation to the objectives of DRIVER+ as a whole. It describes the environment in which the Test-Bed should functions and thereby the high-level functional design of the Test-Bed. In the last, fourth paragraph the different types of users actively operating \(i.e. using\) the Test\_bed are described and a high-level use-case for each use-mode.
 
@@ -149,7 +149,7 @@ Table 4.2: User-types of the Test-bed
 | **Operators** | Persons from the Trial Staff who are operating the Test-bed's components during the execution of the session\(s\), with a primary focus on the Trial Scenario Manager \(i.e. how the Scenario evolves\), the Test-bed Admin Tool \(i.e. whether everything is working correctly and controlling information flow to/from Solutions and Simulators\) and directly in the Simulators \(i.e. how the Scenario evolves\). |
 | **Role-players** | Persons from the Trial Staff who are supporting the Operators by providing role-play towards the Participants, thereby simulating stakeholders not present \(e.g. performing phone-calls as minister or King of the Netherlands\). |
 | **Observer Manager** | Person of the Trial Staff \(i.e. usually 1 person, but can be multiple\) to operates the Observer Support Tool both in the preparation phase \(configuring the tool for a specific Trial\) and in the execution phase \(i.e. managing the Observers\). |
-| **Observers** | Persons who take observations during the Trial’s session\(s\) by using the Observation Support Tool. Observers belong to the Trial Staff, independent whether they are employed by D+ internal organisations or externals.  |
+| **Observers** | Persons who take observations during the Trial’s session\(s\) by using the Observation Support Tool. Observers belong to the Trial Staff, independent whether they are employed by D+ internal organisations or externals. |
 | **Trial Evaluators** | Persons from the Trial Staff who analyse the Trial's session\(s\) during the evaluation phase, using the After Action Review component. |
 | **Implementers** | Technical support staff who install and test the one or more of the Test-bed's components at a Platform location. |
 | **Solution Owner** | An organisation who has developed a Solution which is to be trialled using the Test-bed. For this, technical developers of that organisation have to link their Solution with the Test-bed via a CIS Adapter, thereby using \(a sub-set of\) the Test-bed's components, including the extra developer components. |
