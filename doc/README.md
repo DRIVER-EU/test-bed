@@ -26,14 +26,17 @@ The DRIVER+ trials and the Final Demonstration will benefit from the DRIVER+ Tes
 
 # 1.   Introduction
 
-This document provides:
+This document is intended to serve as functional requirements specifications for the Driver+ Test-Bed. This Test-Bed is intended to provide software components that support organisations in running and evaluating a Trial, in which one or more solutions \(e.g. software tools\) are tested about their benefits \(or negative influence\) w.r.t. crisis management. The Test-Bed components are designed and developed within Work-Package 923 and linked Work-Packages for specific components \(ADD WP numbers\).   
+
+This document is linked to D923.21 that describes a reference implementation of the Test-Bed’s components, including design and development choices taken per component. This document only states the functional requirements to these components and not how exactly these are fulfilled. 
+
+In several chapters, this document provides:
 
 * The high-over use-cases of the entire DRIVER+ Test-bed in the environment it is used in, in the different phases of use and the different user-types \(ADD CHAPTER HYPERLINK\),
 * The functional specifications of this Test-bed and the components it therefore exists of \(ADD CHAPTER HYPERLINK for high-over use-cases and ADD CHAPTER HYPERLINK for functional specifications per component\), The latter chapter also provides links for each component to separate, more detailed specification documents of each component,
 * The process how these specifications were drafted \(ADD CHAPTER HYPERLINK\)
 * The lessons learned from the Test-beds as developed and used in experiments in the former Driver-project \(ADD CHAPTER HYPERLINK\)
-
-What can be concluded from the functional specifications of the DRIVER+ Test-bed, the high-over development cycle and the development dependencies of these Test-bed components with regards to other WPs and SPs.
+* What can be concluded from the functional specifications of the DRIVER+ Test-bed, the high-over development cycle and the development dependencies of these Test-bed components with regards to other WPs and SPs.
 
 ## 1.1   Targeted reading audience
 
@@ -45,12 +48,15 @@ Primary target audiences of this document are:
 * Trial Committee members
 * DRIVER+ Guidance Methodology developers
 * Reviewers of this document as deliverable D923.11
+* DRIVER+ externals, who are interested in what the Test-Bed can bring them
+
+Readers interested in how a specific component functions, the design and development choices made during its development and the way to implement these components, are referred to D923.21 Reference Implementation. 
 
 For reading this document, one must have an internet connection capable of reaching the GitBook website. For editing and reviewing this document, a personal GitHub-account is required with which one can request and be given access to the DRIVER+-GitHub group.
 
 ## 1.2   Online living document on GitBook
 
-The documentation of the Test-bed’s functional specifications is completely done in the online developer tool GitBook, a website linked to the popular developer community GitHub. The decision to use GitBook instead of documenting all functional specifications in MS Word on the DRIVER+ COW , is based on the considerations that:
+The documentation of the Test-Bed’s functional specifications is completely done in the online developer tool GitBook, a website linked to the popular developer community GitHub in which software code can be created, shared and adjusted. GitBook is a website on which documents can be placed, read and adjusted. The decision to use GitBook instead of documenting all functional specifications in MS Word on the DRIVER+ COW, is based on the considerations that:
 
 **GitHub and its affiliative GitBook is targeted specifically for software development**  
 The overall majority of man-months spend on the Test-bed’s development is in fact software development,
@@ -59,7 +65,7 @@ The overall majority of man-months spend on the Test-bed’s development is in f
 All the Test-bed’s specification documents are foreseen to be living documents to include progressing knowledge on the Test-bed and practical considerations and decisions made during the development and use of the Test-bed, like common in any software development project. This requires a documentation process and tooling that can deal with these ongoing updates/changes to the specifications.
 
 **Parallel, agile development**  
-GitHub and GitBook are developed specifically for parallel \(agile\) software development and easy sharing of documents and their updates amongst developers. GitBook is a well proven documentation tool.
+GitHub and GitBook are developed specifically for parallel \(agile\) software development and for easy sharing of documents and their updates amongst developers. In the agile software development method, multiple developers work in parallel on the same/linked software components and the component’s specifications are updated as development progresses immediately taking experiences gained in account. This principle of the ability to update as work progresses is the reason to use a living document structure. GitBook is a well proven documentation tool to create, share and update living documents.
 
 **Versioning and tracking**  
 GitHub and GitBook contain an elaborate versioning and tracking system known by the overall majority of European software developers, where the Track-changes and multiple simultaneous document update functions as available in MS Word are less known to them.
