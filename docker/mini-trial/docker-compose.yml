@@ -20,7 +20,7 @@ services:
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:3500'
-      KAFKA_ADVERTISED_LISTENERS: 'EXTERNAL://driver-testbed.eu:3501,PLAINTEXT://broker:9092'
+      KAFKA_ADVERTISED_LISTENERS: 'EXTERNAL://localhost:3501,PLAINTEXT://broker:9092'
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: 'EXTERNAL:PLAINTEXT,PLAINTEXT:PLAINTEXT'
       KAFKA_LISTENERS: 'EXTERNAL://0.0.0.0:3501,PLAINTEXT://0.0.0.0:9092'
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
@@ -134,7 +134,7 @@ services:
       - "8003:8003"
     volumes:
       - ./config/cscop/config.json:/src/config/dynamic-config.json
-#      - ./projects/projects.json:/src/public/data/projects/projects.json
+      - ./projects/projects.json:/src/public/data/projects/projects.json
     environment:
       CSCOP_PORT: '8003'
 
@@ -145,7 +145,7 @@ services:
     volumes: 
       - ./mbtiles:/mbtiles
     environment: 
-      MBTILES_URL: 'https://github.com/DRIVER-EU/test-bed-mbtiles-service/raw/master/mbtiles/the-hague-test.mbtiles'
+      MBTILES_URL: 'http://driver-testbed.eu:8642/netherlands_2017.mbtiles'
 
   tileserver-gl:
     image: klokantech/tileserver-gl:latest
@@ -156,3 +156,12 @@ services:
       - "3344:80"
     volumes:
       - ./mbtiles:/data
+      
+  xvritem-geojson-converter:
+    image: phameete/xvritem-geojson-converter:latest
+    depends_on:
+      - schema_registry
+      - zookeeper
+      - broker
+    volumes:
+      - ./config/xvritem-geojson-converter:/opt/application/config
