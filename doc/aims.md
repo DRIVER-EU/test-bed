@@ -64,8 +64,7 @@ Based on these DRIVER+ objectives and the lessons learned from the old DRIVER, t
 
 ## 4.2   The environment the Test-bed is used in
 
-![Test-bed environment](../img/test-bed-environment.jpg)  
-Figure 4.1: The Test-bed in its environment
+##### ![Test-bed environment](../img/test-bed-environment.jpg) Figure 4.1: The Test-bed in its environment
 
 The Test-bed is not just a stand-alone collection of software applications. It is used within a larger environment of DRIVER+ entities, as visualized in figure 4.1.
 

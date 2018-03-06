@@ -1,4 +1,4 @@
-# 5. Summarized description per Test-bed component
+________# 5. Summarized description per Test-bed component
 
 This chapter contains for each component an overview of what it is aimed at, who uses it and in which phase of the Trial it is used, in the form of a table per component. The table also contains a hyperlink to the detailed specification of this component.
 
