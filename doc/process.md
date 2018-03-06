@@ -20,7 +20,7 @@ The process followed is not an exact copy of a single, specific design or softwa
 
 The iterative requirements design process followed is visualized in figure 2.1. The following 9 steps can be distinguished in this process, but note that the order of these steps stated here differs in each round the iterative process is followed:
 
-**I.    **The design process is started by gathering lessons learned from the old DRIVER. The outcomes are documented in the [next chapter](../lessons-learned). Every time a development partner, Trial–owner or Solution-owner is included/consulted who has participated in old DRIVER experiments, their experiences in these are taken in account.
+**I.    **The design process is started by gathering lessons learned from the old DRIVER. The outcomes are documented in the [next chapter](../lessons-learned.md). Every time a development partner, Trial–owner or Solution-owner is included/consulted who has participated in old DRIVER experiments, their experiences in these are taken in account.
 
 **II.    **The high-level use-cases of the entire Test-Bed are considered. This quickly led to the fact that the Test-Bed is split up in multiple components, due to the different functionalities of these components and to be able to divide the work amongst multiple development partners.
 
