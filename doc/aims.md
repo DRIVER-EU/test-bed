@@ -1,4 +1,4 @@
-# 4.   Aims of the Test-bed in DRIVER+ & high-over Functional Design
+##### 4.   Aims of the Test-bed in DRIVER+ & high-over Functional Design
 
 This chapter first gives the overall aims of the Test-Bed in relation to the objectives of DRIVER+ as a whole. It describes the environment in which the Test-Bed should functions and thereby the high-level functional design of the Test-Bed. In the last, fourth paragraph the different types of users actively operating \(i.e. using\) the Test\_bed are described and a high-level use-case for each use-mode.
 
@@ -80,8 +80,7 @@ The Test-bed is not just a stand-alone collection of software applications. It i
 
 ## 4.3   High-level functional design
 
-![Test-bed design](../img/test-bed-design.jpg)  
-Figure 4.2: All components of the Test-bed
+##### ![Test-bed design](../img/test-bed-design.jpg) Figure 4.2: All components of the Test-bed
 
 Zooming in on the Test-Bed, as shown in figure 4.2, the following components can be distinguished:
 
