@@ -1,4 +1,4 @@
-##### 4.   Aims of the Test-bed in DRIVER+ & high-over Functional Design
+# 4.   Aims of the Test-bed in DRIVER+ & high-over Functional Design
 
 This chapter first gives the overall aims of the Test-Bed in relation to the objectives of DRIVER+ as a whole. It describes the environment in which the Test-Bed should functions and thereby the high-level functional design of the Test-Bed. In the last, fourth paragraph the different types of users actively operating \(i.e. using\) the Test\_bed are described and a high-level use-case for each use-mode.
 
@@ -13,45 +13,45 @@ So the entire Test-bed is supportive to test Solutions in a realistic, controlle
 
 Based on these DRIVER+ objectives and the lessons learned from the old DRIVER, the following high-level guidelines and requirements are set:
 
-1. **A realistic Platform to trial Solutions**  
+1. **A realistic Platform to trial Solutions**
    The Test-bed must be able to be implemented at a space - called Platform – in which Trials can be conducted in a realistic CM setting, in a controlled manner, in safety and not intervening with other \(real CM\) operations. This Platform is a physical and digital work-space for both the Participants \(i.e. the CM practitioners using the Solutions during the execution-phase of the Trial\) and the Trial staff \(i.e. all other people involved during the preparation-phase, execution-phase and evaluation-phase of the Trial\).
 
-2. **Test-bed is used fitting the Guidance Methodology**  
+2. **Test-bed is used fitting the Guidance Methodology**
    The Trial Staff will conduct Trials using this Test-bed following the GuidanThis chapter first gives the overall aims of the Test-Bed in relation to the objectives of DRIVER+ as a whole. It describes the environment in which the Test-Bed should functions and thereby the high-level functional design of the Test-Bed. In the last, fourth paragraph the different types of users actively operating \(i.e. using\) the Test\_bed are described and a high-level use-case for each use-mode. ce Methodology and will receive support and training, such that each Trial is set-up, executed and evaluated optimally by the Trial Staff.
 
-3. **Connect Solutions with each other**  
+3. **Connect Solutions with each other**
    The \(mainly digital\) infrastructure of the Test-bed must make it possible to connect the Solutions to trial with each other, such that they can be controlled, can exchange data with each other and can be fed with simulated data.
 
-4. **Connect Simulators to provide information of a fictive crisis**  
+4. **Connect Simulators to provide information of a fictive crisis**
    The infrastructure of the Test-bed must also provide one or more simulated incidents/crises, because trialling Solutions during a real incident is both from an ethical and a practical perspective impossible. These simulated incidents - which can be completely virtual and computer-based, completely staged outdoors or a combination of the two - are to provide simulated data to the Solutions via the Test-bed’s infrastructure and are to provide information flows about the fictive incident\(s\) to the Participants \(i.e. information flows not being presented via the Solutions, for instance for incident commanders being present at a fictive incident scene an eye-level view on that scene\).
 
-5. **Interface to control the Trial**  
+5. **Interface to control the Trial**
    The Test-Bed’s infrastructure must provide an interface to the Trial Staff – specifically the Operators controlling the Test-Bed’s components – to create fictive incidents and to control how this fictive incident changes during the Trial’s execution-phase and to control the availability of and the data to/from the Solutions during this execution-phase.
 
-6. **Interface to make observations**  
+6. **Interface to make observations**
    The Test-bed’s infrastructure must provide functionality for the Trial Staff to save observations, recordings and data-logs coming both from the Solutions and from the simulated incidents. During the evaluation-phase, these observations, recordings and data-logs are to be combined to support the creation of an evidence-based evaluation report of the Trial.
 
-7. **Open source Test-bed**  
+7. **Open source Test-bed**
    Crisis management affects us all, and therefore the test-Bed should achieve a broad adaptation and no hindrances with respect to license management. In addition, being open source, all developers from whatever organisation are welcomed to create pull requests to improve the Test-bed’s components.
 
-8. **Open for commercial organisations**  
+8. **Open for commercial organisations**
    Commercial organisations can help to integrate the Test-Bed in an organisation, offer software solutions that exceed the capabilities of the offered components, or provide support in maintaining these Test-Bed components. The development and maintenance approach, while components are delivered in the project open source, should not exclude these commercial organisations.
 
-9. **Standardized connections/interfaces**  
+9. **Standardized connections/interfaces**
    The Test-bed’s infrastructure, specifically the software’s data exchange interfaces, must be standardized as much as possible to ease up connection and joint use of many different Solutions and Simulators, both from within the project and external ones.
 
-10. **Modularized test-bed in several components**  
+10. **Modularized test-bed in several components**
     The Test-bed’s infrastructure must be modularized and can be implemented partly and completely, such that it can be used efficiently and effectively during all development-, testing-, preparation-, execution- and evaluation-phases, by Trial-owners, Solution-providers, Simulator-providers and other Test-bed development parties.
 
-11. **Provide data-sets for development and testing**  
+11. **Provide data-sets for development and testing**
     Specifically for developers who link up Solutions and Simulators to the Test-Bed and for Trial Staff involved in scenario creation, the Test-bed must provide functionality to easily obtain \(simulated\) data and component’s inputs/outputs without the need that for every development step/test the entire Test-bed with all of its components must be activated, as this would require a too high overload on applications, computer hardware and manpower to perform even a simple test.
 
-12. **The test-bed shall run in a **[**Docker**](https://www.gitbook.com/book/driver-eu/test-bed-specification/edit)** environment**  
+12. **The test-bed shall run in a **[**Docker**](https://www.gitbook.com/book/driver-eu/test-bed-specification/edit)** environment**
     Installing software can be tedious, and due to its nature, the Test-Bed consists of an integration of many tools. And although you could install each tool separately, in order to facilitate an easy deployment, Docker images and Docker compose will be used to rollout the Test-Bed. Docker images are ready-to-use installer applications to install a specific software component on a computer. Docker compose provides a process to combine multiple Docker images together, such that can all be installed within one process, resulting in little manpower needed to implement any combination of Test-bed components. As Docker is supported on Unix as well as Windows operating systems, many different organisations should be able to run it smoothly.
 
     As a consequence, for the moment most of the supplied tools will run in a Unix environment, since Windows-based Docker containers are still experimental. However, this will not limit developers to create Windows-only solutions, as it can still connect to the Test-Bed.
 
-13. **The core of the test-bed is based on Apache Kafka**  
+13. **The core of the test-bed is based on Apache Kafka**
     In order to integrate different tools within the test-bed, and to make it easy to connect them with other solutions, we have selected an integration platform based on Apache Kafka. Although there are many good open-source messaging systems available, Kafka has a number of distinct advantages:
 
     * It is supported by the Apache organisation, and used actively by a number of major commercial organisations. This means that it will not go away quickly, and it has many client connectors to ease integration.
@@ -59,12 +59,12 @@ Based on these DRIVER+ objectives and the lessons learned from the old DRIVER, t
 
     Although there are other environments that could satisfy our needs, this current reference implementation relies on Kafka, as we want to create a good reference implementation leveraging the efforts of the Kafka community, and by being more generic, i.e. supporting multiple back-ends, would require a lot more work, as well as not being able to leverage the particular strengths of the backend.
 
-14. **Linked to the Training Module**  
+14. **Linked to the Training Module**
     And finally, the Guidance Methodology, the tools to use this methodology and the Test-bed must be accompanied by a Training Module, primarily aimed at the Trial Staff, into how to use the Methodology and all of the Test-bed’s components best.
 
 ## 4.2   The environment the Test-bed is used in
 
-##### ![Test-bed environment](../img/test-bed-environment.jpg) Figure 4.1: The Test-bed in its environment
+![Test-bed environment](img/test-bed-environment.jpg) Figure 4.1: The Test-bed in its environment
 
 The Test-bed is not just a stand-alone collection of software applications. It is used within a larger environment of DRIVER+ entities, as visualized in figure 4.1.
 
@@ -80,7 +80,7 @@ The Test-bed is not just a stand-alone collection of software applications. It i
 
 ## 4.3   High-level functional design
 
-##### ![Test-bed design](../img/test-bed-design.jpg) Figure 4.2: All components of the Test-bed
+![Test-bed design](img/test-bed-design.jpg) Figure 4.2: All components of the Test-bed
 
 Zooming in on the Test-Bed, as shown in figure 4.2, the following components can be distinguished:
 
@@ -88,7 +88,7 @@ Zooming in on the Test-Bed, as shown in figure 4.2, the following components can
 
 * The **Common Simulation Space \(CSS\)**, provides a similar connection bus to connect the Simulators to the Test-bed. These connections are made by using the standardized CSS Adapters.
 
-* Because the type of data-connections and the required data-exchange speed differs for Solutions on one side \(i.e. report-like messages with a lower update speed\) and Simulators on the other side \(i.e. item oriented data with high update speed\), the CIS and CSS are split. They are connected via one or more **Gateways**. Gateways are used CSS - CIS to feed Solutions with data from the simulated crisis meaning \(e.g. positions of virtual police cars driving around in the fictive region\) and CIS - CSS to pass through changes inputted via one or more Solutions to the Simulators \(e.g. a command police to block off an area, resulting in several police cars driving to the edges of that area and setting up road blocks there\).  
+* Because the type of data-connections and the required data-exchange speed differs for Solutions on one side \(i.e. report-like messages with a lower update speed\) and Simulators on the other side \(i.e. item oriented data with high update speed\), the CIS and CSS are split. They are connected via one or more **Gateways**. Gateways are used CSS - CIS to feed Solutions with data from the simulated crisis meaning \(e.g. positions of virtual police cars driving around in the fictive region\) and CIS - CSS to pass through changes inputted via one or more Solutions to the Simulators \(e.g. a command police to block off an area, resulting in several police cars driving to the edges of that area and setting up road blocks there\).
   A **Validation Service** can be added to safeguard messages sent CSS&lt;-&gt;CIS are correctly filled and understandable by the counterpart.
 
 * Both the CIS and the CSS are controlled via the **Test-bed Admin Tool**. This provides an interface for Trial Staff to control which Solutions and Simulators are to be started and which data is \(not\) exchanged.
@@ -101,7 +101,7 @@ Zooming in on the Test-Bed, as shown in figure 4.2, the following components can
 
 * The **Observer Support Tool** provides a module to prepare, make and gather observations:
 
-  * In the preparation-phase: the Observation Manager \(i.e. person within the Trial Staff\) can manage who can observe who and create observation templates dedicated on what is to be observed. Ethical considerations regarding the formulation of observation templates and storage of data is to be taken into account during this phase. 
+  * In the preparation-phase: the Observation Manager \(i.e. person within the Trial Staff\) can manage who can observe who and create observation templates dedicated on what is to be observed. Ethical considerations regarding the formulation of observation templates and storage of data is to be taken into account during this phase.
   * In the execution-phase: Observers \(i.e. one or multiple persons within the Trial Staff\) can create observations based on prepared observation templates.
   * In the execution-phase: all observations are gathered and the Observer Manager sees them incoming and can guide the Observers by extra Observation Templates and sending them messages.
 

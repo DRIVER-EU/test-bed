@@ -14,7 +14,7 @@ To be continued.This chapter explains the process used to draft the functional r
 
 The process followed is not an exact copy of a single, specific design or software-development method, but is based on the generic agile software development method, currently used by the majority of software-developers worldwide. This agile process encompasses multiple parallel design and development efforts going on at the same time. Experts of different domains \(e.g. functional designer vs. software developers, or organisation creating component A vs. organisation developing component B\), work on their own component and meet regularly to discuss the overall architecture and links between these components. The WP-leader \(i.e. TNO\) maintains an overview over all components and the high-over architecture of the entire Test-bed and thereby actively steers the requirements design process.
 
-![](/img/Process.PNG)
+![D+ Process](img/process.png)
 
 ##### Figure 2.1: Ityerative process used for setting the Test-Bed's specifications
 
@@ -40,9 +40,9 @@ The iterative requirements design process followed is visualized in figure 2.1. 
 
 This requirements specification process circle is followed many times. When viewed from a distance, four main phases can be distinguished:
 
-1. This process was followed already by the core development partners when the description and main ideas behind WP923 were agreed upon and documented in the DOW. This resulted in the main ideas behind WP923 and the description of this work-package in the DOW. 
-2. At start of WP923, the core development partners TNO, XVR and FRQ had face-to-face and remote specification and design meetings, going through all of the Test-Bed’s components, what they are intended for, how they are linked and the high-over functional and technical design of them. The outcomes were documented in the meetings’ minutes. 
-3. Following these high-level specification and design meetings, both internal meetings and face-to-face and remote meetings with other component developers were organised. The high-level specifications and designs were shared and these were then further detailed and documented in component specific documentation \(see also ADD CHAPTER 5 HYPERLINK\). 
+1. This process was followed already by the core development partners when the description and main ideas behind WP923 were agreed upon and documented in the DOW. This resulted in the main ideas behind WP923 and the description of this work-package in the DOW.
+2. At start of WP923, the core development partners TNO, XVR and FRQ had face-to-face and remote specification and design meetings, going through all of the Test-Bed’s components, what they are intended for, how they are linked and the high-over functional and technical design of them. The outcomes were documented in the meetings’ minutes.
+3. Following these high-level specification and design meetings, both internal meetings and face-to-face and remote meetings with other component developers were organised. The high-level specifications and designs were shared and these were then further detailed and documented in component specific documentation \(see also ADD CHAPTER 5 HYPERLINK\).
 4. During the development of each component, the specifications and designs are further detailed and updated. This phase will continue when the Test-Bed is used in Trials. The outcome of this phase are the components and updates on the living documents.
 
 
