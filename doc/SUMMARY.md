@@ -7,3 +7,4 @@
 * [4. Aims](aims.md)
 * [5. Summarized description per Test-bed component](technical-requirements.md)
 * [6. Conclusions and way forward](conclusions.md)
+* [Abbreviations](abbreviatons.md)
