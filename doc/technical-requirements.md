@@ -229,17 +229,23 @@ Questions have different purposes, which are indicated in Observation Types. Gre
 | **(Technical) conditions** | Observer Support Tool (Mobile):<br>- Web browser<br>- Android (tablet and smartphone)<br>- iOS (tablet and smartphone)<br><br>Observer Management Tool (Desktop):<br>- Web browser |
 | **Reference to repository/details** | [https://github.com/DRIVER-EU/ost](https://github.com/DRIVER-EU/ost) or [specifications](https://driver-eu.gitbooks.io/specification-of-the-online-observer-support-tool) |
 
-## 5.14. Security concept
+## 5.14. Security Services
 
-|   | **Security** |
+|   | **Security Services** |
 | ---- |:---- |
-| **Short description** | MAX 5 LINES, EXCL SPECIFIC FUNCTIONS AND USERS |
-| **Who will use it** | LIST OF DIFFERENT TYPES OF USERS |
-| **Main functions** | LIST OF MAIN FUNCTIONS AND WHICH NEED EACH FUNCTION FULFILLS |
-| **Functions it does not do** | LIST OF SPECIFIC THINGS THIS COMPONENT IS NOT INTENDED FOR |
-| **Links with other components** | LIST OF ALL OTHER COMPONENTS IT IS LINKED TO, INCLUDING THE DIRECTION OF THE LINK |
-| **(Technical) conditions** | LIST OF TECHNICAL REQUIREMENTS / BOUNDARY CONDITIONS |
-| **Reference to repository/details** | HYPERLINK TO COMPONENT&#39;S OWN GITBOOK/COW-REPORT |
+| **Short description** | The Security Services provide access control enforcement on the DRIVER+ testbed, as well as support functions for identity and access management. |
+| **Who will use it** | Directly: developers, testbed administrators. Indirectly: everyone using a solution connected to the testbed.
+ |
+| **Main functions** | The Security Services will account for: <br> - Topic access policy enforcement; i.e. the Admin tool defines an access policy (set of access rules) per CIS topic, for the topics with confidentiality requirements, and delegates to the Security Services the enforcement of such policies in CIS. <br>-	SSL client certificate management, for managing (mostly issuing) SSL client certificates of CIS adapters for each tool connected to the testbed; these certificates are required for testbed-level client authentication. 
+ |
+| **Functions it does not do** | The Security Services will not account for: <br> - The SSL authentication on CIS middleware (Kafka); this will rely on Kafka existing features, only the trusted CA certificate used in Kafka configuration comes from Security Services. (Not to be confused with the subsequent authorization phase that will be handled by Security Services indeed, via Kafka extension.) <br>- Protection, escrow or recovery of secret/private keys. Tools will have the possibility to have the Security Services generate keypairs (with the certificates) for them, for testbed purposes only. However, the Security Services are not responsible for the protection, escrow or recovery of the generated private (or secret) keys in any way. If the certificate holder loses them, new ones – with a new certificate - will be generated.<br>-	Attack detection and/or mitigation.
+ |
+| **Links with other components** | - The Admin Tool consumes the Security Services for topic access policy configuration and enforcement in CIS.<br>- The CIS trusts the Security Services CA for client authentication.<br>- The CIS consumes the Security Services for topic access control.
+ |
+| **(Technical) conditions** | - Apache Kafka is needed. <br>- Host OS should be Ubuntu 16.04 LTS 64-bit (or more recent)<br>- Strongly recommended (but not mandatory): OS/applications should  have access to a TPM preferably; else at least to high-quality entropy for cryptographic pseudo-random number generation.
+ |
+| **Reference to repository/details** | https://projectdriver.sharepoint.com/:p:/r/sites/DriverPlus/Documents%20partages/SP92%20-%20Testbed/WP923%20-%20Testbed%20infrastructure/Meetings/2018-02-12.14%20Vienna%20Development%20meeting%20February/Presentations/AccessControl-SecurityRoadmap-V3.pptx?d=w01f66b178f0143ad9eb3179fc3f8fc18&csf=1&e=VyUcKc<br> <br>https://projectdriver.sharepoint.com/:w:/r/sites/DriverPlus/Documents%20partages/SP92%20-%20Testbed/WP923%20-%20Testbed%20infrastructure/Meetings/2018-02-12.14%20Vienna%20Development%20meeting%20February/DRIVER+%20F2F%20Minutes%20-%20Vienna%20-%202018-02-12.14.docx?d=w17d0df9098714babbeb746c0015a3a67&csf=1&e=UsdOiV
+ |
 
 ## Name of Test-bed component
 
