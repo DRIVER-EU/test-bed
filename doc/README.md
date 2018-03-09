@@ -34,8 +34,8 @@ In several chapters, this document provides:
 
 * The high-over use-cases of the entire DRIVER+ Test-bed in the environment it is used in, in the different phases of use and the different user-types \(ADD CHAPTER HYPERLINK\),
 * The functional specifications of this Test-bed and the components it therefore exists of \(ADD CHAPTER HYPERLINK for high-over use-cases and ADD CHAPTER HYPERLINK for functional specifications per component\), The latter chapter also provides links for each component to separate, more detailed specification documents of each component,
-* The process how these specifications were drafted \(ADD CHAPTER HYPERLINK\)
-* The lessons learned from the Test-beds as developed and used in experiments in the former Driver-project \(ADD CHAPTER HYPERLINK\)
+* The process how these specifications were drafted \(ADD CHAPTER HYPERLINK\)[ADDITION BY HECTOR],
+* The lessons learned from the Test-bed[ADDITION BY HECTOR] as developed and used in experiments in the former [ADDITION BY HECTOR]DRIVER project \(ADD CHAPTER HYPERLINK\)[ADDITION BY HECTOR],
 * What can be concluded from the functional specifications of the DRIVER+ Test-bed, the high-over development cycle and the development dependencies of these Test-bed components with regards to other WPs and SPs.
 
 ## 1.1   Targeted reading audience
@@ -44,15 +44,15 @@ This document is targeted at readers who know the DRIVER+ aims and project-conte
 
 Primary target audiences of this document are:
 
-* Software designers, developers and testers from within the DRIVER+ consortium and from external Solution and Simulator providers
-* Trial Committee members
-* DRIVER+ Guidance Methodology developers
-* Reviewers of this document as deliverable D923.11
-* DRIVER+ externals, who are interested in what the Test-Bed can bring them
+* Software designers, developers and testers from within the DRIVER+ consortium and from external Solution and Simulator providers[ADDITION BY HECTOR],
+* Trial Committee members[ADDITION BY HECTOR],
+* DRIVER+ Guidance Methodology developers[ADDITION BY HECTOR],
+* Reviewers of this document as deliverable D923.11[ADDITION BY HECTOR],
+* DRIVER+ externals, who are interested in what the Test-Bed can bring them[ADDITION BY HECTOR].
 
 Readers interested in how a specific component functions, the design and development choices made during its development and the way to implement these components, are referred to D923.21 Reference Implementation. 
 
-For reading this document, one must have an internet connection capable of reaching the GitBook website. For editing and reviewing this document, a personal GitHub-account is required with which one can request and be given access to the DRIVER+-GitHub group.
+For reading this document, one must have an internet connection capable of reaching the GitBook website. For editing and reviewing this document, a personal GitHub-account is required with which one can request and be given access to the DRIVER+ GitHub group.
 
 ## 1.2   Online living document on GitBook
 
