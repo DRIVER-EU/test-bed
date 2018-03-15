@@ -242,7 +242,7 @@ Questions have different purposes, which are indicated in Observation Types. Gre
  |
 | **Links with other components** | - The Admin Tool consumes the Security Services for topic access policy configuration and enforcement in CIS.<br>- The CIS trusts the Security Services CA for client authentication.<br>- The CIS consumes the Security Services for topic access control.
  |
-| **(Technical) conditions** | - Apache Kafka is needed. <br>- Host OS should be Ubuntu 16.04 LTS 64-bit (or more recent)<br>- Strongly recommended (but not mandatory): OS/applications should  have access to a TPM preferably; else at least to high-quality entropy for cryptographic pseudo-random number generation.
+| **(Technical) conditions** | - Apache Kafka is needed. <br>- Host OS should be Ubuntu 16.04 LTS 64-bit (or more recent), RAM >= 4GB, Filesystem ext4, disk space >= 40 GB, Gigabit LAN connection<br>- Strongly recommended (but not mandatory): OS/applications should  have access to a TPM preferably; else at least to high-quality entropy for cryptographic pseudo-random number generation.
  |
 | **Reference to repository/details** | https://projectdriver.sharepoint.com/:p:/r/sites/DriverPlus/Documents%20partages/SP92%20-%20Testbed/WP923%20-%20Testbed%20infrastructure/Meetings/2018-02-12.14%20Vienna%20Development%20meeting%20February/Presentations/AccessControl-SecurityRoadmap-V3.pptx?d=w01f66b178f0143ad9eb3179fc3f8fc18&csf=1&e=VyUcKc<br> <br>https://projectdriver.sharepoint.com/:w:/r/sites/DriverPlus/Documents%20partages/SP92%20-%20Testbed/WP923%20-%20Testbed%20infrastructure/Meetings/2018-02-12.14%20Vienna%20Development%20meeting%20February/DRIVER+%20F2F%20Minutes%20-%20Vienna%20-%202018-02-12.14.docx?d=w17d0df9098714babbeb746c0015a3a67&csf=1&e=UsdOiV
  |
