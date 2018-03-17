@@ -247,27 +247,5 @@ Questions have different purposes, which are indicated in Observation Types. Gre
 | **Reference to repository/details** | https://projectdriver.sharepoint.com/:p:/r/sites/DriverPlus/Documents%20partages/SP92%20-%20Testbed/WP923%20-%20Testbed%20infrastructure/Meetings/2018-02-12.14%20Vienna%20Development%20meeting%20February/Presentations/AccessControl-SecurityRoadmap-V3.pptx?d=w01f66b178f0143ad9eb3179fc3f8fc18&csf=1&e=VyUcKc<br> <br>https://projectdriver.sharepoint.com/:w:/r/sites/DriverPlus/Documents%20partages/SP92%20-%20Testbed/WP923%20-%20Testbed%20infrastructure/Meetings/2018-02-12.14%20Vienna%20Development%20meeting%20February/DRIVER+%20F2F%20Minutes%20-%20Vienna%20-%202018-02-12.14.docx?d=w17d0df9098714babbeb746c0015a3a67&csf=1&e=UsdOiV
  |
 
-## Name of Test-bed component
 
-_This paragraph is to document the functional specifications on max 2 pages (A4) of a specific component. Please fill out the table below first before adding extra information you find relevant for the over-all functional specifications document D923.11._
-
-_Remove this text when you have completed your paragraph._
-
-_Add max 3 lines of introduction text here_
-
-|   | **Test-bed component** |
-| ---- |:---- |
-| **Short description** | MAX 5 LINES, EXCL SPECIFIC FUNCTIONS AND USERS |
-| **Who will use it** | LIST OF DIFFERENT TYPES OF USERS |
-| **Main functions** | LIST OF MAIN FUNCTIONS AND WHICH NEED EACH FUNCTION FULFILLS |
-| **Functions it does not do** | LIST OF SPECIFIC THINGS THIS COMPONENT IS NOT INTENDED FOR |
-| **Links with other components** | LIST OF ALL OTHER COMPONENTS IT IS LINKED TO, INCLUDING THE DIRECTION OF THE LINK |
-| **(Technical) conditions** | LIST OF TECHNICAL REQUIREMENTS / BOUNDARY CONDITIONS |
-| **Reference to repository/details** | HYPERLINK TO COMPONENT&#39;S OWN GITBOOK/COW-REPORT |
-
-### 5.14.1. Extra notes
-
-_If needed you can add extra information about your component here. This paragraph can be left empty, if the table above states all relevant information. Please note that more detailed information such as detailed technical requirements, development considerations and such are to be reserved for the component’s specific documentation (can be another GitBook or can be another report/deliverable on the COW)._
-
-_Remove this text when you have completed your paragraph._
 
