@@ -16,7 +16,7 @@ The process followed is not an exact copy of a single, specific design or softwa
 
 ![D+ Process](img/process.png)
 
-##### Figure 2.1: Iterative process used for setting the Test-Bed's specifications
+_Figure 2.1: Iterative process used for setting the Test-Bed's specifications_
 
 The iterative requirements design process followed is visualized in figure 2.1. The following 9 steps can be distinguished in this process, but note that the order of these steps stated here differs in each round the iterative process is followed:
 
