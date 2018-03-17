@@ -33,9 +33,10 @@ Each of the organised experiments in the old DRIVER created his own, unique, Tes
 * Every solution or simulator provider had to connect his system to different test-beds, using different protocols
 
 * Every solution or simulator provider had to deal with different message types
+
 * Setting up and managing the Test-Bed was difficult, and offered little learning opportunity as in practice the Test-Bed used differed for each experiment
 
-**Lesson learned:** Each trial should use the same Test-Bed. 
+**Lesson learned:** Each trial should use the same Test-Bed.
 
 ## 3.4   Test-Beds were not open source {#open_source}
 
@@ -57,7 +58,7 @@ When different systems need to talk to each other, the messages they exchange mu
 
 For simulators, often DIS \([Distributed Interactive Simulation](https://en.wikipedia.org/wiki/Distributed_Interactive_Simulation)\) or HLA \([High Level Architecture](https://en.wikipedia.org/wiki/High-level_architecture)\) are used as standards to exchange messsages. Syntactically, they can be easily interpreted, albeit that often their stricts schema's do not allow for sufficient freedom to express deviations from the standard, and certain fields may be misused to communicate this missing information.
 
-For solutions in the operational crisis management domain, the CAP \(Common Alerting Protocol\), EMSI \(ADD FULL WORDS\) and EDXL DE \(Emergency Disaster eXchange Language ADD DE\) standards are often encountered. But also here, we see in practice different flavours throughout regions and organisation. Even a simple standard as CAP \(Common Alerting Protocol\) has different implementations across countries, but often also between different organisations. Furthermore, not all standards are freely available. For example you need to pay for the TSO/EMSI standard. And even if these costs are often negligible in a large project, it may cause delays, since a developer needs it, but has to get approval in order to buy it, and he is probably not allowed to share it with project partners. For sustainability of the Test-Bed, this is a disadvantage.
+For solutions in the operational crisis management domain, the CAP \(Common Alerting Protocol\), EMSI \(Emergency Management Shared Information\) and EDXL DE \(Emergency Disaster eXchange Language\) standards are often encountered. But also here, we see in practice different flavours throughout regions and organisation. Even a simple standard as CAP \(Common Alerting Protocol\) has different implementations across countries, but often also between different organisations. Furthermore, not all standards are freely available. For example you need to pay for the TSO/EMSI standard. And even if these costs are often negligible in a large project, it may cause delays, since a developer needs it, but has to get approval in order to buy it, and he is probably not allowed to share it with project partners. For sustainability of the Test-Bed, this is a disadvantage.
 
 To deal with these issues, the test-bed should have:
 
@@ -81,7 +82,7 @@ In the old DRIVER, participants had no clear picture of the scope of the Test-Be
 
 So for some people involved in experiments, the Test-Bed was only the gateway between operational systems. For others, it contained all of the above.
 
-**Lesson learned:** The test-bed should be clearly scoped, i.e. what it is, and what it is not. 
+**Lesson learned:** The test-bed should be clearly scoped, i.e. what it is, and what it is not.
 
 ## 3.8   Test-Bed management was complex {#complete}
 
@@ -92,5 +93,5 @@ The complexity is partially related to the previous observation that each experi
 * Data services: Maps, map layers, weather reports, census data, etc. need to be shared between operational systems and simulators
 * Reproducing a Test-Bed: In case an experiment is to be repeated
 
-**Lesson learned:** The Test-Bed must be easily reproducible, and offer administrative as well as supporting tools and services. 
+**Lesson learned:** The Test-Bed must be easily reproducible, and offer administrative as well as supporting tools and services.
 
