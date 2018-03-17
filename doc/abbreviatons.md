@@ -10,6 +10,9 @@
 | CIS | Common Information Space |
 | CSS | Common Simulation Space |
 | OST | Observer Support Tool |
+| CAP | Common Alerting Protocol |
+| EDXL | Emergency Disaster eXchange Language |
+| EMSI | Emergency Management Shared Information |
 | TGM | Trial Guidance Methodology |
 | GT | Guidance Tool |
 | TAP | Trial Action Plan |
