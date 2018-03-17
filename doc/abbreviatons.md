@@ -2,6 +2,7 @@
 
 | Abbreviation | Definition |
 | :--- | :--- |
+| CM | Crisis Management |
 | D+ | DRIVER+ |
 | SP | Sub-project |
 | WP | Work package |
