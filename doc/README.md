@@ -2,7 +2,7 @@
 
 This document is intended to serve as functional requirements specifications for the DRIVER+ Test-bed. This Test-bed is intended to provide software components that support organisations in running and evaluating a Trial, in which one or more solutions \(e.g. software tools\) are tested about their benefits \(or negative influence\) w.r.t. crisis management. The Test-bed components are designed and developed within Work-Package 923 and linked Work-Packages for specific components \(ADD WP numbers\).
 
-This document is linked to D923.21, D923.22 and D923.23 that describe a reference implementation of the released version of the Test-bed’s components, including design and development choices taken per component. This document merely states the functional requirements for these components \(i.e. what these components must/should do and why this is needed\). How these requirements are fulfilled and design/development choices made during the component's development is documented in the Reference Implementation documentation. Note that 3 versions of the Test-bed are foreseen, each encompanied with its own Reference Implementation deliverable. 
+This document is linked to D923.21, D923.22 and D923.23 that describe a reference implementation of the released version of the Test-bed’s components, including design and development choices taken per component. This document merely states the functional requirements for these components \(i.e. what these components must/should do and why this is needed\). How these requirements are fulfilled and design/development choices made during the component's development is documented in the Reference Implementation documentation. Note that 3 versions of the Test-bed are foreseen, each encompanied with its own Reference Implementation deliverable.
 
 In several chapters, this document provides:
 
@@ -14,18 +14,18 @@ In several chapters, this document provides:
 
 ## 1.1   Targeted reading audience
 
-This document is targeted at readers who know the DRIVER+ aims and project-contents at least at a high-over level. They should also have a minimal level of understanding of functional design and software development.
+This document is targeted at readers who know the DRIVER+ aims and project-contents at least at a high-over level. They should also have a minimal level of understanding of software functional design. 
 
 Primary target audiences of this document are:
 
-* Software designers, developers and testers from within the DRIVER+ consortium and from external Solution and Simulator providers,
+* Software designers, developers and testers creating a part of the Test-bed and/or wanting to use the Test-bed,
 * Trial Committee members \(i.e. people involved in the organization of Trials within DRIVER+\),
 * DRIVER+ Trial Guidance Methodology \(TGM\) developers and those supporting the implementation of this TGM,
 * DRIVER+ externals, who are interested in what the Test-Bed can bring them.
 
 Readers interested in how a specific component functions, the design and development choices made during its development and the way to implement these components, are referred to the Reference Implementation documentation per version of the Test-bed \(i.e. D923.21, D923.22 and D923.23\).
 
-For reading the online verion of this document, one must have an internet connection capable of reaching the GitBook website. For editing and reviewing this document, a personal GitHub-account is required with which one can request and be given access to the DRIVER+ GitHub group.
+For reading the online, most recent version of this document, one must have an internet connection capable of reaching the GitBook website. For editing and reviewing this document, a personal GitHub-account is required with which one can request and be given access to the DRIVER+ GitHub group.
 
 ## 1.2   Online living document on GitBook
 
