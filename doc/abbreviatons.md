@@ -7,7 +7,9 @@
 | CAP | Common Alerting Protocol |
 | CIS | Common Information Space |
 | CM | Crisis Management |
+| COW | Common Online Workspace |
 | CSS | Common Simulation Space |
+| DOW | Description Of Work |
 | D+ | DRIVER+ |
 | D\[xxx\] | Deliverable number xxx |
 | EDXL | Emergency Disaster eXchange Language |
