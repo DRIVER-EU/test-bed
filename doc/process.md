@@ -26,13 +26,13 @@ The iterative requirements design process followed is visualized in figure 2.1. 
 
 **VIII.    **All these requirements \(i.e. in detail a **set of functional and technical requirements and wishes**\) are documented. This documentation forms this deliverable D923.11. As know-how about the Test-bed's components and their functioning grows during development of these components and the use of them during Trials, D923.11 is a living document which is updated whenever specifications are changed or elaborated.
 
-**IX.    **The drafting of these requirement specifications is done in parallel with the **functional and technical design**. These design and the specification efforts highly influence each other. So although design decisions are documented in D923.21/D923.22/D923.23 Reference Implementation, this steps forms an integral part of the requirements specification process.
+**IX.    **The drafting of these requirement specifications is done in parallel with the **functional and technical design**. These design and the specification efforts highly influence each other. So although design decisions are documented in D923.21/D923.22/D923.23 Reference Implementation, both these steps forms an integral part of the requirements specification process.
 
-This circular process of drafting the functional specifications is followed many times. When viewed from a distance, four main phases can be distinguished:
+This circular process of documenting the functional specifications is followed many times. When viewed from a distance, this process is followed during four main phases:
 
-1. This process was followed already by the core development partners when the description and main ideas behind WP923 were agreed upon and documented in the DOW. This resulted in the main ideas behind WP923 and the description of this work-package in the DOW.
+1. This process was followed already by the core D+ development partners, who also participated in the former DRIVER. Their experiences and ideas on improvements were were agreed upon and documented in the WP923 description in the DOW. This resulted in the main concepts behind the new Test-bed. 
 2. At start of WP923, the core development partners TNO, XVR and FRQ had face-to-face and remote specification and design meetings, going through all of the Test-Bed’s components, what they are intended for, how they are linked and the high-over functional and technical design of them. The outcomes were documented in the meetings’ minutes.
-3. Following these high-level specification and design meetings, both internal meetings and face-to-face and remote meetings with other component developers were organised. The high-level specifications and designs were shared and these were then further detailed and documented in component specific documentation \(see also ADD CHAPTER 5 HYPERLINK\).
+3. Following these high-level specification and design meetings, both internal meetings and face-to-face and remote meetings with other component developers were organised. The high-level specifications and designs were shared and these were then further detailed and documented in component specific documentation \(see also Chapter 5\).
 4. During the development of each component, the specifications and designs are further detailed and updated. This phase will continue when the Test-Bed is used in Trials. The outcome of this phase are the components and updates on the living documents.
 
 
