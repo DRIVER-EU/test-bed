@@ -14,7 +14,7 @@ In several chapters, this document provides:
 
 ## 1.1   Targeted reading audience
 
-This document is targeted at readers who know the DRIVER+ aims and project-contents at least at a high-over level. They should also have a minimal level of understanding of software functional design. 
+This document is targeted at readers who know the DRIVER+ aims and project-contents at least at a high-over level. They should also have a minimal level of understanding of software functional design.
 
 Primary target audiences of this document are:
 
@@ -25,11 +25,14 @@ Primary target audiences of this document are:
 
 Readers interested in how a specific component functions, the design and development choices made during its development and the way to implement these components, are referred to the Reference Implementation documentation per version of the Test-bed \(i.e. D923.21, D923.22 and D923.23\).
 
-For reading the online, most recent version of this document, one must have an internet connection capable of reaching the GitBook website. For editing and reviewing this document, a personal GitHub-account is required with which one can request and be given access to the DRIVER+ GitHub group.
+The core of this deliverable is an online version of it, published on GitBook.com. For official delivery of D923.11 in M47 \(March 2018\), this online version will be copied into a single-moment-in-time MS Word and PDF document. These .doc and .pdf-files can be accessed on the DRIVER+ Common Online Workspace for those with a DRIVER+-account.   
+The online document on GitBook.com will be a living document, which is updated throughout the development of the Test-bed. For reading the online, most recent version of this document, one must have an internet connection capable of reaching the GitBook website. For editing and reviewing this document, a personal GitHub-account is required with which one can request and be given access to the DRIVER+ GitHub group.
 
 ## 1.2   Online living document on GitBook
 
-The documentation of the Test-bed’s functional specifications is completely done in the online developer tool GitBook, a website linked to the popular developer community GitHub in which software code can be created, shared and adjusted. GitBook is a website on which documents can be placed, read and adjusted. The decision to use GitBook instead of documenting all functional specifications in MS Word on the DRIVER+ COW, is based on the considerations that:
+The documentation of the Test-bed’s functional specifications is completely done in the online developer tool GitBook, a website linked to the popular developer community GitHub in which software code can be created, shared and adjusted. GitBook is a website on which documents can be placed, read and adjusted. As stated, for official delivery an ofline copy will be made once in March 2018, and delivered as both an MS Word and PDF-file. 
+
+The decision to use GitBook for creating these functional specifications \(i.e. instead of using MS Word for all documentation for D923.11\) is based on the considerations that:
 
 **GitHub and its affiliative GitBook is targeted specifically for software development**  
 The overall majority of man-months spend on the Test-bed’s development is in fact software development,
