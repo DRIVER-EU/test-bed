@@ -1,16 +1,6 @@
 # 2. Work-process used to come up with the Test-bed specifications
 
-This chapter explains how we came up with the specifications as stated in this document:
-
-* Analysis of lessons learned from the old DRIVER
-* Detailing based on the high-over design as stated in the Description Of Work \(DOW\)
-* Use-case analysis and cutting up the envisioned design in sub-functions
-* Discuss practical \(im\)possibilities with the trial-owners and other end-users
-* Consultation with solutions coordinators and development partners
-* Market research of technologies already out there
-* Experience from custom-made and off-the-shelf developments and implementation projects conducted by the Test-bed’s development partners
-
-To be continued.This chapter explains the process used to draft the functional requirement specifications, which are documented in this deliverable. This iterative requirements design-process was used by the Test-Bed’s core-development organisations \(FRQ, TNO and XVR\) and by the other development and review partners \(AIT, ITTI and THS and AIT; GMV, JRC and WWU\).
+This chapter explains the process used to draft the functional requirement specifications, which are documented in this deliverable. This iterative requirements design-process was used by the Test-Bed’s core-development organisations \(FRQ, TNO and XVR\) and by the other development and review partners \(AIT, ITTI and THS and AIT; GMV, JRC and WWU\).
 
 The process followed is not an exact copy of a single, specific design or software-development method, but is based on the generic agile software development method, currently used by the majority of software-developers worldwide. This agile process encompasses multiple parallel design and development efforts going on at the same time. Experts of different domains \(e.g. functional designer vs. software developers, or organisation creating component A vs. organisation developing component B\), work on their own component and meet regularly to discuss the overall architecture and links between these components. The WP-leader \(i.e. TNO\) maintains an overview over all components and the high-over architecture of the entire Test-bed and thereby actively steers the requirements design process.
 
@@ -26,7 +16,7 @@ The iterative requirements design process followed is visualized in figure 2.1. 
 
 **III.    **For each component \(and functional/technical sub-component\) a market research is done about what is already available off-the-shelve, to prevent development efforts are wasted on designing and making everything from scratch while a sufficiently functioning component is already available. Sometimes these components can be directly included in the D+ Test-bed \(e.g. open source Kafka technology\), sometimes parts are re-used from the old DRIVER \(e.g. partly the CIS architecture and base technologies\) and sometimes only the functional design is reviewed and partly copied \(e.g. the NATO exercise management tool JEMM\). To prevent IP infringements n the latter case, references are made to products/technologies the component is based on.
 
-**IV.    **Next to off-the-shelve components and technologies, also the experiences of development partners in similar projects are used to draft the Test-Bed’s specifications. For instance the Observer Module, as made by Middlesex University, Netherlands Aerospace Laboratory and XVR in the FP7-project CRISIS, served as a source of design input for the Test-bed’s Observer Support Tool \(ADD 5.X PARAGRAPH HYPERLINK\).
+**IV.    **Next to off-the-shelf components and technologies, also the experiences of development partners in similar projects are used to draft the Test-Bed’s specifications. For instance the Observer Module, as made by Middlesex University, Netherlands Aerospace Laboratory and XVR in the FP7-project CRISIS, served as a source of design input for the Test-bed’s Observer Support Tool \(ADD 5.X PARAGRAPH HYPERLINK\).
 
 **V.    **Other Solution owners within the D+ consortium are consulted regarding technical link-abilities, as one of the primary functions of the Test-Bed is to let Solutions \(i.e. software tools\) digitally link up with the Test-Bed to exchange information in between these Solutions and with other components. Next to Solution-owners included in the D+ consortium, also potential external Solution providers are considered, both because each Trial’s call for solutions is open to externals and because of the required sustainability of the D+ Test-Bed.
 
