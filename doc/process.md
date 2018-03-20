@@ -2,13 +2,13 @@
 
 This chapter explains how we came up with the specifications as stated in this document:
 
-* Analysis of lessons learned from the old Driver
-* Detailing based on the high-over design as stated in the DOW
+* Analysis of lessons learned from the old DRIVER
+* Detailing based on the high-over design as stated in the Description Of Work \(DOW\)
 * Use-case analysis and cutting up the envisioned design in sub-functions
 * Discuss practical \(im\)possibilities with the trial-owners and other end-users
 * Consultation with solutions coordinators and development partners
 * Market research of technologies already out there
-* Experience from custom-made and off-the-shelve developments and implementation projects conducted by the Test-bed’s development partners
+* Experience from custom-made and off-the-shelf developments and implementation projects conducted by the Test-bed’s development partners
 
 To be continued.This chapter explains the process used to draft the functional requirement specifications, which are documented in this deliverable. This iterative requirements design-process was used by the Test-Bed’s core-development organisations \(FRQ, TNO and XVR\) and by the other development and review partners \(AIT, ITTI and THS and AIT; GMV, JRC and WWU\).
 
