@@ -1,15 +1,15 @@
 # 1.   Introduction
 
-This document is intended to serve as functional requirements specifications for the Driver+ Test-Bed. This Test-Bed is intended to provide software components that support organisations in running and evaluating a Trial, in which one or more solutions \(e.g. software tools\) are tested about their benefits \(or negative influence\) w.r.t. crisis management. The Test-Bed components are designed and developed within Work-Package 923 and linked Work-Packages for specific components \(ADD WP numbers\).
+This document is intended to serve as functional requirements specifications for the DRIVER+ Test-bed. This Test-bed is intended to provide software components that support organisations in running and evaluating a Trial, in which one or more solutions \(e.g. software tools\) are tested about their benefits \(or negative influence\) w.r.t. crisis management. The Test-bed components are designed and developed within Work-Package 923 and linked Work-Packages for specific components \(ADD WP numbers\).
 
-This document is linked to D923.21 that describes a reference implementation of the Test-Bed’s components, including design and development choices taken per component. This document only states the functional requirements to these components and not how exactly these are fulfilled.
+This document is linked to D923.21, D923.22 and D923.23 that describe a reference implementation of the released version of the Test-bed’s components, including design and development choices taken per component. This document merely states the functional requirements for these components \(i.e. what these components must/should do and why this is needed\). How these requirements are fulfilled and design/development choices made during the component's development is documented in the Reference Implementation documentation. Note that 3 versions of the Test-bed are foreseen, each encompanied with its own Reference Implementation deliverable. 
 
 In several chapters, this document provides:
 
-* The high-over use-cases of the entire DRIVER+ Test-bed in the environment it is used in, in the different phases of use and the different user-types \(ADD CHAPTER HYPERLINK\),
-* The functional specifications of this Test-bed and the components it therefore exists of \(ADD CHAPTER HYPERLINK for high-over use-cases and ADD CHAPTER HYPERLINK for functional specifications per component\), The latter chapter also provides links for each component to separate, more detailed specification documents of each component,
-* The process how these specifications were drafted \(ADD CHAPTER HYPERLINK\)\[ADDITION BY HECTOR\],
-* The lessons learned from the Test-bed\[ADDITION BY HECTOR\] as developed and used in experiments in the former \[ADDITION BY HECTOR\]DRIVER project \(ADD CHAPTER HYPERLINK\)\[ADDITION BY HECTOR\],
+* The high-over use-cases of the entire DRIVER+ Test-bed in the environment it is used in, in the different phases of use and the different user-types \(ADD CHAPTER HYPERLINK\). 
+* The functional specifications of this Test-bed and the components it therefore exists of \(ADD CHAPTER HYPERLINK for high-over use-cases and ADD CHAPTER HYPERLINK for functional specifications per component\). The latter chapter also provides links for each component to separate, more detailed specification documents of each component. 
+* The process how these specifications were drafted \(ADD CHAPTER HYPERLINK\). 
+* The lessons learned from the Test-bed as developed and used in experiments in the old DRIVER-project \(ADD CHAPTER HYPERLINK\). 
 * What can be concluded from the functional specifications of the DRIVER+ Test-bed, the high-over development cycle and the development dependencies of these Test-bed components with regards to other WPs and SPs.
 
 ## 1.1   Targeted reading audience
@@ -18,19 +18,18 @@ This document is targeted at readers who know the DRIVER+ aims and project-conte
 
 Primary target audiences of this document are:
 
-* Software designers, developers and testers from within the DRIVER+ consortium and from external Solution and Simulator providers\[ADDITION BY HECTOR\],
-* Trial Committee members\[ADDITION BY HECTOR\],
-* DRIVER+ Guidance Methodology developers\[ADDITION BY HECTOR\],
-* Reviewers of this document as deliverable D923.11\[ADDITION BY HECTOR\],
-* DRIVER+ externals, who are interested in what the Test-Bed can bring them\[ADDITION BY HECTOR\].
+* Software designers, developers and testers from within the DRIVER+ consortium and from external Solution and Simulator providers,
+* Trial Committee members \(i.e. people involved in the organization of Trials within DRIVER+\),
+* DRIVER+ Trial Guidance Methodology \(TGM\) developers and those supporting the implementation of this TGM,
+* DRIVER+ externals, who are interested in what the Test-Bed can bring them.
 
-Readers interested in how a specific component functions, the design and development choices made during its development and the way to implement these components, are referred to D923.21 Reference Implementation.
+Readers interested in how a specific component functions, the design and development choices made during its development and the way to implement these components, are referred to the Reference Implementation documentation per version of the Test-bed \(i.e. D923.21, D923.22 and D923.23\).
 
-For reading this document, one must have an internet connection capable of reaching the GitBook website. For editing and reviewing this document, a personal GitHub-account is required with which one can request and be given access to the DRIVER+ GitHub group.
+For reading the online verion of this document, one must have an internet connection capable of reaching the GitBook website. For editing and reviewing this document, a personal GitHub-account is required with which one can request and be given access to the DRIVER+ GitHub group.
 
 ## 1.2   Online living document on GitBook
 
-The documentation of the Test-Bed’s functional specifications is completely done in the online developer tool GitBook, a website linked to the popular developer community GitHub in which software code can be created, shared and adjusted. GitBook is a website on which documents can be placed, read and adjusted. The decision to use GitBook instead of documenting all functional specifications in MS Word on the DRIVER+ COW, is based on the considerations that:
+The documentation of the Test-bed’s functional specifications is completely done in the online developer tool GitBook, a website linked to the popular developer community GitHub in which software code can be created, shared and adjusted. GitBook is a website on which documents can be placed, read and adjusted. The decision to use GitBook instead of documenting all functional specifications in MS Word on the DRIVER+ COW, is based on the considerations that:
 
 **GitHub and its affiliative GitBook is targeted specifically for software development**  
 The overall majority of man-months spend on the Test-bed’s development is in fact software development,
