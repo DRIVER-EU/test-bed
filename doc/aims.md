@@ -11,7 +11,7 @@ The first stated objective of DRIVER+ is to _“Develop a pan-European Test-bed 
 
 So the entire Test-bed is supportive to test Solutions in a realistic, controlled and safe manner. Furthermore the Test-bed should not be a one-time implementation, but can be implemented within multiple organizations, both during the project, but also after the project and at organizations not being a project-partner.
 
-Based on these DRIVER+ objectives and the lessons learned from the old DRIVER, the following high-level guidelines and requirements are set. Note that this lists consists of both real requirements \(i.e. must do's\) and wishes \(i.e. should/could do\). 
+Based on these DRIVER+ objectives and the lessons learned from the old DRIVER, the following high-level guidelines and requirements are set. Note that this lists consists of both real requirements \(i.e. must do's\) and wishes \(i.e. should/could do\).
 
 1. **A realistic Platform to trial Solutions**  
    The Test-bed must be able to be implemented at a space - called Platform – in which Trials can be conducted in a realistic CM setting, in a controlled manner, in safety and not intervening with other \(real CM\) operations. This Platform is a physical and digital work-space for both the Participants \(i.e. the CM practitioners using the Solutions during the execution-phase of the Trial\) and the Trial staff \(i.e. all other people involved during the preparation-phase, execution-phase and evaluation-phase of the Trial\).
@@ -60,8 +60,10 @@ Based on these DRIVER+ objectives and the lessons learned from the old DRIVER, t
 
     Although there are other environments that could satisfy the D+ needs, this current reference implementation relies on Kafka, the Test-bed should be a good reference implementation leveraging the efforts of the Kafka community. Being more generic \(i.e. supporting multiple back-ends\) would require a lot more development work, as well as not being able to leverage the particular strengths of the backend.
 
-14. **Linked to the Training Module**  
+14. **Linked to the Training Module**
     And finally, the Trial Guidance Methodology \(TGM\), the tools to use this methodology and the Test-bed must be accompanied by a Training Module, primarily aimed at people organizing Trials \(i.e. the Trial Staff\) explaining how to use the TGM and all of the Test-bed’s components best.
+
+
 
 ## 4.2   The environment the Test-bed is used in
 
