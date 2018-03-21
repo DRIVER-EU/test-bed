@@ -101,7 +101,7 @@ In order to direct the simulated world towards a desired scenario relevant for t
 | **Short description** | The Time service is the single source of truth of the fictive time during a trial. It listens to the scenario manager in order to play/pause/stop a scenario, and it may speed up or slow down the simulation. Each adapter will subscribe to the time service, and offer its users the fictive time. When sending messages containing time information, each service should use this fictive time. In addition, it shares the server's time using the Network Time Protocol (NTP), so all services in the test-bed can use it to sync their clocks. |
 | **Who will use it** | It is an internal service |
 | **Main functions** | Publish the fictive scenario time, play/pause/stop/speed up/slow down the time |
-| **Functions it does not do** | |
+| **Functions it does not do** | Run the simulation time backwards or time-jumps, as this would corrupt simulation processes. (Note that reloading a previously saved moment during a Trial is possible and is a way to do a time-jump backwards from an end-user's perspective.) |
 | **Links with other components** | [Scenario manager](#sm) and all adapters |
 | **(Technical) conditions** | Must run in a Docker environment |
 | **Reference to repository/details** | [GitHub repository](https://github.com/DRIVER-EU/test-bed-time-service) |
