@@ -57,10 +57,9 @@ Based on these DRIVER+ objectives and the lessons learned from the old DRIVER, t
     * It is supported by the Apache organisation, and used actively by a number of major commercial organisations. This means that it will not go away quickly, and it has many client connectors to ease integration.
     * It is simple to setup and run, and performs very well. Where similar software systems cannot deal with more than 10.000 messages per second, Kafka can process a tenfold.
 
-    Although there are other environments that could satisfy the D+ needs, this current reference implementation relies on Kafka, the Test-bed should be a good reference implementation leveraging the efforts of the Kafka community. Being more generic \(i.e. supporting multiple back-ends\) would require a lot more development work, as well as not being able to leverage the particular strengths of the backend.
+    Although there are other environments that could satisfy the D+ needs, this current reference implementation relies on Kafka, the Test-bed should be a good reference implementation leveraging the efforts of the Kafka community. Being more generic \(i.e. supporting multiple back-ends\) would require a lot more development work, as well as not being able to leverage the particular strengths of the backend.  
 
-14. 
-15. **Linked to the Training Module**  
+14. **Linked to the Training Module**  
     And finally, the Trial Guidance Methodology \(TGM\), the tools to use this methodology and the Test-bed must be accompanied by a Training Module, primarily aimed at people organizing Trials \(i.e. the Trial Staff\) explaining how to use the TGM and all of the Test-bed’s components best.
 
 ## 4.2   The environment the Test-bed is used in
