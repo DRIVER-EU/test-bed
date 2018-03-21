@@ -16,7 +16,7 @@ The Test-bed will be developed in 3 phases:
 
 ##### Version 1 – to be used in Trials 1 and 2
 
-This provides a first version of the CIS, CSS, logging within the CIS and CSS, adapters for Solutions and Simulators, Test-bed Admin tool, Observer Support Tool and the Play Service functioning as a first version of the Scenario Manager and Time Service. These components together form the functional core. The quality level of this version is that of a first prototype with a focus on functionality and stability needed to execute Trials 1 and 2. Potentially also a first version of the AAR component is developed. When specifically needed in the Trials, also a data-set of the fictive crisis environment\(s\) of Trial 1 or 2 is provided.
+This provides a first version of the CIS, CSS, logging within the CIS and CSS, adapters for Solutions and Simulators, Test-bed Admin tool, Observer Support Tool and the Play Service functioning as a first version of the Scenario Manager and Time Service \(see also figure 4.2 with all components of the Test-bed\). These components together form the functional core. The quality level of this version is that of a first prototype with a focus on functionality and stability needed to execute Trials 1 and 2. Potentially also a first version of the AAR component is developed. When specifically needed in the Trials, also a data-set of the fictive crisis environment\(s\) of Trial 1 or 2 is provided.
 
 After use in Trials 1 and 2, this version is evaluated and the specifications will be updated regarding experiences gained in the use of the Test-bed. Updates on specifications and design choices will function as a base for developing version 2.
 
