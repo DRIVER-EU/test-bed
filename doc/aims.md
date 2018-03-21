@@ -68,7 +68,7 @@ Based on these DRIVER+ objectives and the lessons learned from the old DRIVER, t
 
 The Test-bed is not just a stand-alone collection of software applications. It is used within a larger environment of DRIVER+ entities, as visualized in figure 4.1.
 
-* **Participants** are using the **Solutions** to solve a fictive crisis.
+* **Participants** are using the **Solutions** to solve a fictive crisis. Solutions are any type of tool/product \(e.g. a software package, a training method or a new standard operating procedure\) that is intended to support/improve Crisis Management. 
 * This fictive crisis exists in a virtual world and is thus a “virtual crisis”. This virtual crisis is created by a set of Simulators \(this can be computer-based **Simulators** to simulate a crisis within a virtual reality world, but a fire brigade’s physical exercise terrain is also a type of Simulator to stage a physical yet fictive incident\).
 * Both the Solutions and the Simulators are connected to the **Test-bed**. The Test-bed’s core makes it possible to connect the Solutions with each-other and feed them with data coming from the Simulators. The functionalities of each component of the Test-Bed are explained in the next paragraph.
 * The **Trial Staff** uses the Test-bed to:
