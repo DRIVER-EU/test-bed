@@ -1,4 +1,6 @@
-# About the DRIVER+ project
+# D923.11 - Functional specifications of the DRIVER+ Test-bed
+
+## About the DRIVER+ project
 
 ![DRIVER+](img/driver-home-page.jpg)
 
@@ -26,7 +28,7 @@ In order to achieve these objectives, five sub-projects \(SPs\) have been establ
 
 The DRIVER+ trials and the Final Demonstration will benefit from the DRIVER+ Test-bed, providing the technological infrastructure, the necessary supporting methodology and adequate support tools to prepare, conduct and evaluate the trials. All results from the trails will be stored and made available in the Portfolio of Solutions, being a central platform to present innovative solutions from consortium partners and third parties and to share experiences and best practices with respect to their application. In order to enhance the current European cooperation framework within the Crisis Management domain and to facilitate a shared understanding of Crisis Management across Europe, DRIVER+ will carry out a wide range of activities, whose most important will be to build and structure a dedicated Community of Practice in Crisis Management \(CoPCM\), thereby connecting and fostering the exchange on lessons learnt and best practices between Crisis Management practitioners as well as technological solution providers.
 
-# Executive Summary
+## Executive Summary
 
 
 
