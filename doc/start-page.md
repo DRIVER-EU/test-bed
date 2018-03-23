@@ -30,7 +30,11 @@ The DRIVER+ trials and the Final Demonstration will benefit from the DRIVER+ Tes
 
 ## Executive Summary
 
-This deliverable provides the requirements specifications – meaning both must-do requirements and should/could-do wishes - of the to-be-developed Test-bed within the DRIVER+ project \(D+\). This Test-bed consists of software components intended to support the execution of D+ Trials. Trials are performed to test Crisis Management Solutions \(i.e. any type of tool/product/procedure, like a software package, a training method or a new standard operating procedure, that is intended to support/improve Crisis Management\) for their pro’s and con’s in a realistic yet fictive incident/crisis setting. This deliverable is available as living document on the online, open-source document-sharing platform GitBook, such that it can be updated when development and use of the Test-bed progresses and to open up these specifications to anyone outside D+.
+This deliverable provides the requirements specifications – meaning both must-do requirements and should/could-do wishes - of the to-be-developed Test-bed within the DRIVER+ project \(D+\). This Test-bed consists of software components intended to support the execution of D+ Trials. Trials are performed to test Crisis Management Solutions \(i.e. any type of tool/product/procedure, like a software package, a training method or a new standard operating procedure, that is intended to support/improve Crisis Management\) for their pro’s and con’s in a realistic yet fictive incident/crisis setting. This deliverable is available as living document on the online, open-source document-sharing platform GitBook, such that it can be updated when development and use of the Test-bed progresses and to open up these specifications to anyone outside D+. This document describes what the Test-bed must/should be. How theserequirements and wishes are implemented is documented in Deliverables D923.21, D923.22 and D923.23 - Reference Implementations of versions 1/2/3.  
+
+![](/doc/img/process.png)
+
+_Figure Sum-1: Iterative process followed for requirements and wishes specification_
 
 The documented specifications are based on lessons learned from experiments done in the former DRIVER-project, use-case analysis, experiences from development partners is other project, market analysis into comparable components and consulting D+ Trial organizers and Solution providers. The specifications drafting process runs in parallel with the design and development process of the Test-bed’s components such that both processes can influence each other positively in a quick and agile manner.
 
@@ -44,15 +48,19 @@ The following lessons were learned from the use of previous test-beds in the for
 * The Test-bed should be clearly defined and scoped, i.e. what it is, and what it is not.
 * The Test-bed must be easily reproducible, and offer administrative as well as supporting tools and services.
 
+![](/doc/img/test-bed-environment.jpg)_Figure Sum-2: Environment the Test-bed is used in_
+
 The Test-bed will be used in the following environment:
 
 * Participants are using the Solutions to solve a fictive crisis. Data-integration between these Solutions flows via the Test-bed.
 * This fictive, virtual crisis exists in a virtual world created by a set of Simulators \(e.g. computer-based Simulators, or a fire brigade’s physical exercise terrain, or a combination of both\). Data-integration between the Simulators flows via the Test-bed.
-* The Trial Staff uses the Test-bed to:
+* The Trial Staff, supported by the Trial Guidance Methodology and the Training Module, uses the Test-bed to:
   * Prepare the Trial - build the scenario and set-up and test all Solutions and Simulators required. 
   * Run the Trial - control how the virtual crisis scenario evolves, observe the Participants and gather data-logs from both the Solutions and the virtual crisis. 
   * Evaluate the Trial – gather and analyse all observations, recordings and data-logs, and base an evidence-based evaluation report on these.
 * The Test-bed, Solutions and Simulators are available at the Platform \(i.e. one or more locations\), which provides rooms/areas for Participants to execute CM operations and rooms/areas for the Trial Staff. The Platform can be a simulation centre like available in The Hague, but this can also be a live exercise terrain. 
+
+![](/doc/img/test-bed-design.jpg)_Figure Sum-3: All components available within the Test-bed_
 
 To support this use, the Test-bed must consist of the following components:
 
