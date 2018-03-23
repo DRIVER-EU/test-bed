@@ -1,3 +1,6 @@
+
+---
+
 # 4.   Aims of the Test-bed in DRIVER+ & high-over Functional Design
 
 This chapter first gives the overall aims of the Test-bed in relation to the objectives of DRIVER+ as a whole. It describes the environment in which the Test-bed should functions and thereby the high-level functional design of the Test-bed. In the last, fourth paragraph the different types of users actively operating \(i.e. using\) the Test-bed are described and a high-level use-case for each use-mode.
@@ -253,6 +256,4 @@ _This use-case is executed in Development mode, up front of the execution and ev
 2. Solution/Simulator Owner selects the most applicable CIS/CSS Adapter and develops this into a Solution/Simulator specific adapter.
 3. Solution/Simulator Owner implements the Test-bed components needed to test its own Solution/Simulator and the specific adapter created
 4. Solution/Simulator Owner tests its developed Solution/Simulator and the specific adapter and adjusts it if needed.
-
-
 
