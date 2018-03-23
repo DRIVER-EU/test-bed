@@ -5,7 +5,7 @@ The current project, DRIVER+ \(D+\), is a continuation of the old DRIVER project
 ## 3.1   Summary of the lessons learned
 
 1. A generic [Trial Guidance Methodology](#guidance_methodology) is needed for analysing the need, and preparing, executing and reviewing an experiment.
-2. Create [one Test-bed](#one_testbed) and use it for each and every Trial.
+2. Only [one Test-bed](#one_testbed) must be created and this must be used for each and every Trial.
 3. The Test-bed should be [open source](#open_source).
 4. The Test-bed should have a [message-oriented architecture](#message_oriented).
 5. The Test-bed should use [well-defined, easily accessible, syntactically correct messages, and close to common standards](#standard).
@@ -36,7 +36,7 @@ Each of the organised experiments in the old DRIVER created his own, unique, Tes
 
 * Setting up and managing the Test-bed was difficult, and offered little learning opportunity as in practice the Test-bed used differed for each experiment
 
-**Lesson learned:** Each trial should use the same Test-bed.
+**Lesson learned:** Each trial must use the same Test-bed. Therefore, only one Test-bed must be created. 
 
 ## 3.4   Test-beds were not open source {#open_source}
 
