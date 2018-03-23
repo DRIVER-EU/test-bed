@@ -30,9 +30,9 @@ The DRIVER+ trials and the Final Demonstration will benefit from the DRIVER+ Tes
 
 ## Executive Summary
 
-This deliverable provides the requirements specifications – meaning both must-do requirements and should/could-do wishes - of the to-be-developed Test-bed within the DRIVER+ project \(D+\). This Test-bed consists of software components intended to support the execution of D+ Trials. Trials are performed to test Crisis Management Solutions \(i.e. any type of tool/product/procedure, like a software package, a training method or a new standard operating procedure, that is intended to support/improve Crisis Management\) for their pro’s and con’s in a realistic yet fictive incident/crisis setting. This deliverable is available as living document on the online, open-source document-sharing platform GitBook, such that it can be updated when development and use of the Test-bed progresses and to open up these specifications to anyone outside D+. 
+This deliverable provides the requirements specifications – meaning both must-do requirements and should/could-do wishes - of the to-be-developed Test-bed within the DRIVER+ project \(D+\). This Test-bed consists of software components intended to support the execution of D+ Trials. Trials are performed to test Crisis Management Solutions \(i.e. any type of tool/product/procedure, like a software package, a training method or a new standard operating procedure, that is intended to support/improve Crisis Management\) for their pro’s and con’s in a realistic yet fictive incident/crisis setting. This deliverable is available as living document on the online, open-source document-sharing platform GitBook, such that it can be updated when development and use of the Test-bed progresses and to open up these specifications to anyone outside D+.
 
-The documented specifications are based on lessons learned from experiments done in the former DRIVER-project, use-case analysis, experiences from development partners is other project, market analysis into comparable components and consulting D+ Trial organizers and Solution providers. The specifications drafting process runs in parallel with the design and development process of the Test-bed’s components such that both processes can influence each other positively in a quick and agile manner. 
+The documented specifications are based on lessons learned from experiments done in the former DRIVER-project, use-case analysis, experiences from development partners is other project, market analysis into comparable components and consulting D+ Trial organizers and Solution providers. The specifications drafting process runs in parallel with the design and development process of the Test-bed’s components such that both processes can influence each other positively in a quick and agile manner.
 
 The following lessons were learned from the use of test-beds in the former DRIVER experiments:
 
@@ -44,7 +44,7 @@ The following lessons were learned from the use of test-beds in the former DRIVE
 * The Test-bed should be clearly defined and scoped, i.e. what it is, and what it is not.
 * The Test-bed must be easily reproducible, and offer administrative as well as supporting tools and services.
 
-For successful Trials, the Test-bed must be fit-for-use in the following environment: 
+For successful Trials, the Test-bed must be fit-for-use in the following environment:
 
 * Participants are using the Solutions to solve a fictive crisis. Data-integration between these Solutions flows via the Test-bed.
 * This fictive, virtual crisis exists in a virtual world created by a set of Simulators \(e.g. computer-based Simulators, or a fire brigade’s physical exercise terrain, or a combination of both\). Data-integration between the Simulators flows via the Test-bed.
@@ -54,7 +54,7 @@ For successful Trials, the Test-bed must be fit-for-use in the following environ
   * Evaluate the Trial – gather and analyse all observations, recordings and data-logs, and base an evidence-based evaluation report on these.
 * The Test-bed, Solutions and Simulators are available at the Platform \(i.e. one or more locations\), which provides rooms/areas for Participants to execute CM operations and rooms/areas for the Trial Staff. The Platform can be a simulation centre like available in The Hague, but this can also be a live exercise terrain. 
 
-The Test-Bed consists of the following components:
+To support this use, the Test-Bed must consist of the following components:
 
 * The **Common Information Space \(CIS\)** is a central messaging bus with standardized CIS Adapters to connect Solutions to the Test-bed. 
 * The **Common Simulation Space \(CSS\)** is a similar central messaging bus with standardized CSS Adapters to connect Simulators to the Test-bed. 
@@ -64,14 +64,14 @@ The Test-Bed consists of the following components:
 * The **Observer Support Tool \(OST\)** provides a module to prepare, make and gather observations. 
 * The **After Action Review \(AAR\)** module gathers in execution-phase data-logs, Observations and \(screen-\) recordings, such that these can be reviewed.
 
-For development and implementation purposes, the Test-Bed also comes with:
+For development and implementation purposes, the Test-Bed should also come with:
 
 * A **Message Injector** to input specific, single messages to test whether these messages are correctly received by another component.
 * A **Play Service** to input several messages in chronological order.
 * **Data Server\(s\)** to feed the Simulators and potentially also the Solutions with geo-specific information and map-layers. 
 * A **Docker Environment** providing images \(i.e. installers\) of each component, such that the installation of \(a limited\) Test-bed can be done quickly and transparently.
 
-The Test-bed will be delivered in 3 versions. Version 1 is intended for use in Trials 1 and 2, and consist of a limited number of components \(i.e. Scenario Manager and AAR not included and other components in first prototype quality\). Version 2 is to be used in Trials 3 and 4 and the Final Demo and comes with all components with a quality level surpassing that of a first prototype. It should contain data-sets and basic scenarios that can be used for effectively implementing and testing the Test-bed. The final version, Version 3, should have an even better quality based on experiences gathered from the use of the Test-bed in the executed Trials and is made available open-source on GitHub. 
+The Test-bed will be delivered in 3 versions. Version 1 is intended for use in Trials 1 and 2, and consist of a limited number of components \(i.e. Scenario Manager and AAR not included and other components in first prototype quality\). Version 2 is to be used in Trials 3 and 4 and the Final Demo and comes with all components with a quality level surpassing that of a first prototype. It should contain data-sets and basic scenarios that can be used for effectively implementing and testing the Test-bed. The final version, Version 3, should have an even better quality based on experiences gathered from the use of the Test-bed in the executed Trials and is made available open-source on GitHub.
 
 The development of the Test-bed is done within WP923. The test-bed and its development is:
 
@@ -80,8 +80,6 @@ The development of the Test-bed is done within WP923. The test-bed and its devel
 * Described in the Portfolio of Solutions, developed in WP93
 * Used in the Trials of SP94
 * Made available open-source to the support the sustainability of D+ results in WP954
-
-
 
 
 
