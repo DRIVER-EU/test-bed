@@ -54,7 +54,7 @@ The Test-bed will be used in the following environment:
   * Evaluate the Trial – gather and analyse all observations, recordings and data-logs, and base an evidence-based evaluation report on these.
 * The Test-bed, Solutions and Simulators are available at the Platform \(i.e. one or more locations\), which provides rooms/areas for Participants to execute CM operations and rooms/areas for the Trial Staff. The Platform can be a simulation centre like available in The Hague, but this can also be a live exercise terrain. 
 
-To support this use, the Test-Bed must consist of the following components:
+To support this use, the Test-bed must consist of the following components:
 
 * The **Common Information Space \(CIS\)** is a central messaging bus with standardized CIS Adapters to connect Solutions to the Test-bed. 
 * The **Common Simulation Space \(CSS\)** is a similar central messaging bus with standardized CSS Adapters to connect Simulators to the Test-bed. 
@@ -64,7 +64,7 @@ To support this use, the Test-Bed must consist of the following components:
 * The **Observer Support Tool \(OST\)** provides a module to prepare, make and gather observations. 
 * The **After Action Review \(AAR\)** module gathers in execution-phase data-logs, Observations and \(screen-\) recordings, such that these can be reviewed.
 
-For development and implementation purposes, the Test-Bed should also come with:
+For development and implementation purposes, the Test-bed should also come with:
 
 * A **Message Injector** to input specific, single messages to test whether these messages are correctly received by another component.
 * A **Play Service** to input several messages in chronological order.
