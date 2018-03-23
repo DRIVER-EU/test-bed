@@ -45,8 +45,8 @@
 | WFS | Web Feature Service \(serving a map layer as vectors\) |
 | WMS | Web Mapping Service \(serving a map layer as picture\) |
 | WP | Work package |
-|  | eXtended Access Control Markup Language, a standard for describing security permissions to resource |
-|  |  |
+| XACML | eXtended Access Control Markup Language, a standard for describing security permissions to resource |
+| XML | eXtended Markup Language, a textual representation of a message that is easily readable by computers |
 | XVR | XVR simulation \(D+ partner |
 
 
