@@ -44,7 +44,7 @@ The following lessons were learned from the use of test-beds in the former DRIVE
 * The Test-bed should be clearly defined and scoped, i.e. what it is, and what it is not.
 * The Test-bed must be easily reproducible, and offer administrative as well as supporting tools and services.
 
-For successful Trials, the Test-bed must be fit-for-use in the following environment:
+The Test-bed will be used in the following environment:
 
 * Participants are using the Solutions to solve a fictive crisis. Data-integration between these Solutions flows via the Test-bed.
 * This fictive, virtual crisis exists in a virtual world created by a set of Simulators \(e.g. computer-based Simulators, or a fire brigade’s physical exercise terrain, or a combination of both\). Data-integration between the Simulators flows via the Test-bed.
