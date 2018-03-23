@@ -34,7 +34,7 @@ This deliverable provides the requirements specifications – meaning both must-
 
 The documented specifications are based on lessons learned from experiments done in the former DRIVER-project, use-case analysis, experiences from development partners is other project, market analysis into comparable components and consulting D+ Trial organizers and Solution providers. The specifications drafting process runs in parallel with the design and development process of the Test-bed’s components such that both processes can influence each other positively in a quick and agile manner.
 
-The following lessons were learned from the use of test-beds in the former DRIVER experiments:
+The following lessons were learned from the use of previous test-beds in the former DRIVER experiments:
 
 * A generic Trial Guidance Methodology is needed for analysing the need, and preparing, executing and reviewing an experiment \(i.e. Trial\).
 * Only one Test-bed must be created and this must be used for each and every Trial.
