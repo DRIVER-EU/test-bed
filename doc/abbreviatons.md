@@ -1,6 +1,6 @@
-# Abbreviations used in this document
+# Acronyms used in this document
 
-| Abbreviation | Definition |
+| Acronym | Definition |
 | :--- | :--- |
 | AAR | After Action Review |
 | AIT | Austrian Institute of Technology \(D+ partner\) |
@@ -29,7 +29,7 @@
 | Java | Programming Language |
 | JRC | Joint Research Centre \(D+ partner\) |
 | Kafka | An open source distributed streaming platform supported by the Apache Organisation that is used as the basis to exchange information between simulators and solutions |
-| KPI | Key Performance Inidcator |
+| KPI | Key Performance Indicator |
 | MBtiles | Single file database format to store images of a map |
 | MGT | Management |
 | OST | Observer Support Tool |
