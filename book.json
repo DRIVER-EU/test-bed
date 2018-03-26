@@ -2,5 +2,11 @@
     "root": "./doc",
     "title": "Functional specification of the test-bed",
     "author": "Steven van Campen, Erik Vullings",
-    "plugins": []
-}
+    "plugins": [ "image-captions" ],
+    "pluginsConfig": {
+      "image-captions": {
+        "caption": "Figure _PAGE_IMAGE_NUMBER_: _CAPTION_.",
+        "variable_name": "pictures"
+      }
+    }
+  }
