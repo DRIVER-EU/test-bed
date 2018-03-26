@@ -12,7 +12,7 @@ This chapter contains for each component an overview of what it is aimed at, who
 | **Functions it does not do** | The CIS will NOT account for: <br>- Validation of messages |
 | **Links with other components** |- Admin tool – to configure (parts of) the CIS<br>- AAR – re-uses messages sent via the CIS<br>- CIS-CSS Gateways – data exchange between CIS and CSS in both directions<br>- Validation Service – messages coming from the CSS to the CIS are syntax validated|
 | **(Technical) conditions** | Apache Kafka is needed |
-| **Reference to repository/details** |  |
+| **Reference to repository/details** | - |
 
 ### 5.1.1. Extra notes
 
@@ -28,12 +28,12 @@ The CIS itself is visible only to developers, not end-users. However, end-users 
 | **Main functions** | The CSS will connect the simulators to each other and link to the gateways to exchange data CIS-CSS (bidirectional) |
 | **Functions it does not do** | Deal with security: simulators don't have secrets. Semantic validation/translation of messages send over the CSS. Other message format support (like JSON or XML). |
 | **Links with other components** | Individual simulators (bidirectional, but note these are no Test-bed components); Admin tool for configuration of the CSS; CIS-CSS gateways; Trial Scenario Manager (bidirectional);  Time Service (from Time Service to CSS);  [AAR](#aar) to use the data for analysis (from CSS to After Action Review)|
-| **(Technical) conditions** | Open source; Standardized connectors via the CSS Adapters; Possible to run in a Dockker environment; Based on Apache Kafka|
-| **Reference to repository/details** |  |
+| **(Technical) conditions** | Open source; Standardized connectors via the CSS Adapters; Possible to run in a Docker environment; Based on Apache Kafka|
+| **Reference to repository/details** | - |
 
 ### 5.2.1. Extra notes
 Simulators all have their own data model of how they represent the simulated world. The CSS allows these simulators to agree on a communication form that the simulators understand to create and maintain a joint simulated world.
-Next to the CSS, there also is the Common Information Space (CIS), that is used to connect all the solution tools with the Test-bed and thus with each other. The design to not connect the simulators to the CIS directly is mainly to ensure the two spaces of simulated truth and perceived/communicated truth are kept separate inside the Test-bed. Like with a lot of emergency management processes, obtaining relevant information from the real world to base a decision on is either done by: 
+Next to the CSS, there also is the Common Information Space (CIS), that is used to connect all the solution tools with the Test-bed and thus with each other. The design to not connect the simulators to the CIS directly is mainly to ensure the two spaces of simulated truth and perceived/communicated truth are kept separate inside the Test-bed. Like with a lot of emergency management processes, obtaining relevant information from the real world to base a decision on is either done by:
 •	actually being at a specific location observing the current state, or
 •	receiving and sending messages via all kinds of communication channels from persons or systems at a specific location (e.g. radio communication, sensor input, camera feeds).
 These ways of obtaining information gives a (shared) perceived truth to be used in further emergency management decision making. However, due to a wrong observation or miscommunication, the perceived truth can be different than the simulated truth.
@@ -52,7 +52,7 @@ In order to direct the simulated world towards a desired scenario relevant for t
 | **Functions it does not do** | The CSS-CIS gateways will NOT account for: Semantic translation |
 | **Links with other components** | - [CIS](#cis) & [CSS](#css): the gateways are the bridge between them<br>Validation service: the validation service is a gateway service that validates messages going through the gateway |
 | **(Technical) conditions** | Must run in a Docker environment |
-| **Reference to repository/details** |  |
+| **Reference to repository/details** | - |
 
 
 ## 5.4. Validation Service {#validation-service}
@@ -65,7 +65,7 @@ In order to direct the simulated world towards a desired scenario relevant for t
 | **Functions it does not do** | The validation service will NOT account for: Semantic validation of messages |
 | **Links with other components** | - [CIS-CSS gateways](#cis-css-gateways): the message validation is a gateway service<br>CIS: only messages that fulfil a certain standard are forwarded to the rest of the system |
 | **(Technical) conditions** | Use of Apache AVRO schemas to represent standards |
-| **Reference to repository/details** |  |
+| **Reference to repository/details** | - |
 
 
 ## 5.5. Test-bed manager (Admin tool) {#admin-tool}
@@ -114,11 +114,11 @@ In order to direct the simulated world towards a desired scenario relevant for t
 | **Short description** | The aim of OST is to collect observations, inform observers about trial progress, and visualize collected data|
 | **Who will use it** | Trial Manager (person who configures the OST up front of a Trial, manages Observers and has overall control over the system). User, which can be an Observer or Participant |
 | **Main functions** | Allowing trial managers to setup observation questions and send messages to observers|
-|  | Assigning observers to specific observation tasks|
-|  | Allowing observers to enter observations|
-|  | Allowing trial managers to monitor observations, also in real–time|
-|  | Allowing participants to complete surveys|
-|  | Storing observations and surveys, and offers means to analyse the data|
+| - | Assigning observers to specific observation tasks|
+| - | Allowing observers to enter observations|
+| - | Allowing trial managers to monitor observations, also in real–time|
+| - | Allowing participants to complete surveys|
+| - | Storing observations and surveys, and offers means to analyse the data|
 | **Functions it does not do** | OST does not provide sets of data about events and time. This tool waits for simulation phases from external system,  publish events and generate questions based on these data. |
 | **Links with other components** | OST is linked with Test-bed, which is responsible for providing simulation phases – data about events and simulation time. Package of data is sent to OST Server, events and set of questions are generated. When the new event is displayed, OST Server notifies the user and set of questions changes. |
 | **(Technical) conditions** | Observer Support Tool (Mobile):<br>- Web browser<br>- Android (tablet and smartphone)<br>- iOS (tablet and smartphone)<br><br>Observer Management Tool (Desktop):<br>- Web browser |
@@ -147,7 +147,7 @@ Questions have different purposes, which are indicated in Observation Types. Gre
 
 |   | **After-Action-Review** |
 | ---- |:---- |
-| **Short description** |The After-Action Review (AAR) tool provides the possibility to collect data after a trial has finished and analyse it. Its main purpose is to facilitate the evaluation of the trialed solutions, and to help the participants determine how well they functioned. It collects messages (exchanged during trial), observation reports and takes screen-shots.|
+| **Short description** |The After-Action Review (AAR) tool provides the possibility to collect data after a trial has finished and analyse it. Its main purpose is to facilitate the evaluation of the trialled solutions, and to help the participants determine how well they functioned. It collects messages (exchanged during trial), observation reports and takes screen-shots.|
 | **Who will use it** | Facilitator |
 | **Main functions** | The AAR tool will account for:<br>- Storing relevant data <br>- Reviewing a trial completely or parts of it<br>- Jump to specific point in time |
 | **Functions it does not do** | The AAR tool will NOT account for: Changing the course of the trial afterwards in any way |
@@ -160,16 +160,16 @@ Questions have different purposes, which are indicated in Observation Types. Gre
 
 |   | **Security Services** |
 | ---- |:---- |
-| **Short description** | The Security Services provide access control enforcement on the DRIVER+ testbed, as well as support functions for identity and access management. |
-| **Who will use it** | Directly: developers, testbed administrators. Indirectly: everyone using a solution connected to the testbed.
+| **Short description** | The Security Services provide access control enforcement on the DRIVER+ Test-bed, as well as support functions for identity and access management. |
+| **Who will use it** | Directly: developers, test-bed administrators. Indirectly: everyone using a solution connected to the Test-bed.
  |
-| **Main functions** | The Security Services will account for: <br> - Topic access policy enforcement; i.e. the Admin tool defines an access policy (set of access rules) per CIS topic, for the topics with confidentiality requirements, and delegates to the Security Services the enforcement of such policies in CIS. <br>-	SSL client certificate management, for managing (mostly issuing) SSL client certificates of CIS adapters for each tool connected to the testbed; these certificates are required for testbed-level client authentication. 
+| **Main functions** | The Security Services will account for: <br> - Topic access policy enforcement; i.e. the Admin tool defines an access policy (set of access rules) per CIS topic, for the topics with confidentiality requirements, and delegates to the Security Services the enforcement of such policies in CIS. <br>-	SSL client certificate management, for managing (mostly issuing) SSL client certificates of CIS adapters for each tool connected to the Test-bed; these certificates are required for test-bed-level client authentication.
  |
-| **Functions it does not do** | The Security Services will not account for: <br> - The SSL authentication on CIS middleware (Kafka); this will rely on Kafka existing features, only the trusted CA certificate used in Kafka configuration comes from Security Services. (Not to be confused with the subsequent authorization phase that will be handled by Security Services indeed, via Kafka extension.) <br>- Protection, escrow or recovery of secret/private keys. Tools will have the possibility to have the Security Services generate keypairs (with the certificates) for them, for testbed purposes only. However, the Security Services are not responsible for the protection, escrow or recovery of the generated private (or secret) keys in any way. If the certificate holder loses them, new ones – with a new certificate - will be generated.<br>-	Attack detection and/or mitigation.
+| **Functions it does not do** | The Security Services will not account for: <br> - The SSL authentication on CIS middleware (Kafka); this will rely on Kafka existing features, only the trusted CA certificate used in Kafka configuration comes from Security Services. (Not to be confused with the subsequent authorization phase that will be handled by Security Services indeed, via Kafka extension.) <br>- Protection, escrow or recovery of secret/private keys. Tools will have the possibility to have the Security Services generate keypairs (with the certificates) for them, for Test-bed purposes only. However, the Security Services are not responsible for the protection, escrow or recovery of the generated private (or secret) keys in any way. If the certificate holder loses them, new ones – with a new certificate - will be generated.<br>-	Attack detection and/or mitigation.
  |
 | **Links with other components** | - The Admin Tool consumes the Security Services for topic access policy configuration and enforcement in CIS.<br>- The CIS trusts the Security Services CA for client authentication.<br>- The CIS consumes the Security Services for topic access control.
  |
-| **(Technical) conditions** | - Apache Kafka is needed. <br>- Host OS should be Ubuntu 16.04 LTS 64-bit (or more recent), RAM >= 4GB, Filesystem ext4, disk space >= 40 GB, Gigabit LAN connection<br>- Strongly recommended (but not mandatory): OS/applications should  have access to a TPM preferably; else at least to high-quality entropy for cryptographic pseudo-random number generation.
+| **(Technical) conditions** | - Apache Kafka is needed. <br>- Host OS should be Ubuntu 16.04 LTS 64-bit (or more recent), RAM >= 4GB, file-system ext4, disk space >= 40 GB, Gigabit LAN connection<br>- Strongly recommended (but not mandatory): OS/applications should  have access to a TPM preferably; else at least to high-quality entropy for cryptographic pseudo-random number generation.
  |
 | **Reference to repository/details** | https://projectdriver.sharepoint.com/:p:/r/sites/DriverPlus/Documents%20partages/SP92%20-%20Testbed/WP923%20-%20Testbed%20infrastructure/Meetings/2018-02-12.14%20Vienna%20Development%20meeting%20February/Presentations/AccessControl-SecurityRoadmap-V3.pptx?d=w01f66b178f0143ad9eb3179fc3f8fc18&csf=1&e=VyUcKc<br> <br>https://projectdriver.sharepoint.com/:w:/r/sites/DriverPlus/Documents%20partages/SP92%20-%20Testbed/WP923%20-%20Testbed%20infrastructure/Meetings/2018-02-12.14%20Vienna%20Development%20meeting%20February/DRIVER+%20F2F%20Minutes%20-%20Vienna%20-%202018-02-12.14.docx?d=w17d0df9098714babbeb746c0015a3a67&csf=1&e=UsdOiV |
 
@@ -195,10 +195,10 @@ Related to this service is the open source [csCOP](https://github.com/DRIVER-EU/
 | **Short description** | The message injector is used for debugging purposes, similar to [Postman](https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop), and it is used to inject messages manually into the Test-bed in order to generate a certain response.|
 | **Who will use it** | Developers |
 | **Main functions** | The main functionality is to inject (prepared or on the fly) messages into the test-bed for testing purposes |
-| **Functions it does not do** |  |
+| **Functions it does not do** | - |
 | **Links with other components** | It will use one of the existing adapters, most likely, the Java one, to send its messages to the test-bed |
-| **(Technical) conditions** | Must run in a Docker enviroment |
-| **Reference to repository/details** |  |
+| **(Technical) conditions** | Must run in a Docker environment |
+| **Reference to repository/details** | - |
 
 ## 5.13. Data services
 
