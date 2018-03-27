@@ -2,6 +2,10 @@
 
 The current project, DRIVER+ \(D+\), is a continuation of the old DRIVER project. In the old DRIVER, already several experiments were organised to test crisis management systems and solutions. This chapter will discuss the lessons that we could learn from them, specifically related to the technical infrastructure, a.k.a. the Test-bed, encompassing the connection to the operational systems as well as the simulators.
 
+In order to collect the lessons learned, several interviews were conducted with:
+- Trial leaders of the old DRIVER
+- Developers and architects in the old DRIVER
+
 ## 3.1   Summary of the lessons learned
 
 1. A generic [Trial Guidance Methodology](#guidance_methodology) is needed for analysing the need, and preparing, executing and reviewing an experiment.
@@ -36,7 +40,7 @@ Each of the organised experiments in the old DRIVER created his own, unique, Tes
 
 * Setting up and managing the Test-bed was difficult, and offered little learning opportunity as in practice the Test-bed used differed for each experiment
 
-**Lesson learned:** Each trial must use the same Test-bed. Therefore, only one Test-bed must be created. 
+**Lesson learned:** Each trial must use the same Test-bed. Therefore, only one Test-bed must be created.
 
 ## 3.4   Test-beds were not open source {#open_source}
 
