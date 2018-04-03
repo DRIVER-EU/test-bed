@@ -13,7 +13,7 @@
 <h1>Document information</h1>
 
 <table style="border: 2px solid black">
-  <tr><td style="font-weight: bold; color: white; background: #00497E">Document Status:</td><td>Draft</td></tr>
+  <tr><td style="font-weight: bold; color: white; background: #00497E">Document Status:</td><td>Final</td></tr>
   <tr><td style="font-weight: bold; color: white; background: #00497E">Document Title:</td><td>Test-bed Specification</td></tr>
   <tr><td style="font-weight: bold; color: white; background: #00497E">Document Nature:</td><td>Report (R)</td></tr>
   <tr><td style="font-weight: bold; color: white; background: #00497E">Dissemination Level:</td><td>Public (P)</td></tr>
