@@ -1,6 +1,6 @@
 # 2. Work-process used to come up with the Test-bed specifications
 
-This chapter explains the process used to draft the functional requirement specifications, which are documented in this deliverable. This iterative requirements design-process was used by the Test-Bed’s core-development organisations \(FRQ, TNO and XVR\) and by the other development and review partners \(AIT, ITTI and THS and AIT; GMV, JRC and WWU\).
+This chapter explains the process used to draft the functional requirement specifications, which are documented in this deliverable. This iterative requirements design-process was used by the Test-Bed’s core-development organisations \(FRQ, TNO and XVR\) and by the other development and review partners \(AIT, ITTI and TS and AIT; GMV, JRC and WWU\).
 
 The process followed is not an exact copy of a single, specific design or software-development method, but is based on the generic agile software development method, currently used by many software-developers worldwide. This agile process encompasses multiple parallel design and development efforts going on at the same time. Experts of different domains \(e.g. functional designer vs. software developers, or organisation creating component A vs. organisation developing component B\), work on their own component and meet regularly to discuss the overall architecture and links between these components. The WP-leader \(i.e. TNO\) maintains an overview over all components and the high-over architecture of the entire Test-bed and thereby actively steers the requirements design process.
 
