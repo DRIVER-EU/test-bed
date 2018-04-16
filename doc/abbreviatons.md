@@ -39,7 +39,7 @@
 | SUMO | Simulation of Urban Mobility, a traffic and pedestrian simulator |
 | TAP | Trial Action Plan |
 | TGM | Trial Guidance Methodology |
-| THS | Thales \(D+ partner\) |
+| TS | Thales Services \(D+ partner\) |
 | TNO | TNO \(D+ partner\) |
 | TypeScript | Programming Language |
 | WFS | Web Feature Service \(serving a map layer as vectors\) |
