@@ -34,8 +34,6 @@ This command removes all containers and thus data and configuration that was pre
 
 ## TNO Hosted Test Bed (driver-testbed.eu)
 
-** NOTE: the TNO Hosted Test Bed will be offline from 6-4-2018 until 9-4-2018 due to a power outtage **
-
 * Zookeeper: `driver-testbed.eu:3500`
 * Kafka Broker: `driver-testbed.eu:3501` or `PLAINTEXT://driver-testbed.eu:3501` depending on your adapter
 * [Kafka Schema Registry](https://docs.confluent.io/current/schema-registry/docs/index.html): [http://driver-testbed.eu:3502](http://driver-testbed.eu:3502)
