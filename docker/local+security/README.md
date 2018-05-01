@@ -15,7 +15,7 @@ $ ./preinst.sh
 $ docker-compose up -d
 ```
 
-## Kafka broker client authentication
+## Kafka client authentication
 Once the services are running, Kafka clients must authenticate to the Kafka `broker` service using [SASL plain authentication](https://kafka.apache.org/documentation/#security_jaas_client) with one of the credentials set in [Kafka server's JAAS configuration file](kafka/config/server_jaas.conf) (`KafkaServer` section).
 
 *In a later version, SASL plain authentication will be replaced with [SSL certificate authentication](https://kafka.apache.org/documentation/#security_ssl).*
