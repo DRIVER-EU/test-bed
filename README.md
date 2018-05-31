@@ -5,7 +5,7 @@
 For the specification document, please go [here](https://driver-eu.gitbooks.io/test-bed-specification/content).
 
 # Test-bed
-This repository combines tools and data to quickly setup an environment for testing new solutions in the crisis domain, either standalone or in collaborative trials and experiments.
+This repository combines tools and data to quickly setup an environment for testing new solutions in the crisis domain, either standalone or in collaborative trials and experiments. To read more about its specification, see [here](https://driver-eu.gitbook.io/test-bed-specification). If you want to have a better understanding technically, see [here](https://driver-eu.gitbook.io/test-bed-design).
 
 Our work is funded by the [DRIVER+](http://www.driver-project.eu) EU project as part of the Seventh Framework program, and runs till 2020. However, we are commited to find sustainable solutions well beyond this date.
 
@@ -15,20 +15,32 @@ Assuming you have installed `docker`, you can either go to `docker/local` and ru
 
 # Integration process
 
-To get your simulation or solution integrated with the test-bed:
--	Get the test-bed up and running locally: see [here](https://github.com/DRIVER-EU/test-bed/tree/master/docker), or alternatively, in the near future, use the [GUI](https://driver-eu.github.io/docker-composer/#/). 
--	Define your input/output messages as AVRO: already supported messages can be found here. 
-If your message is not available, first talk to Pieter.
--	Choose the adapter, and install it locally: the repositories as linked above should contain a description of how to do that
--	Define some input and output messages (in [AVRO](https://avro.apache.org), see also [here](https://github.com/DRIVER-EU/avro-schemas)): Register the AVRO schema with the test-bed via the [schema registry](http://localhost:3601/#/) (only available after running the test-bed locally). You can do that manually, or alternatively, the adapter will do this for you. The registration procedure is a bit different for each adapter.
--	Use the adapter to send messages to the test-bed. You can use the [test-bed topics UI](http://localhost:3600/#/) (only available after running the test-bed locally) to see whether they have arrived correctly.
--	Define some input messages (manually): we are currently working on a [replay-service](https://github.com/DRIVER-EU/kafka-replay-service), which allows you to play these messages, basically producing a sequence of messages. In the near future, you should also have a message injector web app, comparable to [Swagger](https://swagger.io), in which you will be able to create your own messages. You can use the test-bed topics UI to see whether they have arrived correctly.
--	When your message contains time, you need to query the adapter to get the local trial time. We are currently working on the [time service](https://github.com/DRIVER-EU/test-bed-time-service), and soon after it is finished, the adapter will offer an interface to it. So there is no need to query the test-bed yourself to get these messages. 
-In case no time messages are available, I.e. we are not running a trial, it should return the system time. 
--	For validation/integration testing, the two main tests are currently:
-    - The test-bed’s COP tool will display (popular) messages on a map (e.g. the ones described below). This allows you to manually/visually check the expected output.
-    - The test-bed will have a validation service, which will examine the messages in more detail. For example, in AVRO, we will only check that a polygon consists of a coordinate array, the validation service will check that it is properly closed.
+To get your simulation or solution integrated with the Test-bed, this is the recommended process:
 
+## Run the Test-bed locally
+As a quick recap of what I normally do to get a local Test-bed up-and-running:
+1. [Install Docker](https://docs.docker.com/install/) for Windows / Mac / Linux
+2. Checkout (download the zip or fork) this project: git clone https://github.com/DRIVER-EU/test-bed.git. In the near future, use the [GUI](https://driver-eu.github.io/docker-composer/#/), and we are working on a Cloud-based solution where we provide a hosted version for you. 
+3. Follow the README: https://github.com/DRIVER-EU/test-bed/tree/master/docker  
+
+## Select and test the adapter in one of the available languages
+Next, depending on your application’s programming language, checkout an adapter and get the example (producer and consumer) working: [Java](https://github.com/DRIVER-EU/java-test-bed-adapter), [C#](https://github.com/DRIVER-EU/csharp-test-bed-adapter), [JavaScript/TypeScript/Node.js](https://github.com/DRIVER-EU/node-test-bed-adapter), [REST](https://github.com/DRIVER-EU/test-bed-rest-service).
+
+## Determine the information you would like to share
+When sending messages, or receiving messages, you need to use [Apache AVRO](https://avro.apache.org/docs/current) to specify them (and they need to be published to the Test-bed’s schema registry). But first, check if there isn’t a schema already available at https://github.com/DRIVER-EU/avro-schemas. If you need to create a new schema, you can register it manually at the Test-bed’s schema registry service (normally at http://localhost:3601) or use the adapter to do it for you (note that each schema’s name is [TOPIC-NAME]-value.avsc. If you do this manually, their should also be a corresponding [TOPIC-NAME]-key.avsc schema in order to use the AVRO format, but this is the same for each topic (information based on the EDSL DE enveloppe). 
+
+## Connect your solution to the adapter and send information
+Note that you can inspect your messages in the Kafka topic viewer at http://localhost:3600. 
+
+## Sharing information with other solutions
+You basically repeat the process as described above for the other solution. Note that you can record messages send by a solution using the (Node.js-based) [Kafka-logger tool](https://github.com/DRIVER-EU/kafka-logger), which can be replayed using the [Kafka replay service](https://github.com/DRIVER-EU/kafka-replay-service). This helps you in developing stand-alone, since you can replay the messages of the other solutions. In the near future, you should also have a message injector web app, comparable to [Swagger](https://swagger.io), in which you will be able to create your own messages. 
+
+## Work In Progress
+When your solution or simulator needs time, you need to query the adapter to get the local trial time. We are currently working on integrating the [time service](https://github.com/DRIVER-EU/test-bed-time-service) into each adapter. So there is no need to query the Test-bed yourself to get these messages. In case no time messages are available, I.e. we are not running a trial, it should return the system time. 
+
+The Observer Support Tool has already been trialed in Poland, and is actively worked upon to further improve it. Progress can be followed [here](https://github.com/DRIVER-EU/ost).
+
+The After-Action-Review tool, Message-Injector and Validation service, and Scenario Manager are expected in 2018 with a first version too, so please stay in tune.
 
 # Design Guidelines of the DRIVER+ Test-bed
 
