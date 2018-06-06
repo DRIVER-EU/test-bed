@@ -64,7 +64,7 @@ We also invite other parties to create (open or commercial) tools and data that 
 Interoperability in the test-bed is based on exchanging information (in the form of messages) between tools and users. Conceptually, there are two kinds of messages:
 
 - Informative messages that are exchanged between the end users (crisis management practicioners). These are part of the Common Information Space (or CIS). Messages exchanged in this space should be based on open standards to allow a wide adoption, and we support:
-  - OASIS [Emergency Data Exchange Language](http://docs.oasis-open.org/emergency/edxl-de/v2.0/edxl-de-v2.0.html), a.k.a. EDXL, version 2
+  - OASIS [Emergency Data Exchange Language](http://docs.oasis-open.org/emergency/edxl-de/v2.0/edxl-de-v2.0.html), a.k.a. EDXL-DE, version 2
   - OASIS [Common Alerting Protocol](http://docs.oasis-open.org/emergency/cap/v1.2/CAP-v1.2-os.html) (CAP) messages, version 1.2.
 
 - Simulation messages that are exchanged between different simulators, and which together create a virtual incident area. These are part of the Common Simulation Space (CSS). Messages exchanged in this space are more dynamic in nature, depending on the virtual incident that you wish to simulate, and even (commercial) simulation standards like the [High Level Architecture](https://en.wikipedia.org/wiki/High-level_architecture), a.k.a. HLA or IEEE 1516, are often not flexible enough to support them.
