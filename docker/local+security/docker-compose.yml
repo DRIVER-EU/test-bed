@@ -1,32 +1,67 @@
 ---
 version: '3'
 services:
+
   zookeeper:
     image: confluentinc/cp-zookeeper
     hostname: zookeeper
     ports:
-      - "3500:3500"
+     - "3500:3500"
+    volumes:
+     - ./zookeeper/config/zookeeper.properties:/etc/kafka/zookeeper.properties
+     - ./zookeeper/config/zookeeper_jaas.conf:/etc/kafka/zookeeper_jaas.conf
     environment:
+      KAFKA_OPTS: '-Djava.security.auth.login.config=/etc/kafka/zookeeper_jaas.conf'
       ZOOKEEPER_CLIENT_PORT: 3500
       ZOOKEEPER_TICK_TIME: 2000
+  
+  authorization_service:
+    image: authzforce/server
+    hostname: authz
+    ports:
+     - "8080:8080"
+    volumes:
+     - ./authzforce-ce-server/webapp-context.xml:/usr/local/tomcat/conf/Catalina/localhost/authzforce-ce.xml
+     - ./authzforce-ce-server/data:/opt/authzforce-ce-server/data
+    environment:
+      JAVA_OPTS: "-Djava.security.egd=file:/dev/./urandom -Djava.awt.headless=true -Djavax.xml.accessExternalSchema=http -Xms2048m -Xmx2048m -XX:+UseConcMarkSweepGC -server"
 
   broker:
     image: confluentinc/cp-kafka
     hostname: broker
+    links: 
+     - authorization_service:authz
     depends_on:
       - zookeeper
+      - authorization_service  
     ports:
       - "3501:3501"
+      #- "9092:9092"
+    volumes:
+      - ./authzforce-ce-kafka-extensions:/opt/authzforce-ce-kafka-extensions
+      - ./kafka/config/server_jaas.conf:/etc/kafka/server_jaas.conf
     environment:
+      CLASSPATH: '/opt/authzforce-ce-kafka-extensions/lib/*' 
+      KAFKA_OPTS: '-Djava.security.auth.login.config=/etc/kafka/server_jaas.conf'     
+      #KAFKA_LOG4J_LOGGERS: "kafka=INFO,org.apache.cxf=WARN,org.ow2.authzforce=INFO"
+      # Comment line below and uncomment line above for production. Line below is for testing/debugging (e.g. all XACML requests/responses to/from authorization service's PDP are logged).
+      KAFKA_LOG4J_LOGGERS: "kafka=INFO,org.apache.cxf=INFO,org.ow2.authzforce=DEBUG"
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:3500'
       KAFKA_ADVERTISED_LISTENERS: 'EXTERNAL://localhost:3501,PLAINTEXT://broker:9092'
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: 'EXTERNAL:PLAINTEXT,PLAINTEXT:PLAINTEXT'
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: 'EXTERNAL:SASL_PLAINTEXT,PLAINTEXT:PLAINTEXT'
       KAFKA_LISTENERS: 'EXTERNAL://0.0.0.0:3501,PLAINTEXT://0.0.0.0:9092'
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_DEFAULT_REPLICATION_FACTOR: 1
       KAFKA_MESSAGE_MAX_BYTES: 100000000
       KAFKA_REPLICA_FETCH_MAX_BYTES: 100000000
+      KAFKA_SECURITY_INTER_BROKER_PROTOCOL: 'PLAINTEXT'
+      # KAFKA_SASL_MECHANISM_INTER_BROKER_PROTOCOL: 'PLAIN'
+      KAFKA_SASL_ENABLED_MECHANISMS: 'PLAIN'
+      KAFKA_AUTHORIZER_CLASS_NAME: 'org.ow2.authzforce.kafka.pep.CombinedXacmlAclAuthorizer'
+      KAFKA_SUPER_USERS: 'User:admin'
+      KAFKA_ORG_OW2_AUTHZFORCE_KAFKA_PEP_XACML_PDP_URL: 'http://authz:8080/authzforce-ce/domains/A0bdIbmGEeWhFwcKrC9gSQ/pdp' 
+      KAFKA_ORG_OW2_AUTHZFORCE_KAFKA_PEP_XACML_REQ_TMPL_LOCATION: 'file:///opt/authzforce-ce-kafka-extensions/request.xacml.json.ftl'
 
   schema_registry:
     image: confluentinc/cp-schema-registry
@@ -82,54 +117,3 @@ services:
     environment:
       SCHEMAREGISTRY_URL: 'http://schema_registry:3502'
       PROXY: 'true'
-
-  postgres:
-    image: postgres:9.6
-    hostname: postgres
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: ADMIN_DB
-    volumes:
-       - postgres-data:/var/lib/postgresql/data
-    restart: unless-stopped
-    
-  admintool:
-    image: drivereu/test-bed-admin:latest
-    depends_on:
-      - postgres
-    ports:
-      - "8090:8090"
-    volumes:
-      - ./admintool-config/gateways.json:/opt/application/config/gateways.json
-      - ./admintool-config/solutions.json:/opt/application/config/solutions.json
-      - ./admintool-config/topics.json:/opt/application/config/topics.json
-  
-  pgadmin:
-    image: fenglc/pgadmin4
-    depends_on:
-      - postgres
-    ports:
-        - "5050:5050"
-    restart: unless-stopped
-    
-  nextcloud:
-    depends_on:
-      - postgres
-    image: nextcloud:13.0.4
-    ports:
-        - "8080:80"
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_HOST: postgres:5432
-      POSTGRES_DB: nextcloud
-      NEXTCLOUD_ADMIN_USER: nextcloud
-      NEXTCLOUD_ADMIN_PASSWORD: nextcloud
-    restart: unless-stopped
-    volumes:
-      - nextcloud-data:/var/www/html/data
-      
-volumes:
-  nextcloud-data:
-  postgres-data:
