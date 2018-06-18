@@ -30,7 +30,20 @@ This command removes all containers and thus data and configuration that was pre
 * [Kafka REST Proxy](https://docs.confluent.io/current/kafka-rest/docs/index.html): [http://localhost:8082](http://localhost:8082).
 * Kafka Topics Browser UI: [http://localhost:3600](http://localhost:3600)
 * Kafka Schema Browser UI: [http://localhost:3601](http://localhost:3601)
-* Kafka Connect Browser uI: [http://localhost:3602](http://localhost:3602)
+* Test-bed Admin Interface: [http://localhost:8090](http://localhost:8090). See the [GitHub Project Page](https://github.com/DRIVER-EU/test-bed-admin) for more info.
+* Nextcloud Interface: [http://localhost:8080](http://localhost:8080). Default username/password: nextcloud/nextcloud.
+
+## Lightweight Local Test Bed (localhost)
+
+The Lightweight Local Test-bed will contain the Test-bed in Dev Mode. This means no Admin Tool is started. Nextcloud is also excluded to save CPU/Memory resources.
+
+* Zookeeper: `localhost:3500`
+* Kafka Broker: `localhost:3501` or `PLAINTEXT://localhost:3501` depending on your adapter
+* [Kafka Schema Registry](https://docs.confluent.io/current/schema-registry/docs/index.html): [http://localhost:3502](http://localhost:3502)
+* [Kafka Connect](https://docs.confluent.io/current/connect/index.html): [http://localhost:3504](http://localhost:3504)
+* [Kafka REST Proxy](https://docs.confluent.io/current/kafka-rest/docs/index.html): [http://localhost:8082](http://localhost:8082).
+* Kafka Topics Browser UI: [http://localhost:3600](http://localhost:3600)
+* Kafka Schema Browser UI: [http://localhost:3601](http://localhost:3601)
 
 ## TNO Hosted Test Bed (driver-testbed.eu)
 

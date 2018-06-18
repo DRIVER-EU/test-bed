@@ -40,6 +40,7 @@ services:
       SCHEMA_REGISTRY_HOST_NAME: schema_registry
       SCHEMA_REGISTRY_LISTENERS: 'http://0.0.0.0:3502'
       SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: 'zookeeper:3500'
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: 'PLAINTEXT://broker:9092'
 
   kafka_rest:
     image: confluentinc/cp-kafka-rest
@@ -82,42 +83,53 @@ services:
       SCHEMAREGISTRY_URL: 'http://schema_registry:3502'
       PROXY: 'true'
 
-  kafka_connect_ui:
-    image: landoop/kafka-connect-ui
-    hostname: kafka_connect_ui
-    depends_on:
-      - connect
-    ports:
-      - "3602:8000"
+  postgres:
+    image: postgres:9.6
+    hostname: postgres
     environment:
-      CONNECT_URL: 'http://connect:3504'
-      PROXY: 'true'
-
-  connect:
-    image: confluentinc/cp-kafka-connect
-    hostname: connect
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ADMIN_DB
+    volumes:
+       - postgres-data:/var/lib/postgresql/data
+    restart: unless-stopped
+    
+  admintool:
+    image: drivereu/test-bed-admin:latest
     depends_on:
-      - zookeeper
-      - broker
-      - schema_registry
+      - postgres
     ports:
-      - "3504:3504"
+      - "8090:8090"
+    volumes:
+      - ./admintool-config/gateways.json:/opt/application/config/gateways.json
+      - ./admintool-config/solutions.json:/opt/application/config/solutions.json
+      - ./admintool-config/topics.json:/opt/application/config/topics.json
+  
+  pgadmin:
+    image: fenglc/pgadmin4
+    depends_on:
+      - postgres
+    ports:
+        - "5050:5050"
+    restart: unless-stopped
+    
+  nextcloud:
+    depends_on:
+      - postgres
+    image: nextcloud:13.0.4
+    ports:
+        - "8080:80"
     environment:
-      CONNECT_BOOTSTRAP_SERVERS: 'broker:9092'
-      CONNECT_REST_ADVERTISED_HOST_NAME: connect
-      CONNECT_REST_PORT: 3504
-      CONNECT_GROUP_ID: compose-connect-group
-      CONNECT_CONFIG_STORAGE_TOPIC: docker-connect-configs
-      CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: 1
-      CONNECT_OFFSET_FLUSH_INTERVAL_MS: 10000
-      CONNECT_OFFSET_STORAGE_TOPIC: docker-connect-offsets
-      CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: 1
-      CONNECT_STATUS_STORAGE_TOPIC: docker-connect-status
-      CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: 1
-      CONNECT_KEY_CONVERTER: io.confluent.connect.avro.AvroConverter
-      CONNECT_KEY_CONVERTER_SCHEMA_REGISTRY_URL: 'http://schema_registry:3502'
-      CONNECT_VALUE_CONVERTER: io.confluent.connect.avro.AvroConverter
-      CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL: 'http://schema_registry:3502'
-      CONNECT_INTERNAL_KEY_CONVERTER: org.apache.kafka.connect.json.JsonConverter
-      CONNECT_INTERNAL_VALUE_CONVERTER: org.apache.kafka.connect.json.JsonConverter
-      CONNECT_ZOOKEEPER_CONNECT: 'zookeeper:3500'
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_HOST: postgres:5432
+      POSTGRES_DB: nextcloud
+      NEXTCLOUD_ADMIN_USER: nextcloud
+      NEXTCLOUD_ADMIN_PASSWORD: nextcloud
+    restart: unless-stopped
+    volumes:
+      - nextcloud-data:/var/www/html/data
+      
+volumes:
+  nextcloud-data:
+  postgres-data:
