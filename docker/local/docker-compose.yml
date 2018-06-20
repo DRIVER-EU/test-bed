@@ -89,7 +89,7 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: ADMIN_DB
+      POSTGRES_DB: TRIAL_ADMIN
     volumes:
        - postgres-data:/var/lib/postgresql/data
     restart: unless-stopped
