@@ -16,15 +16,15 @@ services:
       ZOOKEEPER_TICK_TIME: 2000
   
   authorization_service:
-    image: authzforce/server
+    image: authzforce/driver-testbed-sec-authz-service
     hostname: authz
     ports:
      - "8080:8080"
     volumes:
-     - ./authzforce-ce-server/webapp-context.xml:/usr/local/tomcat/conf/Catalina/localhost/authzforce-ce.xml
-     - ./authzforce-ce-server/data:/opt/authzforce-ce-server/data
+     - ./authorization_service/application.properties:/application.properties
+     - ./authorization_service/config:/opt/driver-testbed-sec-authz-service
     environment:
-      JAVA_OPTS: "-Djava.security.egd=file:/dev/./urandom -Djava.awt.headless=true -Djavax.xml.accessExternalSchema=http -Xms2048m -Xmx2048m -XX:+UseConcMarkSweepGC -server"
+      JAVA_OPTS: "-Djava.security.egd=file:/dev/./urandom -Djava.awt.headless=true -Djavax.xml.accessExternalSchema=all -Xms2048m -Xmx2048m -XX:+UseConcMarkSweepGC -server"
 
   broker:
     image: confluentinc/cp-kafka
@@ -60,7 +60,7 @@ services:
       KAFKA_SASL_ENABLED_MECHANISMS: 'PLAIN'
       KAFKA_AUTHORIZER_CLASS_NAME: 'org.ow2.authzforce.kafka.pep.CombinedXacmlAclAuthorizer'
       KAFKA_SUPER_USERS: 'User:admin'
-      KAFKA_ORG_OW2_AUTHZFORCE_KAFKA_PEP_XACML_PDP_URL: 'http://authz:8080/authzforce-ce/domains/A0bdIbmGEeWhFwcKrC9gSQ/pdp' 
+      KAFKA_ORG_OW2_AUTHZFORCE_KAFKA_PEP_XACML_PDP_URL: 'http://authz:8080/services/authz/pdp' 
       KAFKA_ORG_OW2_AUTHZFORCE_KAFKA_PEP_XACML_REQ_TMPL_LOCATION: 'file:///opt/authzforce-ce-kafka-extensions/request.xacml.json.ftl'
 
   schema_registry:
