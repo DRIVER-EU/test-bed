@@ -56,7 +56,7 @@ The Lightweight Local Test-bed will contain the Test-bed in Dev Mode. This means
 * Kafka Schema Browser UI: [http://driver-testbed.eu:3601](http://driver-testbed.eu:3601)
 * Kafka Connect Browser uI: [http://driver-testbed.eu:3602](http://driver-testbed.eu:3602)
 
-## Local Test Bed - Security-Enabled Kafka Broker for topic access control (localhost)
+## Local Test Bed with Security-Enabled Kafka Broker for topic access control (localhost)
 *More info in the [README](local+security/README.md)*
 * Zookeeper: `localhost:3500`
 * Kafka Broker: `localhost:3501` or `SSL://localhost:3501` depending on your adapter, requires client certificate authentication and authorization by the Authorization Service below
