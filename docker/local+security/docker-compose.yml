@@ -16,10 +16,10 @@ services:
       ZOOKEEPER_TICK_TIME: 2000
   
   authorization_service:
-    image: authzforce/driver-testbed-sec-authz-service
+    image: drivereu/driver-testbed-sec-authz-service:release-1.1.0
     hostname: authz
     ports:
-     - "8080:8080"
+     - "8443:8443"
     volumes:
      - ./authorization_service/application.properties:/application.properties
      - ./authorization_service/config:/opt/driver-testbed-sec-authz-service
@@ -36,32 +36,60 @@ services:
       - authorization_service  
     ports:
       - "3501:3501"
-      #- "9092:9092"
+      - "9092:9092"
     volumes:
       - ./authzforce-ce-kafka-extensions:/opt/authzforce-ce-kafka-extensions
-      - ./kafka/config/server_jaas.conf:/etc/kafka/server_jaas.conf
+      - ./broker/config/ssl:/etc/kafka/secrets
+      - ./broker/config/authorizer:/etc/kafka/authorizer
+      - ./broker/config/log4j.properties:/etc/kafka/log4j.properties
     environment:
-      CLASSPATH: '/opt/authzforce-ce-kafka-extensions/lib/*' 
-      KAFKA_OPTS: '-Djava.security.auth.login.config=/etc/kafka/server_jaas.conf'     
-      #KAFKA_LOG4J_LOGGERS: "kafka=INFO,org.apache.cxf=WARN,org.ow2.authzforce=INFO"
-      # Comment line below and uncomment line above for production. Line below is for testing/debugging (e.g. all XACML requests/responses to/from authorization service's PDP are logged).
-      KAFKA_LOG4J_LOGGERS: "kafka=INFO,org.apache.cxf=INFO,org.ow2.authzforce=DEBUG"
+      # https://docs.confluent.io/current/installation/docker/docs/configuration.html#confluent-kafka-cp-kafka
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:3500'
-      KAFKA_ADVERTISED_LISTENERS: 'EXTERNAL://localhost:3501,PLAINTEXT://broker:9092'
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: 'EXTERNAL:SASL_PLAINTEXT,PLAINTEXT:PLAINTEXT'
-      KAFKA_LISTENERS: 'EXTERNAL://0.0.0.0:3501,PLAINTEXT://0.0.0.0:9092'
+      # The listener name must be 'PLAINTEXT' like the protocol name, as workaround for https://github.com/confluentinc/schema-registry/issues/648
+      # SSL is enabled in Kafka Docker image only if KAFKA_ADVERTISED_LISTENERS has SSL://
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: 'SSL:SSL,PLAINTEXT:PLAINTEXT'
+      KAFKA_ADVERTISED_LISTENERS: 'SSL://localhost:3501,PLAINTEXT://broker:9092'
+      KAFKA_LISTENERS: 'SSL://0.0.0.0:3501,PLAINTEXT://0.0.0.0:9092'
+      # KAFKA_SECURITY_INTER_BROKER_PROTOCOL: 'PLAINTEXT'
+      KAFKA_INTER_BROKER_LISTENER_NAME: 'PLAINTEXT'
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_DEFAULT_REPLICATION_FACTOR: 1
       KAFKA_MESSAGE_MAX_BYTES: 100000000
+      # KAFKA_REPLICA_FETCH_WAIT_MAX_MS: 10000
       KAFKA_REPLICA_FETCH_MAX_BYTES: 100000000
-      KAFKA_SECURITY_INTER_BROKER_PROTOCOL: 'PLAINTEXT'
-      # KAFKA_SASL_MECHANISM_INTER_BROKER_PROTOCOL: 'PLAIN'
-      KAFKA_SASL_ENABLED_MECHANISMS: 'PLAIN'
+      KAFKA_CONFLUENT_SUPPORT_METRICS_ENABLE: 'false'
+      # Change log levels for debugging
+      # More info: https://github.com/confluentinc/cp-docker-images/blob/master/debian/kafka/include/etc/confluent/docker/log4j.properties.template
+      # KAFKA_LOG4J_LOGGERS: "kafka.controller=INFO,kafka=INFO,org.apache.cxf=INFO,org.ow2.authzforce=INFO"
+      # KAFKA_LOG4J_ROOT_LOGLEVEL: "INFO"
+      # KAFKA_TOOLS_LOG4J_LOGLEVEL: "INFO"
+
+      # SSL
+      # See https://docs.confluent.io/current/installation/docker/docs/tutorials/clustered-deployment-ssl.html#id2 for docker image specifics, 
+      # and https://docs.confluent.io/current/kafka/authentication_ssl.html in general
+      # Uncomment line below for SSL debugging
+      # KAFKA_OPTS: '-Djavax.net.debug=all'
+      # PLAINTEXT protocol used by schema_registry and kafka_rest services. TODO: make them use SSL.
+      # Name of file in /etc/kafka/secrets
+      KAFKA_SSL_TRUSTSTORE_FILENAME: truststore.jks
+      KAFKA_SSL_TRUSTSTORE_CREDENTIALS: truststore_creds
+      # Name of file in /etc/kafka/secrets
+      KAFKA_SSL_KEYSTORE_FILENAME: keystore.p12
+      KAFKA_SSL_KEYSTORE_TYPE: PKCS12
+      KAFKA_SSL_KEYSTORE_CREDENTIALS: keystore_creds
+      KAFKA_SSL_KEY_CREDENTIALS: keystore_creds
+      KAFKA_SSL_CLIENT_AUTH: required
+      
+      # Kafka Authorizer extension
+      CLASSPATH: '/opt/authzforce-ce-kafka-extensions/lib/*' 
       KAFKA_AUTHORIZER_CLASS_NAME: 'org.ow2.authzforce.kafka.pep.CombinedXacmlAclAuthorizer'
-      KAFKA_SUPER_USERS: 'User:admin'
-      KAFKA_ORG_OW2_AUTHZFORCE_KAFKA_PEP_XACML_PDP_URL: 'http://authz:8080/services/authz/pdp' 
-      KAFKA_ORG_OW2_AUTHZFORCE_KAFKA_PEP_XACML_REQ_TMPL_LOCATION: 'file:///opt/authzforce-ce-kafka-extensions/request.xacml.json.ftl'
+      KAFKA_SUPER_USERS: 'User:CN=Admin Tool,OU=Authz Service Dev Project,OU=WP923,O=DRIVER-PROJECT.EU'
+      KAFKA_ORG_OW2_AUTHZFORCE_KAFKA_PEP_XACML_PDP_URL: 'https://authz:8443/services/authz/pdp' 
+      KAFKA_ORG_OW2_AUTHZFORCE_KAFKA_PEP_XACML_REQ_TMPL_LOCATION: 'file:///etc/kafka/authorizer/request.xacml.json.ftl'
+      KAFKA_ORG_OW2_AUTHZFORCE_KAFKA_PEP_HTTP_CLIENT_CFG_LOCATION: '/etc/kafka/authorizer/http-client.xml'
+      # Max size of authorization decision cache (use negative or zero value to disable)
+      KAFKA_ORG_OW2_AUTHZFORCE_KAFKA_PEP_AUTHZ_CACHE_SIZE_MAX: -1
 
   schema_registry:
     image: confluentinc/cp-schema-registry
@@ -72,10 +100,15 @@ services:
     ports:
       - "3502:3502"
     environment:
+      # By default, ConsumerConfig 'fetch.max.wait.ms' = 500 triggering READ on <kafkastore.topic> ('_schemas' by default) via broker every 500 ms! Increase this value if you need to reduce network traffic or debug
+      # ConsumerConfig properties, e.g. fetch.max.wait.ms can be set via SchemaRegistryConfig by prefixing with 'kafkastore.'
+      SCHEMA_REGISTRY_KAFKASTORE_FETCH_MAX_WAIT_MS: 10000
+      # SCHEMA_REGISTRY_LOG4J_LOGGERS: "kafka=TRACE"      
       SCHEMA_REGISTRY_HOST_NAME: schema_registry
       SCHEMA_REGISTRY_LISTENERS: 'http://0.0.0.0:3502'
       SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: 'zookeeper:3500'
       SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: 'PLAINTEXT://broker:9092'
+      # SCHEMA_REGISTRY_KAFKASTORE_TIMEOUT_MS: 15000
 
   kafka_rest:
     image: confluentinc/cp-kafka-rest
@@ -117,3 +150,52 @@ services:
     environment:
       SCHEMAREGISTRY_URL: 'http://schema_registry:3502'
       PROXY: 'true'
+      
+  postgres:
+    image: postgres:9.6
+    hostname: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: TRIAL_ADMIN
+    volumes:
+       - postgres-data:/var/lib/postgresql/data
+    restart: unless-stopped
+    
+  admintool:
+    image: drivereu/test-bed-admin:latest
+    depends_on:
+      - postgres
+    ports:
+      - "8090:8090"
+    volumes:
+      - ./admintool-config/gateways.json:/opt/application/config/gateways.json
+      - ./admintool-config/solutions.json:/opt/application/config/solutions.json
+      - ./admintool-config/topics.json:/opt/application/config/topics.json
+      - ./admintool-config/standards.json:/opt/application/config/standards.json
+  
+  pgadmin:
+    image: fenglc/pgadmin4
+    depends_on:
+      - postgres
+    ports:
+        - "5050:5050"
+    restart: unless-stopped
+    
+  nextcloud:
+    depends_on:
+      - postgres
+    image: nextcloud:13.0.4
+    ports:
+        - "8080:80"
+    environment:
+      SQLITE_DATABASE: nextcloud
+      NEXTCLOUD_ADMIN_USER: nextcloud
+      NEXTCLOUD_ADMIN_PASSWORD: nextcloud
+    restart: unless-stopped
+    volumes:
+      - nextcloud-data:/var/www/html/data
+      
+volumes:
+  nextcloud-data:
+  postgres-data:
