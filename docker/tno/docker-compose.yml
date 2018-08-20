@@ -104,6 +104,7 @@ services:
       - ./admintool-config/gateways.json:/opt/application/config/gateways.json
       - ./admintool-config/solutions.json:/opt/application/config/solutions.json
       - ./admintool-config/topics.json:/opt/application/config/topics.json
+      - ./admintool-config/standards.json:/opt/application/config/standards.json
   
   pgadmin:
     image: fenglc/pgadmin4
