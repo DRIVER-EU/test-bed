@@ -98,6 +98,8 @@ services:
     image: drivereu/test-bed-admin:latest
     depends_on:
       - postgres
+      - broker
+      - schema_registry
     ports:
       - "8090:8090"
     volumes:
@@ -113,6 +115,18 @@ services:
     ports:
         - "5050:5050"
     restart: unless-stopped
+  
+  time_service:
+    image: drivereu/test-bed-time-service:latest
+    depends_on:
+      - broker
+      - schema_registry
+    ports:
+      - "8100:8100"
+    environment:
+      KAFKA_BROKER_URL: broker:9092
+      SCHEMA_REGISTRY_URL: http://schema_registry:3502
+      AUTO_REGISTER_SCHEMAS: 'true'
       
 volumes:
   postgres-data:
