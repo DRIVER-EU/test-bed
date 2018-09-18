@@ -1,14 +1,25 @@
 ---
 version: '3'
 services:
+  reverse-proxy:
+    image: traefik
+    command: --api --docker --docker.domain=${TESTBED_HOST}
+    ports:
+      - "80:80"     # The HTTP port
+      - "8080:8080" # The Web UI (enabled by --api)
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock # So that Traefik can listen to the Docker events
+      
   zookeeper:
     image: confluentinc/cp-zookeeper:5.0.0
     hostname: zookeeper
     ports:
-      - "3500:3500"
+      - 3500
     environment:
       ZOOKEEPER_CLIENT_PORT: 3500
       ZOOKEEPER_TICK_TIME: 2000
+    labels:
+      - "traefik.port=3500"
 
   broker:
     image: confluentinc/cp-kafka:5.0.0
@@ -16,17 +27,19 @@ services:
     depends_on:
       - zookeeper
     ports:
-      - "3501:3501"
+      - 3501
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:3500'
-      KAFKA_ADVERTISED_LISTENERS: 'EXTERNAL://localhost:3501,PLAINTEXT://broker:9092'
+      KAFKA_ADVERTISED_LISTENERS: 'EXTERNAL://${TESTBED_HOST}:3501,PLAINTEXT://broker:9092'
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: 'EXTERNAL:PLAINTEXT,PLAINTEXT:PLAINTEXT'
       KAFKA_LISTENERS: 'EXTERNAL://0.0.0.0:3501,PLAINTEXT://0.0.0.0:9092'
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_DEFAULT_REPLICATION_FACTOR: 1
       KAFKA_MESSAGE_MAX_BYTES: 100000000
       KAFKA_REPLICA_FETCH_MAX_BYTES: 100000000
+    labels:
+      - "traefik.port=3501"
 
   schema_registry:
     image: confluentinc/cp-schema-registry:5.0.0
@@ -35,12 +48,14 @@ services:
       - zookeeper
       - broker
     ports:
-      - "3502:3502"
+      - 3502
     environment:
       SCHEMA_REGISTRY_HOST_NAME: schema_registry
       SCHEMA_REGISTRY_LISTENERS: 'http://0.0.0.0:3502'
       SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: 'zookeeper:3500'
       SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: 'PLAINTEXT://broker:9092'
+    labels:
+      - "traefik.port=3502"
 
   kafka_rest:
     image: confluentinc/cp-kafka-rest:5.0.0
@@ -49,8 +64,6 @@ services:
       - zookeeper
       - schema_registry
       - broker
-    ports:
-      - "8082:8082"
     environment:
       KAFKA_REST_HOST_NAME: kafka_rest
       KAFKA_REST_BOOTSTRAP_SERVERS: 'PLAINTEXT://broker:9092'
@@ -66,21 +79,21 @@ services:
     hostname: kafka_topics_ui
     depends_on:
       - kafka_rest
-    ports:
-      - "3600:8000"
     environment:
       KAFKA_REST_PROXY_URL: 'http://kafka_rest:8082'
       PROXY: 'true'
       MAX_BYTES: 5000000
       RECORD_POLL_TIMEOUT: 10000
+    labels:
+      - "traefik.frontend.rule=Host:topics-ui.${TESTBED_HOST}"
 
   kafka_schema_registry_ui:
     image: landoop/schema-registry-ui:0.9.5
     hostname: kafka_schema_registry_ui
     depends_on:
       - schema_registry
-    ports:
-      - "3601:8000"
     environment:
       SCHEMAREGISTRY_URL: 'http://schema_registry:3502'
       PROXY: 'true'
+    labels:
+      - "traefik.frontend.rule=Host:schema-ui.${TESTBED_HOST}"
