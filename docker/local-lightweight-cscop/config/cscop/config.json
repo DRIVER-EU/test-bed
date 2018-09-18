@@ -1,0 +1,34 @@
+{
+    "clientId": "csCOP-A",
+    "kafkaHost": "broker:9092",
+    "schemaRegistry": "http://schema_registry:3502",
+    "wrapUnions": "auto",
+    "heartbeatInterval": 10000,
+    "fetchAllSchemas": false,
+    "fetchAllVersions": false,
+    "autoRegisterSchemas": true,
+    "schemaFolder": "./data/schemas",
+    "consume": [{
+            "topic": "cap"
+        },
+        {
+            "topic": "css-demo-geojson"
+        },
+        {
+            "topic": "teamcommunication"
+        },
+        {
+            "topic": "standard_geojson_sim_item"
+        },
+        {
+            "topic": "standard_geojson_sim_unit"
+        },
+        {
+            "topic": "standard_geojson_sim_unitgroup"
+        },
+        {
+            "topic": "standard_geojson_sim_station"
+        }
+    ],
+    "produce": ["cap", "teamcommunication", "css-demo-geojson", "standard_geojson_sim_unit", "standard_geojson_sim_item", "standard_geojson_sim_unitgroup", "standard_geojson_sim_station"]
+}
