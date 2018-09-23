@@ -27,7 +27,7 @@ services:
     image: drivereu/driver-testbed-sec-authz-service:release-1.1.0
     hostname: authz
     ports:
-     - "8443:8443"
+     - "9443:8443"
     volumes:
      - ./authorization_service/application.properties:/application.properties
      - ./authorization_service/config:/opt/driver-testbed-sec-authz-service
@@ -35,11 +35,12 @@ services:
       JAVA_OPTS: "-Djava.security.egd=file:/dev/./urandom -Djava.awt.headless=true -Djavax.xml.accessExternalSchema=all -Xms2048m -Xmx2048m -XX:+UseConcMarkSweepGC -server"
 
   kafka_sec_extensions:
-    build: ./kafka_sec_extensions
+    build: 
+      context: ./kafka_sec_extensions
+      args:
+         AUTHZFORCE_EXT_VERSION: "1.1.0"  
     volumes:
-     - kafka-sec-ext-data:/opt/kafka_sec_extensions
-    environment:
-      AUTHZFORCE_EXT_VERSION: "1.1.0"  
+     - kafka-sec-ext-data:/kafka_sec_extensions
 
   broker:
     image: confluentinc/cp-kafka
@@ -57,7 +58,8 @@ services:
       - kafka-sec-ext-data:/opt/kafka_sec_extensions
       - ./broker/config/ssl:/etc/kafka/secrets
       - ./broker/config/authorizer:/etc/kafka/authorizer
-      - ./broker/config/log4j.properties:/etc/kafka/log4j.properties
+        # For debugging, create log4j.properties based on log4j.properties.orig in folder 'broker/config' and customize it.
+        #      - ./broker/config/log4j.properties:/etc/kafka/log4j.properties
     environment:
       # https://docs.confluent.io/current/installation/docker/docs/configuration.html#confluent-kafka-cp-kafka
       KAFKA_BROKER_ID: 1
