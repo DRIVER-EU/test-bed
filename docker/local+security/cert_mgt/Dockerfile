@@ -19,7 +19,7 @@ USER pki
 WORKDIR /opt/pki
 
 COPY --chown=pki:pki root-ca.p12 root-ca.p12
-RUN keytool -exportcert -keystore root-ca.p12 -alias ca -rfc -file root-ca-crt.pem &&\
+RUN keytool -exportcert -keystore root-ca.p12 -storepass changeit -alias ca -rfc -file root-ca-crt.pem &&\
     git clone https://github.com/DRIVER-EU/ejbca.git ejbca.git
 
 COPY --chown=pki:pki ejbca-profiles ejbca-profiles
@@ -44,4 +44,4 @@ EXPOSE 8443/tcp
 EXPOSE 4447/tcp
 EXPOSE 9990/tcp
 
-CMD ["wildfly/bin/standalone.sh" "-b" "0.0.0.0"]
+CMD ["wildfly/bin/standalone.sh", "-b", "0.0.0.0"]
