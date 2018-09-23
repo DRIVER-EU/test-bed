@@ -11,7 +11,6 @@ This is similar to [docker/local](../local) folder, except it provides extra sec
 ## Build, create and start services
 
 ```sh
-$ ./preinst.sh
 $ docker-compose up -d
 ```
 
