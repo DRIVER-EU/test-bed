@@ -30,37 +30,37 @@ superadmin.password=cb40ec9ee9875580325c6a6e4d1b382fb3e521f8
 If the user that you want to enroll is not registered yet, register him/her first as follows:
 
 1. Create a file, say `/tmp/user.json`, with the user data as JSON object like this:
-
-```js
-{
-        "certificate_profile_name": "ENDUSER",
-        "end_entity_profile_name": "TLS_EE",
-        "username": "testUser",
-        "password": "changeit",
-        "email": "",
-        "subject_dn":"CN=testUser,O=DRIVER_PROJECT",
-        "ca_name": "Issuing_CA",
-        "token_type": "P12"
-}
-```
-Modify only the username, password and email that should be the contact for the contact person/owner of the client solution, and set the subject_dn to `CN=<username>,O=DRIVER_PROJECT`.
-
+    ```js
+        {
+                "certificate_profile_name": "ENDUSER",
+                "end_entity_profile_name": "TLS_EE",
+                "username": "testUser",
+                "password": "changeit",
+                "email": "",
+                "subject_dn":"CN=testUser,O=DRIVER_PROJECT",
+                "ca_name": "Issuing_CA",
+                "token_type": "P12"
+        }
+    ```
+    
+    Modify only the username, password and email that should be the contact for the contact person/owner of the client solution, and set the subject_dn to `CN=<username>,O=DRIVER_PROJECT`.
+    
 1. Register the user via the REST API as follows (separating the path to the superadmin certificate and password with `:` in the `--cert` argument):
-```sh
-$ curl -k -v --cert /tmp/superadmin.p12:cb40ec9ee9875580325c6a6e4d1b382fb3e521f8 --cert-type p12  -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' --data @/tmp/user.json -i 'https://localhost:8443/ejbca/ejbca-rest-api/v1/ees' 
+    ```sh
+    $ curl -k -v --cert /tmp/superadmin.p12:cb40ec9ee9875580325c6a6e4d1b382fb3e521f8 --cert-type p12  -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' --data @/tmp/user.json -i 'https://localhost:8443/ejbca/ejbca-rest-api/v1/ees' 
 
-HTTP/1.1 200 OK
-Connection: keep-alive
-X-Powered-By: Undertow/1
-Server: WildFly/10
-Content-Type: application/json
-Content-Length: 4
-Date: Sun, 03 Sep 2018 16:50:18 GMT
-
-true
-```
-
-1. You may list registered users as follows:
+    HTTP/1.1 200 OK
+    Connection: keep-alive
+    X-Powered-By: Undertow/1
+    Server: WildFly/10
+    Content-Type: application/json
+    Content-Length: 4
+    Date: Sun, 03 Sep 2018 16:50:18 GMT
+    
+    true
+    ```
+    
+You may list registered users as follows:
 ```sh
 $ curl -k -v --cert /tmp/superadmin.p12:cb40ec9ee9875580325c6a6e4d1b382fb3e521f8 --cert-type p12  -X GET -H 'Accept: application/json' -i 'https://localhost:8443/ejbca/ejbca-rest-api/v1/ees'
 
@@ -82,30 +82,31 @@ $ curl -k -v --cert /tmp/superadmin.p12:cb40ec9ee9875580325c6a6e4d1b382fb3e521f8
 
 ### Certificate request (aka enrollment)
 Once the user is registered, you can request a certificate for that user as follows:
+
 1. Create a file, say `/tmp/certReq.json`, with the certificate request data as JSON object like this:
 
-```js
-{
-"username":"testUserRest",
-"password":"changeit",
-"key_alg":"RSA",
-"key_spec":"2048"
-}
-```
-The username and password should match the registered user's username and password.
+    ```js
+    {
+        "username":"testUserRest",
+        "password":"changeit",
+        "key_alg":"RSA",
+        "key_spec":"2048"
+    }
+    ```
+    The username and password should match the registered user's username and password.
 1. Request the certificate via the REST API as follows:
-```sh
-$ curl -k --cert /tmp/superadmin.p12:cb40ec9ee9875580325c6a6e4d1b382fb3e521f8 --cert-type p12  -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' --data @/tmp/certReq.json -i 'https://localhost:8443/ejbca/ejbca-rest-api/v1/certificate/enrollkeystore'
+   ```sh
+    $ curl -k --cert /tmp/superadmin.p12:cb40ec9ee9875580325c6a6e4d1b382fb3e521f8 --cert-type p12  -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' --data @/tmp/certReq.json -i 'https://localhost:8443/ejbca/ejbca-rest-api/v1/certificate/enrollkeystore'
 
-{"keystore_data":"TUlJVWNBSUJBekNDRkNvR0NT...(content omitted)...kJvY1MvbXFhZURiakc0WQpBZ0lFQUE9PQ==","keystore_type":"TOKENSOFTP12"}
-```
+    {"keystore_data":"TUlJVWNBSUJBekNDRkNvR0NT...(content omitted)...kJvY1MvbXFhZURiakc0WQpBZ0lFQUE9PQ==","keystore_type":"TOKENSOFTP12"}
+    ```
 
 The returned `keystore_data` value is the password-protected (with the user's password) PKCS#12 keystore in PEM format, re-encoded in base64 (to get rid of line breaks for JSON compatibility). Therefore, in order to export to a binary p12 file for use with common SSL libraries, do as follows:
 1. Save the `keystore_data` string to a file, say `/tmp/keystore_data.txt`. Make sure it is one line.
 1. Base64-decode the content to get back the keystore in PEM format, then base64-decode again to get the keystore in binary (DER) format as most applications would expect. You can do it in one command line as follows:
-```sh
-$ base64 -d /tmp/keystore_data.txt | base64 -d > /tmp/keystore.p12
-```
+    ```sh
+    $ base64 -d /tmp/keystore_data.txt | base64 -d > /tmp/keystore.p12
+    ```
 1. Make sure the result P12 file is in the right format with a PKCS#12 tool such as openssl, keytool (or try import into your browser):
 ```sh
 $ keytool -keystore /tmp/keystore.p12 -list
