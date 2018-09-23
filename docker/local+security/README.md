@@ -16,6 +16,7 @@ $ docker-compose up -d
 
 ## Certificate Management Service
 The Certificate Management Service allows end-users such as Kafka consumers to enroll certificates with a REST API. *Soon, the Admin Tool will provide a user interface for this.*
+The Certificate Management Service is instantiated with a Certificate Authority (CA) named "Issuing CA" that is a sub-CA of the Root CA materialized in PKCS#12 keystore file `cert_mgt/root-ca.p12`.
 
 The service requires client certificate authentication for admin operations. So you first need to retrieve the superadmin certificate and password from the service's docker container as follows:
 
