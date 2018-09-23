@@ -2,6 +2,14 @@
 version: '3'
 services:
 
+  # Certificate Management Service
+  cert_mgt:
+    build: ./cert_mgt
+    hostname: certmgt
+    ports:
+     - "8442:8442"
+     - "8443:8443"
+        
   zookeeper:
     image: confluentinc/cp-zookeeper
     hostname: zookeeper
@@ -26,6 +34,13 @@ services:
     environment:
       JAVA_OPTS: "-Djava.security.egd=file:/dev/./urandom -Djava.awt.headless=true -Djavax.xml.accessExternalSchema=all -Xms2048m -Xmx2048m -XX:+UseConcMarkSweepGC -server"
 
+  kafka_sec_extensions:
+    build: ./kafka_sec_extensions
+    volumes:
+     - kafka-sec-ext-data:/opt/kafka_sec_extensions
+    environment:
+      AUTHZFORCE_EXT_VERSION: "1.1.0"  
+
   broker:
     image: confluentinc/cp-kafka
     hostname: broker
@@ -34,11 +49,12 @@ services:
     depends_on:
       - zookeeper
       - authorization_service  
+      - kafka_sec_extensions
     ports:
       - "3501:3501"
       - "9092:9092"
     volumes:
-      - ./authzforce-ce-kafka-extensions:/opt/authzforce-ce-kafka-extensions
+      - kafka-sec-ext-data:/opt/kafka_sec_extensions
       - ./broker/config/ssl:/etc/kafka/secrets
       - ./broker/config/authorizer:/etc/kafka/authorizer
       - ./broker/config/log4j.properties:/etc/kafka/log4j.properties
@@ -82,7 +98,7 @@ services:
       KAFKA_SSL_CLIENT_AUTH: required
       
       # Kafka Authorizer extension
-      CLASSPATH: '/opt/authzforce-ce-kafka-extensions/lib/*' 
+      CLASSPATH: '/opt/kafka_sec_extensions/lib/*' 
       KAFKA_AUTHORIZER_CLASS_NAME: 'org.ow2.authzforce.kafka.pep.CombinedXacmlAclAuthorizer'
       KAFKA_SUPER_USERS: 'User:CN=Admin Tool,OU=Authz Service Dev Project,OU=WP923,O=DRIVER-PROJECT.EU'
       KAFKA_ORG_OW2_AUTHZFORCE_KAFKA_PEP_XACML_PDP_URL: 'https://authz:8443/services/authz/pdp' 
@@ -199,3 +215,4 @@ services:
 volumes:
   nextcloud-data:
   postgres-data:
+  kafka-sec-ext-data:
