@@ -3,7 +3,7 @@ version: '3'
 services:
 
   zookeeper:
-    image: confluentinc/cp-zookeeper
+    image: confluentinc/cp-zookeeper:5.0.0
     hostname: zookeeper
     ports:
      - "3500:3500"
@@ -27,7 +27,7 @@ services:
       JAVA_OPTS: "-Djava.security.egd=file:/dev/./urandom -Djava.awt.headless=true -Djavax.xml.accessExternalSchema=all -Xms2048m -Xmx2048m -XX:+UseConcMarkSweepGC -server"
 
   broker:
-    image: confluentinc/cp-kafka
+    image: confluentinc/cp-kafka:5.0.0
     hostname: broker
     links: 
      - authorization_service:authz
@@ -41,7 +41,8 @@ services:
       - ./authzforce-ce-kafka-extensions:/opt/authzforce-ce-kafka-extensions
       - ./broker/config/ssl:/etc/kafka/secrets
       - ./broker/config/authorizer:/etc/kafka/authorizer
-      - ./broker/config/log4j.properties:/etc/kafka/log4j.properties
+        # For troubleshooting Kafka, copy ./broker/config/log4j.properties.orig to .../log4j.properties, change log levels in this file, and uncomment the line below
+        #      - ./broker/config/log4j.properties:/etc/kafka/log4j.properties
     environment:
       # https://docs.confluent.io/current/installation/docker/docs/configuration.html#confluent-kafka-cp-kafka
       KAFKA_BROKER_ID: 1
@@ -92,7 +93,7 @@ services:
       KAFKA_ORG_OW2_AUTHZFORCE_KAFKA_PEP_AUTHZ_CACHE_SIZE_MAX: -1
 
   schema_registry:
-    image: confluentinc/cp-schema-registry
+    image: confluentinc/cp-schema-registry:5.0.0
     hostname: schema_registry
     depends_on:
       - zookeeper
@@ -111,7 +112,7 @@ services:
       # SCHEMA_REGISTRY_KAFKASTORE_TIMEOUT_MS: 15000
 
   kafka_rest:
-    image: confluentinc/cp-kafka-rest
+    image: confluentinc/cp-kafka-rest:5.0.0
     hostname: kafka_rest
     depends_on:
       - zookeeper
@@ -130,7 +131,7 @@ services:
       KAFKA_REST_ACCESS_CONTROL_ALLOW_ORIGIN: '*'
 
   kafka_topics_ui:
-    image: landoop/kafka-topics-ui
+    image: landoop/kafka-topics-ui:0.9.4
     hostname: kafka_topics_ui
     depends_on:
       - kafka_rest
@@ -141,7 +142,7 @@ services:
       PROXY: 'true'
 
   kafka_schema_registry_ui:
-    image: landoop/schema-registry-ui
+    image: landoop/schema-registry-ui:0.9.5
     hostname: kafka_schema_registry_ui
     depends_on:
       - schema_registry
@@ -181,21 +182,6 @@ services:
     ports:
         - "5050:5050"
     restart: unless-stopped
-    
-  nextcloud:
-    depends_on:
-      - postgres
-    image: nextcloud:13.0.4
-    ports:
-        - "8080:80"
-    environment:
-      SQLITE_DATABASE: nextcloud
-      NEXTCLOUD_ADMIN_USER: nextcloud
-      NEXTCLOUD_ADMIN_PASSWORD: nextcloud
-    restart: unless-stopped
-    volumes:
-      - nextcloud-data:/var/www/html/data
       
 volumes:
-  nextcloud-data:
   postgres-data:

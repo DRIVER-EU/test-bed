@@ -83,3 +83,27 @@ services:
     environment:
       SCHEMAREGISTRY_URL: 'http://schema_registry:3502'
       PROXY: 'true'
+      
+  gateway_converter:
+    image: phameete/gateway-xvr-geojson:1.0.8
+    depends_on:
+      - schema_registry
+      - broker
+    volumes:
+      - ./config/gateway-config:/opt/application/config
+
+  cscop:
+    image: rinzeb/cscop
+    hostname: cscop
+    depends_on:
+      - schema_registry
+      - zookeeper
+      - broker
+      - gateway_converter
+    command: ["/src/scripts/wait-for.sh", "schema_registry:3502", "-t", "120", "--", "node", "/src/server.js"]
+    ports:
+      - "8003:8003"
+    volumes:
+      - ./config/cscop/:/src/config/
+    environment:
+      CSCOP_PORT: '8003'
