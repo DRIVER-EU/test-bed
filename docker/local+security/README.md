@@ -34,17 +34,17 @@ If the user that you want to enroll is not registered yet, register him/her firs
         {
                 "certificate_profile_name": "ENDUSER",
                 "end_entity_profile_name": "TLS_EE",
-                "username": "testUser",
+                "username": "thesolution.the.org",
                 "password": "changeit",
-                "email": "",
-                "subject_dn":"CN=testUser,O=DRIVER_PROJECT",
+                "email": "thesolution.admin@the.org",
+                "subject_dn":"CN=thesolution.the.org,O=TheOrganization",
                 "ca_name": "Issuing_CA",
                 "token_type": "P12"
         }
     ```
     
-    Modify only the username, password and email that should be the contact for the contact person/owner of the client solution, and set the subject_dn to `CN=<username>,O=DRIVER_PROJECT`.
-    
+    Set the username to the DNS name of the solution/tool instance or, if it does have any, any valid Common Name - according to ITU-T Recommendation X.520 - that uniquely identifies the organization and solution/too. In the latter case, if the organization that owns the solution instance has a domain name, we recommend to use the pattern `<solution_name>.<domain_name_of_the_organization_owning_the_solution_instance>`, e.g. `thesolution.the.org` if the organization's domain name is `the.org`. In addition, set the `password` parameter to the password you want to use for protecting the generated keystore; and set the `email` parameter to the contact email address of the contact person/owner of the solution/tool; finally, set the subject_dn to  `CN=<username>,O=<Name_of_the_organization_owning_the_solution_instance>`.
+    Leave the other fields unchanged.
 1. Register the user via the REST API as follows (separating the path to the superadmin certificate and password with `:` in the `--cert` argument):
     ```sh
     $ curl -k -v --cert /tmp/superadmin.p12:cb40ec9ee9875580325c6a6e4d1b382fb3e521f8 --cert-type p12  -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' --data @/tmp/user.json -i 'https://localhost:8443/ejbca/ejbca-rest-api/v1/ees' 
@@ -65,19 +65,19 @@ You may list registered users as follows:
 $ curl -k -v --cert /tmp/superadmin.p12:cb40ec9ee9875580325c6a6e4d1b382fb3e521f8 --cert-type p12  -X GET -H 'Accept: application/json' -i 'https://localhost:8443/ejbca/ejbca-rest-api/v1/ees'
 
 {"end_entities":[
-  {"username":"testUser", ...}
+  {"username":"thesolution.the.org", ...}
   ...
 ]}
 ```
 
-Get a specific registered user info, e.g. user with `username=testUser`:
+Get a specific registered user info, e.g. user with `username=thesolution.the.org`:
 ```sh
-$ curl -k -v --cert /tmp/superadmin.p12:cb40ec9ee9875580325c6a6e4d1b382fb3e521f8 --cert-type p12  -X GET -H 'Accept: application/json' -i 'https://localhost:8443/ejbca/ejbca-rest-api/v1/ees/testUser'
+$ curl -k -v --cert /tmp/superadmin.p12:cb40ec9ee9875580325c6a6e4d1b382fb3e521f8 --cert-type p12  -X GET -H 'Accept: application/json' -i 'https://localhost:8443/ejbca/ejbca-rest-api/v1/ees/thesolution.the.org'
 ```
 
 You may deregister the user as follows:
 ```sh
-$ curl -k -v --cert /tmp/superadmin.p12:cb40ec9ee9875580325c6a6e4d1b382fb3e521f8 --cert-type p12  -X DELETE -H 'Accept: application/json' -i 'https://localhost:8443/ejbca/ejbca-rest-api/v1/ees/testUser'
+$ curl -k -v --cert /tmp/superadmin.p12:cb40ec9ee9875580325c6a6e4d1b382fb3e521f8 --cert-type p12  -X DELETE -H 'Accept: application/json' -i 'https://localhost:8443/ejbca/ejbca-rest-api/v1/ees/thesolution.the.org'
 ```
 
 ### Certificate request (aka enrollment)
@@ -87,13 +87,13 @@ Once the user is registered, you can request a certificate for that user as foll
 
     ```js
     {
-        "username":"testUserRest",
+        "username":"thesolution.the.org",
         "password":"changeit",
         "key_alg":"RSA",
         "key_spec":"2048"
     }
     ```
-    The username and password should match the registered user's username and password.
+    The username and password should match the registered user's username and password (see first step).
 1. Request the certificate via the REST API as follows:
    ```sh
     $ curl -k --cert /tmp/superadmin.p12:cb40ec9ee9875580325c6a6e4d1b382fb3e521f8 --cert-type p12  -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' --data @/tmp/certReq.json -i 'https://localhost:8443/ejbca/ejbca-rest-api/v1/certificate/enrollkeystore'
@@ -117,7 +117,7 @@ Keystore provider: SUN
 
 Your keystore contains 1 entry
 
-testuserrest, Sep 03, 2018, PrivateKeyEntry, 
+thesolution.the.org, Sep 03, 2018, PrivateKeyEntry, 
 Certificate fingerprint (SHA1): 04:DC:24:E3:87:D9:16:F7:B4:7A:9A:2D:09:51:56:54:33:1B:0C:2A
 ```
 
