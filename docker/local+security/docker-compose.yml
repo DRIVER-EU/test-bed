@@ -41,7 +41,8 @@ services:
       - ./authzforce-ce-kafka-extensions:/opt/authzforce-ce-kafka-extensions
       - ./broker/config/ssl:/etc/kafka/secrets
       - ./broker/config/authorizer:/etc/kafka/authorizer
-      - ./broker/config/log4j.properties:/etc/kafka/log4j.properties
+        # For troubleshooting Kafka, copy ./broker/config/log4j.properties.orig to .../log4j.properties, change log levels in this file, and uncomment the line below
+        #      - ./broker/config/log4j.properties:/etc/kafka/log4j.properties
     environment:
       # https://docs.confluent.io/current/installation/docker/docs/configuration.html#confluent-kafka-cp-kafka
       KAFKA_BROKER_ID: 1
