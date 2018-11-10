@@ -28,7 +28,7 @@ COPY --chown=pki:pki ejbca-setup.sh ejbca.git/bin/extra/custom-ejbca-setup.sh
 ENV LAUNCH_JBOSS_IN_BACKGROUND=true
 
 RUN chmod +x ejbca.git/bin/extra/custom-ejbca-setup.sh &&\
-    ./ejbca.git/bin/extra/custom-ejbca-setup.sh &&\
+    ejbca.git/bin/extra/custom-ejbca-setup.sh &&\
     ejbca/bin/ejbca.sh ca init --verbose --caname Issuing_CA --dn "O=DRIVER_PROJECT,OU=WP923,CN=Issuing_CA" --tokenType soft --tokenPass null --keytype RSA --keyspec 2048 -v 730 --policy null -s SHA256WithRSA --signedby External -externalcachain /opt/pki/root-ca-crt.pem &&\
     openssl req -inform DER -outform PEM -in ejbca/Issuing_CA_csr.der -out ejbca/Issuing_CA_csr.pem &&\
     keytool -keystore root-ca.p12 -storepass changeit -gencert -v -alias ca -keypass changeit -infile ejbca/Issuing_CA_csr.pem -rfc -outfile Issuing_CA_crt.pem &&\
