@@ -94,10 +94,11 @@ WILDFLY_VERSION="10.1.0.Final"
 #MARIADB_DOWNLOAD_SHA256=fead0b3c61eba772fdaef2abed3b80eaeadbb5706abd78acf7698fe0a871cd4c
 #MARIADB_DOWNLOAD_SHA256_URL="https://downloads.mariadb.com/Connectors/java/connector-java-${MARIADB_CONNECTOR_VERSION}/sha256sums.txt"
 
-WILDFLY_TAR="wildfly-${WILDFLY_VERSION}.tar.gz"
-WILDFLY_TAR_SHA256=80781609be387045273f974662dadf7f64ad43ee93395871429bc6b7786ec8bc
+WILDFLY_TAR="wildfly-dist-${WILDFLY_VERSION}.tar.gz"
+#WILDFLY_TAR_SHA256=80781609be387045273f974662dadf7f64ad43ee93395871429bc6b7786ec8bc
+WILDFLY_TAR_SHA1=9ee3c0255e2e6007d502223916cefad2a1a5e333
 WILDFLY_DIR="wildfly-${WILDFLY_VERSION}"
-WILDFLY_DOWNLOAD_URL=https://download.jboss.org/wildfly/${WILDFLY_VERSION}/${WILDFLY_TAR}
+WILDFLY_DOWNLOAD_URL=https://repo1.maven.org/maven2/org/wildfly/wildfly-dist/${WILDFLY_VERSION}/${WILDFLY_TAR}
 
 # Which OS are we running? RHEL or UBUNTU? This is updated automagically in the end of this script
 BASE_OS=UBUNTU
@@ -320,10 +321,13 @@ ejbca_installer() {
     cd Download
     echo "Downloading WildFly to $(pwd)"
     curl -o ${WILDFLY_TAR} -L ${WILDFLY_DOWNLOAD_URL}
-    echo ${WILDFLY_TAR_SHA256} ${WILDFLY_TAR} > ${WILDFLY_TAR}.sha256
-    sha256sum --check ${WILDFLY_TAR}.sha256
+    #echo ${WILDFLY_TAR_SHA256} ${WILDFLY_TAR} > ${WILDFLY_TAR}.sha256
+	echo ${WILDFLY_TAR_SHA1} ${WILDFLY_TAR} > ${WILDFLY_TAR}.sha1
+    #sha256sum --check ${WILDFLY_TAR}.sha1
+	sha1sum --check ${WILDFLY_TAR}.sha1
     if [ $? -ne 0 ]; then
-       echo "SHA256 for wildfly does not match"
+       #echo "SHA256 for wildfly does not match"
+	   echo "SHA1 for wildfly does not match"
        rm ${WILDFLY_TAR}
        exit 1
     fi
