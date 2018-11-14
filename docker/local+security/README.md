@@ -133,6 +133,7 @@ Example with Kafka console script (Kafka Console Producer):
 $ cd sample-ssl-clients
 $ /path/to/kafka_home_dir/bin/kafka-console-producer.sh --broker-list localhost:3501 --topic test --producer.config admin-tool-client-ssl.properties
 ```
+If you wish to test the authorization service, replace `admin-tool-client-ssl.properties` with a normal user configuration (as opposed to the Admin Tool that is superadmin) such as `other-tool-1-client-ssl.properties`.
 
 More info in [Kafka documentation](https://kafka.apache.org/documentation/#security_configclients).
 
