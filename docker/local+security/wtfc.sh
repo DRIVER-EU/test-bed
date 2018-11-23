@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# Source: https://github.com/typekpb/wtfc/tree/71123e36a3509940c3832f4634310a3808478242
+
 # Uncomment for debugging
 #set -x
 
