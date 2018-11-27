@@ -23,9 +23,9 @@ services:
     ports:
      - "9443:8443"
     volumes:
-     - ./authorization_service/application.properties:/application.properties
-     - ./authorization_service/config:/opt/driver-testbed-sec-authz-service
-     - ./wtfc.sh:/opt/wtfc.sh
+     - ./authorization_service/application.properties:/application.properties:ro
+     - ./authorization_service/config:/opt/driver-testbed-sec-authz-service/conf:ro
+     - ./wtfc.sh:/opt/wtfc.sh:ro
     environment:
       JAVA_OPTS: "-Djava.security.egd=file:/dev/./urandom -Djava.awt.headless=true -Djavax.xml.accessExternalSchema=all -Xms1024m -Xmx2048m -XX:+UseConcMarkSweepGC -server"
 

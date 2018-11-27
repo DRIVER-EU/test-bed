@@ -9,7 +9,9 @@ ARG JAR_VERSION
 ENV JAR_URL="https://raw.githubusercontent.com/DRIVER-EU/maven-repo/master/eu/driver/driver-testbed-sec-authz-service/${JAR_VERSION}/driver-testbed-sec-authz-service-${JAR_VERSION}.jar"
 VOLUME /tmp
 
-# wait-for-it.sh is used to wait until resources have started, in the docker compose
+# COPY target folder must match policyLocation's folder in config/pdp.xml
+COPY config/default-policies /opt/driver-testbed-sec-authz-service/data/policies
+
 RUN apk --no-cache add curl &&\
     curl --verbose --output /app.jar --location $JAR_URL
 
