@@ -3,10 +3,9 @@ version: '3'
 services:
   reverse-proxy:
     image: traefik
-    command: --api --docker --docker.domain=${TESTBED_HOST}
+    command: --docker --docker.domain=${TESTBED_HOST}
     ports:
       - "80:80"     # The HTTP port
-      - "8080:8080" # The Web UI (enabled by --api)
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       
@@ -78,6 +77,7 @@ services:
       RECORD_POLL_TIMEOUT: 10000
     labels:
       - "traefik.frontend.rule=PathPrefixStrip:/topics-ui/"
+      - "traefik.frontend.auth.basic=test:$$apr1$$HZ2P3tDf$$dpM/.oro0qln4898HNYzM1"
 
   kafka_schema_registry_ui:
     image: drivereu/schema-registry-ui:0.0.1
@@ -91,7 +91,8 @@ services:
       PROXY: 'true'
     labels:
       - "traefik.frontend.rule=PathPrefixStrip:/schema-ui/"
-
+      - "traefik.frontend.auth.basic=test:$$apr1$$HZ2P3tDf$$dpM/.oro0qln4898HNYzM1"
+      
   postgres:
     image: postgres:9.6
     environment:
