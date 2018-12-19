@@ -1,3 +1,15 @@
+# Introduction
+
+This 'Swarm' Test-Bed composition is created to allow running the Test-Bed on the Docker Swarm in combination with Traefik as a reverse proxy. Only the Broker and Schema Regsitry will still be exposed via a port. The other services are exposed via a relative URL on a specified domain name. Traefik also handles certificates for the domain by using lets-encrypt. This ensures that communication with all web services is performed via HTTPS without requiring configuration of the services themselves.
+
+## Relative URL's for services:
+
+* Topics-ui: https://<domain>/topics-ui/
+* Schema-ui: https://<domain>/schema-ui/
+* Time Service: https://<domain>/time-service/
+* Large File Service: https://<domain>/large-file-service/
+* Admin Tool: Not yet available, awaiting Issue: https://github.com/DRIVER-EU/test-bed-admin/issues/17
+
 # Starting a new Cloud Test-Bed with Portainer
 
 1. Go to the portainer instance running at http://134.221.20.201:9000/ and login.
