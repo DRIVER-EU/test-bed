@@ -4,10 +4,12 @@ This 'Swarm' Test-Bed composition is created to allow running the Test-Bed on th
 
 ## Relative URL's for services:
 
-* Topics-ui: https://<domain>/topics-ui/
-* Schema-ui: https://<domain>/schema-ui/
-* Time Service: https://<domain>/time-service/
-* Large File Service: https://<domain>/large-file-service/
+The following services can be reached via HTTPS on these relative URL's, where TESTBED_HOST is the configured hostname for the Cloud Test-Bed:
+
+* Topics-ui: https://TESTBED_HOST/topics-ui/
+* Schema-ui: https://TESTBED_HOST/schema-ui/
+* Time Service: https://TESTBED_HOST/time-service/
+* Large File Service: https://TESTBED_HOST/large-file-service/
 * Admin Tool: Not yet available, awaiting Issue: https://github.com/DRIVER-EU/test-bed-admin/issues/17
 
 # Starting a new Cloud Test-Bed with Portainer
