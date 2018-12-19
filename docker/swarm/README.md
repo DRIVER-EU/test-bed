@@ -35,7 +35,7 @@ Important labels are:
 * `traefik.port=xxxx` the port on which the web service runs. Traefik will route from port 443 (HTTPS) to this port on the container.
 * `traefik.enable=true` ensures that Traefik will function as a reverse proxy for this service. By default it will NOT in the current configuration.
 * `traefik.docker.network=traefik-net` The Docker network that is used by Traefik to route to the container. This network 'traefik-net' has been predefined and is already present for the Docker Swarm at TNO.
-* `traefik.frontend.rule=Host:${TESTBED_HOST};PathPrefixStrip:/schema-ui/` specifies on which hostname and relative URL the service can be reached. Also allows modifying the request URL before forwarding requests to the service.  Many things are possible here, for more details please check the [Traefik Documentation](https://docs.traefik.io/basics/#frontends).
+* `traefik.frontend.rule=Host:${TESTBED_HOST};PathPrefixStrip:/relative-path/` specifies on which hostname and relative URL the service can be reached. Also allows modifying the request URL before forwarding requests to the service.  Many things are possible here, for more details please check the [Traefik Documentation](https://docs.traefik.io/basics/#frontends).
 
 # Starting a new Cloud Test-Bed with Portainer
 
