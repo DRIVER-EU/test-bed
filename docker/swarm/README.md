@@ -12,6 +12,10 @@
 7. Press 'Deploy the stack'.
 8. Traefik (running in the Traefik stack) will now automatically pick up the starting pack and handle routing for the configured domain.
 
+*Available Domain Names*
+
+Currently the available domain names for the Docker Swarm are tb1.driver-testbed.eu up to tb10.driver-testbed.eu
+
 # Stopping a Cloud Test-Bed
 
 1. Go to the portainer instance running at http://134.221.20.201:9000/ and login.
