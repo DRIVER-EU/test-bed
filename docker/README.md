@@ -68,4 +68,4 @@ The Lightweight Local Test-bed will contain the Test-bed in Dev Mode. This means
 * Kafka Schema Browser UI: [http://localhost:3601](http://localhost:3601)
 * Test-bed Admin Interface: [http://localhost:8090](http://localhost:8090). See the [GitHub Project Page](https://github.com/DRIVER-EU/test-bed-admin) for more info.
 * Nextcloud Interface: [http://localhost:8080](http://localhost:8080). Default username/password: nextcloud/nextcloud.
-
+* csCOP Interface: [http://localhost:8003/](http://localhost:8003)
