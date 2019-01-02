@@ -5,6 +5,7 @@ services:
   # Certificate Management Service
   cert_mgt:
     build: ./cert_mgt
+    image: drivereu/cert_mgt:1.0.0
     hostname: certmgt
     ports:
      - "8442:8442"

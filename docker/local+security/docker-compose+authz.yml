@@ -9,6 +9,7 @@ services:
       context: ./authorization_service
       args:
         JAR_VERSION: "2.0.0"
+    image: drivereu/authorization_service:2.0.0
     hostname: authz
     links: 
      - cert_mgt:certmgt
@@ -47,7 +48,8 @@ services:
     build: 
       context: ./kafka_sec_extensions
       args:
-         AUTHZFORCE_EXT_VERSION: "1.2.0"  
+         AUTHZFORCE_EXT_VERSION: "1.2.0"
+    image: drivereu/kafka_sec_extensions:1.2.0
     volumes:
      - kafka-sec-ext-data:/kafka_sec_extensions:ro
 
