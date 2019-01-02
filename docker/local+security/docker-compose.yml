@@ -9,42 +9,8 @@ services:
     ports:
      - "8442:8442"
      - "8443:8443"
-  
-  authorization_service:
-    depends_on:
-      - cert_mgt
-    build: 
-      context: ./authorization_service
-      args:
-        JAR_VERSION: "1.1.0"
-    hostname: authz
-    links: 
-     - cert_mgt:certmgt
-    ports:
-     - "9443:8443"
-    volumes:
-     - ./authorization_service/application.properties:/application.properties:ro
-     - ./authorization_service/config:/opt/driver-testbed-sec-authz-service/conf:ro
-     - ./wtfc.sh:/opt/wtfc.sh:ro
-    environment:
-      JAVA_OPTS: "-Djava.security.egd=file:/dev/./urandom -Djava.awt.headless=true -Djavax.xml.accessExternalSchema=all -Xms1024m -Xmx2048m -XX:+UseConcMarkSweepGC -server"
 
-    # healthcheck start_period option does not stop other services to start although this service is not "healthy" yet :-( Intended Docker design? 
-    # Using alternative "wait-for-it" script to prevent dependent services from starting too soon. More info:
-    # https://docs.docker.com/compose/startup-order/
-    # https://stackoverflow.com/questions/31746182/docker-compose-wait-for-container-x-before-starting-y/35202892
-
-    #healthcheck:
-    #  test: nc -vz authz 8443
-    #  interval: 10s
-    #  #timeout: 10s
-    #  retries: 10
-    #  start_period: 60s
-    command: sh -c "/opt/wtfc.sh --progress --timeout=120 --interval=10 --status=0 nc -w 5 -vz certmgt 8442 && java $${JAVA_OPTS} -jar /app.jar"
-    
   zookeeper:
-    depends_on:
-      - authorization_service 
     image: confluentinc/cp-zookeeper:5.0.0
     hostname: zookeeper
     ports:
@@ -52,41 +18,22 @@ services:
     volumes:
      - ./zookeeper/config/zookeeper.properties:/etc/kafka/zookeeper.properties
      - ./zookeeper/config/zookeeper_jaas.conf:/etc/kafka/zookeeper_jaas.conf
-     - ./wtfc.sh:/opt/wtfc.sh
     environment:
       KAFKA_OPTS: '-Djava.security.auth.login.config=/etc/kafka/zookeeper_jaas.conf'
       ZOOKEEPER_CLIENT_PORT: 3500
       ZOOKEEPER_TICK_TIME: 2000
 
-  kafka_sec_extensions:
-    depends_on:
-      - authorization_service
-    build: 
-      context: ./kafka_sec_extensions
-      args:
-         AUTHZFORCE_EXT_VERSION: "1.1.0"  
-    volumes:
-     - kafka-sec-ext-data:/kafka_sec_extensions
-
   broker:
     image: confluentinc/cp-kafka:5.0.0
     hostname: broker
-    links: 
-     - authorization_service:authz
     depends_on:
       - zookeeper  
-      - kafka_sec_extensions
     ports:
       - "3501:3501"
-      - "9092:9092"
     volumes:
-      - kafka-sec-ext-data:/opt/kafka_sec_extensions
       - ./broker/config/ssl:/etc/kafka/secrets
-      - ./broker/config/authorizer:/etc/kafka/authorizer
-      - ./wtfc.sh:/opt/wtfc.sh
       # For debugging, create log4j.properties based on log4j.properties.orig in folder 'broker/config' and customize it.
-      #      - ./broker/config/log4j.properties:/etc/kafka/log4j.properties
-    command: sh -c "/opt/wtfc.sh --progress --timeout=120 --interval=10 --status=0 nc -w 5 -vz authz 8443 && /etc/confluent/docker/run"    
+      #      - ./broker/config/log4j.properties:/etc/kafka/log4j.properties   
     environment:
       # https://docs.confluent.io/current/installation/docker/docs/configuration.html#confluent-kafka-cp-kafka
       KAFKA_BROKER_ID: 1
@@ -97,7 +44,7 @@ services:
       KAFKA_ADVERTISED_LISTENERS: 'SSL://localhost:3501,PLAINTEXT://broker:9092'
       KAFKA_LISTENERS: 'SSL://0.0.0.0:3501,PLAINTEXT://0.0.0.0:9092'
       # KAFKA_SECURITY_INTER_BROKER_PROTOCOL: 'PLAINTEXT'
-      KAFKA_INTER_BROKER_LISTENER_NAME: 'PLAINTEXT'
+      KAFKA_INTER_BROKER_LISTENER_NAME: 'SSL'
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_DEFAULT_REPLICATION_FACTOR: 1
       KAFKA_MESSAGE_MAX_BYTES: 100000000
@@ -125,16 +72,6 @@ services:
       KAFKA_SSL_KEYSTORE_CREDENTIALS: keystore_creds
       KAFKA_SSL_KEY_CREDENTIALS: keystore_creds
       KAFKA_SSL_CLIENT_AUTH: required
-      
-      # Kafka Authorizer extension
-      CLASSPATH: '/opt/kafka_sec_extensions/lib/*' 
-      KAFKA_AUTHORIZER_CLASS_NAME: 'org.ow2.authzforce.kafka.pep.CombinedXacmlAclAuthorizer'
-      KAFKA_SUPER_USERS: 'User:CN=Admin Tool,OU=Authz Service Dev Project,OU=WP923,O=DRIVER-PROJECT.EU'
-      KAFKA_ORG_OW2_AUTHZFORCE_KAFKA_PEP_XACML_PDP_URL: 'https://authz:8443/services/authz/pdp' 
-      KAFKA_ORG_OW2_AUTHZFORCE_KAFKA_PEP_XACML_REQ_TMPL_LOCATION: 'file:///etc/kafka/authorizer/request.xacml.json.ftl'
-      KAFKA_ORG_OW2_AUTHZFORCE_KAFKA_PEP_HTTP_CLIENT_CFG_LOCATION: '/etc/kafka/authorizer/http-client.xml'
-      # Max size of authorization decision cache (use negative or zero value to disable)
-      KAFKA_ORG_OW2_AUTHZFORCE_KAFKA_PEP_AUTHZ_CACHE_SIZE_MAX: -1
 
   schema_registry:
     image: confluentinc/cp-schema-registry:5.0.0
@@ -233,4 +170,3 @@ services:
       
 volumes:
   postgres-data:
-  kafka-sec-ext-data:

@@ -1,2 +1,1 @@
-authzforce-ce-kafka-extensions*
-*.xacml.xml
+docker-compose.override.yml

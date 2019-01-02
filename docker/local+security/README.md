@@ -133,13 +133,39 @@ Example with Kafka console script (Kafka Console Producer):
 $ cd sample-ssl-clients
 $ /path/to/kafka_home_dir/bin/kafka-console-producer.sh --broker-list localhost:3501 --topic test --producer.config admin-tool-client-ssl.properties
 ```
-If you wish to test the authorization service, replace `admin-tool-client-ssl.properties` with a normal user configuration (as opposed to the Admin Tool that is superadmin) such as `other-tool-1-client-ssl.properties`.
 
 More info in [Kafka documentation](https://kafka.apache.org/documentation/#security_configclients).
-
 
 ## Stop and remove services 
 
 ```sh
 $ docker-compose down
 ```
+
+## Kafka authorization
+In order to enable authorization in Kafka, first stop and remove any running service as told previoulsy, then boot up again as follows:
+
+```sh
+$ docker-compose -f docker-compose.yml -f docker-compose+authz.yml up -d
+```
+
+This boots up the Authorization Service and enables a special Kafka Authorizer integrated with the Authorization Service.
+
+If you intend to enable Kafka authorization most of the time, create a symbolink link named `docker-compose.override.yml` to `docker-compose+authz.yml` (use `ln` command on Linux, or `mklink` on Windows 10). With that symlink, you can use the simple command as usual:
+
+```sh
+$ docker-compose up -d
+```
+
+Indeed, by default, [Compose reads two files](https://docs.docker.com/compose/extends/#understanding-multiple-compose-files), a `docker-compose.yml` and an optional `docker-compose.override.yml` file.
+
+For testing, replace `admin-tool-client-ssl.properties` with a normal user configuration (as opposed to the Admin Tool that is superadmin) such as `other-tool-1-client-ssl.properties`.
+
+To disable authorization, just remove the symlink and restart all:
+
+```sh
+$ docker-compose down
+$ docker-compose up -d
+```
+
+More info in [Kafka documentation](https://kafka.apache.org/documentation/#security_configclients).

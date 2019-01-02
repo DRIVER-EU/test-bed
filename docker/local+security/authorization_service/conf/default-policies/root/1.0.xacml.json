@@ -21,6 +21,18 @@
 									"mustBePresent": true
 								}
 							}
+						],
+						[
+							{
+								"matchFunction": "urn:oasis:names:tc:xacml:1.0:function:string-equal",
+								"value": "CN=Admin Tool,OU=Authz Service Dev Project,OU=WP923,O=DRIVER-PROJECT.EU",
+								"attributeDesignator": {
+									"category": "urn:oasis:names:tc:xacml:1.0:subject-category:access-subject",
+									"id": "urn:oasis:names:tc:xacml:1.0:subject:subject-id",
+									"dataType": "http://www.w3.org/2001/XMLSchema#string",
+									"mustBePresent": true
+								}
+							}
 						]
 					]
 				]
