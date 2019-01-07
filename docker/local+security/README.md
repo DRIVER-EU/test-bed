@@ -161,10 +161,11 @@ Indeed, by default, [Compose reads two files](https://docs.docker.com/compose/ex
 
 For testing, replace `admin-tool-client-ssl.properties` with a normal user configuration (as opposed to the Admin Tool that is superadmin) such as `other-tool-1-client-ssl.properties`.
 
-To disable authorization, just remove the symlink and restart all:
+To disable authorization, shutdown Compose and remove the symlink before you restart:
 
 ```sh
 $ docker-compose down
+$ rm docker-compose.override.yml
 $ docker-compose up -d
 ```
 
