@@ -49,7 +49,7 @@ services:
       context: ./kafka_sec_extensions
       args:
          AUTHZFORCE_EXT_VERSION: "1.2.0"
-    image: drivereu/kafka_sec_extensions:1.2.0
+    image: drivereu/kafka_sec_extensions:1.2.0-1
     volumes:
      - kafka-sec-ext-data:/kafka_sec_extensions:ro
 
