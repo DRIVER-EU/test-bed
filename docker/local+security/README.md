@@ -179,27 +179,27 @@ For demo purposes, you can use the Secure Kafka Chat application - provided on D
 
 1. Run a first Chat participant (using a Kafka client backend), e.g. the sample Admin Tool:
 
-```sh
-$ cd sample-ssl-clients
-$ java -jar /path/to/kovasbak-1.0.0.jar --spring.config.location=sec-kafka-chat-admin.yml
-```
+    ```sh
+    $ cd sample-ssl-clients
+    $ java -jar /path/to/kovasbak-1.0.0.jar --spring.config.location=sec-kafka-chat-admin.yml
+    ```
 
-The app uses properties in the file specified by `spring.config.location` .
+    The app uses properties in the file specified by `spring.config.location` .
 
-*If you wish to override properties in the above `.yml` file on the command line, you specify them prefixed with `--` and before `--spring.config.location` as follows:*
+    *If you wish to override properties in the above `.yml` file on the command line, you specify them prefixed with `--` and before `--spring.config.location` as follows:*
 
-```sh
-$ java -jar /path/to/kovasbak-1.0.0.jar --server.port=6666 --spring.config.location=sec-kafka-chat-admin.yml
-```
+    ```sh
+    $ java -jar /path/to/kovasbak-1.0.0.jar --server.port=6666 --spring.config.location=sec-kafka-chat-admin.yml
+    ```
 
-This overrides the `server.port` property, which is the port that the local web chat server for the web UI is listening to.
-Overriding this property is useful if you want to start multiple instances of the app on your host, in order to use different participant identities (Kafka clients using different TLS client certificates), one per instance.
+    This overrides the `server.port` property, which is the port that the local web chat server for the web UI is listening to.
+    Overriding this property is useful if you want to start multiple instances of the app on your host, in order to use different participant identities (Kafka clients using different TLS client certificates), one per instance.
 
-There are two other important application properties you may wish to customize:
-- `chat.rooms`: comma-separated list of chat rooms the chat participant may participate in, each room corresponds to a Kafka topic;
-- `spring.kafka.consumer.group-id` (optional): Kafka consumer group ID.
+    There are two other important application properties you may wish to customize:
+    - `chat.rooms`: comma-separated list of chat rooms the chat participant may participate in, each room corresponds to a Kafka topic;
+    - `spring.kafka.consumer.group-id` (optional): Kafka consumer group ID.
 
-Once the app is running, you can access the chat app's web UI by opening a browser to `http://localhost:${server.port}`, where `server.port` is `8080` by default.
+1. Once the app is running, you can access the chat app's web UI by opening a browser to `http://localhost:${server.port}`, where `server.port` is `8080` by default.
 
 1. Run a second chat participant, e.g. the sample "Other Tool 1":
 
@@ -218,19 +218,20 @@ If authorization is enabled on the test-bed (see previous section for enabling/d
 - join its consumer group defined by `spring.kafka.consumer.group-id` if one is defined (non-empty).
 
 In this sample scenario, we assume the Admin Tool participant is started first in the previous command, and therefore all topics created successfully by the Admin Tool. In our example, the other participant "Other Tool 1" has the same `chat.rooms`, therefore is using the same Kafka topics. So we don't need to authorize the latter to create the topics (already done by the Admin Tool) but we still need to authorize it to join its consumer group and to publish/subscribe to the topics. You authorize such actions on the Authorization Service as a system admin, either with the Admin Tool, or using the REST API directly with the command line as described below. 
+
 1. If authorization enabled, you have to authorize `Other Tool 1` to join the consumer group specified by `spring.kafka.consumer.group-id` property (`firefighters`) with the Admin Tool, or with the command line:
 
-```sh
-$ curl --verbose --include -k --cert admin-tool-client.p12:changeit --cert-type p12  -X PUT -H 'Content-Type: application/json' -H 'Accept: application/json' --data @permit-other-tool-rd.policy.json 'https://localhost:9443/services/authz/pap/policies/resource.type=GROUP/policies;resource.id=firefighters'
-```
+    ```sh
+    $ curl --verbose --include -k --cert admin-tool-client.p12:changeit --cert-type p12  -X PUT -H 'Content-Type: application/json' -H 'Accept: application/json' --data @permit-other-tool-rd.policy.json 'https://localhost:9443/services/authz/pap/policies/resource.type=GROUP/policies;resource.id=firefighters'
+    ```
 
 1. If authorization enabled, in addition, you have to authorize the user to publish/subscribe the requested topics corresponding to the chatrooms (see `chat.rooms` property in the [config file](sec-kafka-chat-other-tool-1.yml) ). For demonstration purposes, we'll use group-based access control, i.e. grant permissions to the consumer group (`firefighters`) instead of granting to the user directly:
 
-```sh
-$ curl --verbose --include -k --cert admin-tool-client.p12:changeit --cert-type p12  -X PUT -H 'Content-Type: application/json' -H 'Accept: application/json' --data @permit-firefighters-rwd.policy.json 'https://localhost:9443/services/authz/pap/policies/resource.type=TOPIC/policies;resource.id=all'
+    ```sh
+    $ curl --verbose --include -k --cert admin-tool-client.p12:changeit --cert-type p12  -X PUT -H 'Content-Type: application/json' -H 'Accept: application/json' --data @permit-firefighters-rwd.policy.json 'https://localhost:9443/services/authz/pap/policies/resource.type=TOPIC/policies;resource.id=all'
 
-$ curl --verbose --include -k --cert admin-tool-client.p12:changeit --cert-type p12  -X PUT -H 'Content-Type: application/json' -H 'Accept: application/json' --data @permit-firefighters-rwd.policy.json 'https://localhost:9443/services/authz/pap/policies/resource.type=TOPIC/policies;resource.id=COP'
-```
+    $ curl --verbose --include -k --cert admin-tool-client.p12:changeit --cert-type p12  -X PUT -H 'Content-Type: application/json' -H 'Accept: application/json' --data @permit-firefighters-rwd.policy.json 'https://localhost:9443/services/authz/pap/policies/resource.type=TOPIC/policies;resource.id=COP'
+    ```
 
-You may restart whatever chat participant having authorization issues, to see the changes.
+    You may restart whatever chat participant having authorization issues, to see the changes.
 
