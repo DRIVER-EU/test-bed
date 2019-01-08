@@ -203,11 +203,11 @@ For demo purposes, you can use the Secure Kafka Chat application - provided on D
 
 1. Run a second chat participant, e.g. the sample "Other Tool 1":
 
-```sh
-$ java -jar /path/to/kovasbak-1.0.0.jar --spring.config.location=sec-kafka-chat-other-tool-1.yml
-```
+    ```sh
+    $ java -jar /path/to/kovasbak-1.0.0.jar --spring.config.location=sec-kafka-chat-other-tool-1.yml
+    ```
 
-If authorization is enabled on the test-bed, you will notice a bunch of authorization errors in the console. In this case, follow the instructions in section [Testing with authorization](#testing-with-authorization), then restart the chat participant and make sure these errors are gone, before going further.
+    If authorization is enabled on the test-bed, you will notice a bunch of authorization errors in the console. In this case, follow the instructions in section [Testing with authorization](#testing-with-authorization), then restart the chat participant and make sure these errors are gone, before going further.
 
 1. Start typing messages in one or the other chat participant's browser tab/window on the same room, by accessing the right `http://localhost:${server.port}` URL depending on the chat participant's `server.port`. Notice that messages sent from one chat participant's window are received on the other chat participant's window.
 
