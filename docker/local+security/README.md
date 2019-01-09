@@ -107,19 +107,53 @@ The returned `keystore_data` value is the password-protected (with the user's pa
     ```sh
     $ base64 -d /tmp/keystore_data.txt | base64 -d > /tmp/keystore.p12
     ```
+    
+    You may do it in Java as well like this:
+    ```java
+	package test;
+	
+	import java.io.IOException;
+	import java.nio.charset.StandardCharsets;
+	import java.nio.file.Files;
+	import java.nio.file.Paths;
+	import java.util.Base64;
+	
+	public class EjbcaRestApiKeystoreDataParser
+	{
+	
+		public static void main(final String[] args) throws IOException
+		{
+			final String encodedPem = new String(Files.readAllBytes(Paths.get("/tmp/keystore_data.txt")));
+			System.out.println("Original: " + encodedPem);
+			System.out.println();
+			final byte[] pemBytes = Base64.getDecoder().decode(encodedPem);
+			final String pem = new String(pemBytes, StandardCharsets.UTF_8);
+			System.out.println("PEM: " + pem);
+			System.out.println();
+			final byte[] p12Bytes = Base64.getMimeDecoder().decode(pem);
+			Files.write(Paths.get("/tmp/keystore.p12"), p12Bytes);
+		}
+	
+	}
+	```
+	
 1. Make sure the result P12 file is in the right format with a PKCS#12 tool such as openssl, keytool (or try import into your browser):
-```sh
-$ keytool -keystore /tmp/keystore.p12 -list
+	```sh
+	$ keytool -keystore /tmp/keystore.p12 -list
+	
+	Enter keystore password:  
+	Keystore type: JKS
+	Keystore provider: SUN
+	
+	Your keystore contains 1 entry
+	
+	thesolution.the.org, Sep 03, 2018, PrivateKeyEntry, 
+	Certificate fingerprint (SHA1): 04:DC:24:E3:87:D9:16:F7:B4:7A:9A:2D:09:51:56:54:33:1B:0C:2A
+	```
 
-Enter keystore password:  
-Keystore type: JKS
-Keystore provider: SUN
+### Quick testing of user certificate enrollment (Python script)
+For quick testing of the full user enrollment on the Certificate Management service (registration and certificate request) for a given user, you can use the provided [python script](sample-ssl-clients/enroll-cert.py) on this repository, which does exactly what was describe in previous sections.
 
-Your keystore contains 1 entry
-
-thesolution.the.org, Sep 03, 2018, PrivateKeyEntry, 
-Certificate fingerprint (SHA1): 04:DC:24:E3:87:D9:16:F7:B4:7A:9A:2D:09:51:56:54:33:1B:0C:2A
-```
 
 ## Kafka client authentication
 Once the services are running, Kafka clients must authenticate to the Kafka `broker` service using [SSL certificate authentication](https://kafka.apache.org/documentation/#security_ssl) with a client certificate issued by the Certificate Management Service mentioned previously. You can also find in folder [sample-ssl-clients](ca_service/sample-ssl-clients) a few examples of SSL client files (certificates and keystores) for testing:
@@ -210,6 +244,7 @@ For demo purposes, you can use the Secure Kafka Chat application - provided on D
     If authorization is enabled on the test-bed, you will notice a bunch of authorization errors in the console. In this case, follow the instructions in section [Testing with authorization](#testing-with-authorization), then restart the chat participant and make sure these errors are gone, before going further.
 
 1. Start typing messages in one or the other chat participant's browser tab/window on the same room, by accessing the right `http://localhost:${server.port}` URL depending on the chat participant's `server.port`. Notice that messages sent from one chat participant's window are received on the other chat participant's window.
+1. You may also run another chat participant using a certificate generated using the provided [python script](sample-ssl-clients/enroll-cert.py). This script enables you to request a certificate from the command line for a given username in one shot (by running the script) instead of using the Admin Tool UI. Then you have to use the [sec-kafka-chat-enrolled-user.yml](sample-ssl-clients/sec-kafka-chat-enrolled-user.yml) file as `spring-config-location` argument to run the chat app.
 
 ### Testing with authorization
 If authorization is enabled on the test-bed (see previous section for enabling/disabling authorization), each Chat participant, i.e. Kafka client, except for the Admin Tool - the superadmin with all privileges - must be authorized explicitly (by a policy in the Authorization Service) to:

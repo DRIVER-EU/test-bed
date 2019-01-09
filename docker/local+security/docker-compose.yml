@@ -5,11 +5,12 @@ services:
   # Certificate Management Service
   cert_mgt:
     build: ./cert_mgt
-    image: drivereu/cert_mgt:1.0.0
+    image: drivereu/cert_mgt:1.0.1
     hostname: certmgt
     ports:
      - "8442:8442"
      - "8443:8443"
+     - "9090:8080"
 
   zookeeper:
     image: confluentinc/cp-zookeeper:5.0.0
