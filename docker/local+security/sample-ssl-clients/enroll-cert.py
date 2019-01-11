@@ -14,9 +14,14 @@ userPassword = "P@55w0/2d"
 
 # Extract superadmin p12 from cert_mgt container to /tmp
 subprocess.run(['docker', 'cp', 'localsecurity_cert_mgt_1:/opt/pki/ejbca/p12/superadmin.p12', '/tmp'])
+
+print("Superadmin keystore extracted to: /tmp/superadmin.p12")
+
 # Extract superadmin password
 result = subprocess.run(['docker', 'exec', 'localsecurity_cert_mgt_1', 'grep', 'superadmin.password', '/opt/pki/ejbca/conf/web.properties'], stdout=subprocess.PIPE)
 superadminPass = re.search("=([a-f0-9]+)\n", result.stdout.decode('utf-8')).group(1)
+
+print(f"Superadmin keystore password: {superadminPass}")
 
 # Register the user on the Certificate Management's REST API
 headers = {'Content-Type': 'application/json', 'Accept': 'application/json'}
@@ -62,12 +67,12 @@ keystoreData = responseJson['keystore_data']
 # Decode one-liner b64 to PEM
 keystoreBytes = base64.b64decode(keystoreData)
 keystorePem = keystoreBytes.decode("utf-8")
-print("PEM: \n" + keystorePem)
+#print("PEM: \n" + keystorePem)
 # Decode PEM to binary P12
 keystoreBin = base64.b64decode(keystorePem)
 # Save result to binary file username.p12
 p12Path = "/tmp/keystore.p12"
 open(p12Path, 'wb').write(keystoreBin)
-print(f"\nPKCS#12 keystore saved to file: '{p12Path}'")
+print(f"\nPKCS#12 keystore for username '{inputUsername}' saved to file: '{p12Path}'")
 print(f"You may display the content with this command (password: {userPassword}):\n keytool -list -v -keystore /tmp/keystore.p12")
 
