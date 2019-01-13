@@ -8,8 +8,8 @@ services:
     build: 
       context: ./authorization_service
       args:
-        JAR_VERSION: "2.1.0"
-    image: drivereu/authorization_service:2.1.0
+        JAR_VERSION: "2.1.1"
+    image: drivereu/authorization_service:2.1.1
     hostname: authz
     links: 
      - cert_mgt:certmgt
