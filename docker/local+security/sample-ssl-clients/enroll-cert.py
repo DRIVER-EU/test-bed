@@ -6,11 +6,13 @@ if sys.version_info.major < 3 or sys.version_info.minor < 6:
 
 if len(sys.argv) < 2:
     print("Missing username argument")
-    print("Usage: ./enroll-cert.py username")
+    print("Usage: ./enroll-cert.py username [organization]")
     sys.exit(2)
 
 inputUsername = sys.argv[1]
 userPassword = "P@55w0/2d"
+
+inputOrganization = sys.argv[2] or "TheOrg"
 
 # Extract superadmin p12 from cert_mgt container to /tmp
 subprocess.run(['docker', 'cp', 'localsecurity_cert_mgt_1:/opt/pki/ejbca/p12/superadmin.p12', '/tmp'])
@@ -33,7 +35,7 @@ userDataJson = {
             "username": inputUsername,
             "password": userPassword,
             "email": f"{inputUsername}.admin@the.org",
-            "subject_dn":f"CN={inputUsername},O=TheOrganization",
+            "subject_dn":f"CN={inputUsername},O={inputOrganization}",
             "ca_name": "Issuing_CA",
             "token_type": "P12"
     }

@@ -9,7 +9,7 @@ chat.rooms: all
 # Kafka client - General
 spring.kafka.template.default-topic: all
 spring.kafka.bootstrap-servers: localhost:3501
-spring.kafka.consumer.group-id: 
+spring.kafka.consumer.group-id: firefighters 
 spring.kafka.properties.security.protocol: SSL
 
 # Kafka client - SSL
