@@ -152,7 +152,12 @@ The returned `keystore_data` value is the password-protected (with the user's pa
 	```
 
 ### Quick testing of user certificate enrollment (Python script)
-For quick testing of the full user enrollment on the Certificate Management service (registration and certificate request) for a given user, you can use the provided [python script](sample-ssl-clients/enroll-cert.py) on this repository, which does exactly what was describe in previous sections.
+For quick testing of the full user enrollment on the Certificate Management service (registration and certificate request) for a given user, you can use the provided [python script](sample-ssl-clients/enroll-cert.py) on this repository, which does exactly what was describe in previous sections (the two arguments are the name of the solution/tool and the name of the organization):
+
+```python
+$ cd sample-ssl-clients
+$ python3 enroll-cert.py best.solution.com BestOrganization
+```
 
 
 ## Kafka client authentication
@@ -244,7 +249,14 @@ For demo purposes, you can use the Secure Kafka Chat application - provided on D
     If authorization is enabled on the test-bed, you will notice a bunch of authorization errors in the console. In this case, follow the instructions in section [Testing with authorization](#testing-with-authorization), then restart the chat participant and make sure these errors are gone, before going further.
 
 1. Start typing messages in one or the other chat participant's browser tab/window on the same room, by accessing the right `http://localhost:${server.port}` URL depending on the chat participant's `server.port`. Notice that messages sent from one chat participant's window are received on the other chat participant's window.
-1. You may also run another chat participant using a certificate generated using the provided [python script](sample-ssl-clients/enroll-cert.py). This script enables you to request a certificate from the command line for a given username in one shot (by running the script) instead of using the Admin Tool UI. Then you have to use the [sec-kafka-chat-enrolled-user.yml](sample-ssl-clients/sec-kafka-chat-enrolled-user.yml) file as `spring-config-location` argument to run the chat app.
+1. You may also run another chat participant using a certificate generated using the provided [python script](sample-ssl-clients/enroll-cert.py). This script enables you to request a certificate from the command line for a given solution in a given organization in one shot (by running the script) instead of using the Admin Tool UI:
+
+```python
+$ cd sample-ssl-clients
+$ python3 enroll-cert.py best.solution.com BestOrganization
+```
+
+Then you have to use the [sec-kafka-chat-enrolled-user.yml](sample-ssl-clients/sec-kafka-chat-enrolled-user.yml) file as `spring-config-location` argument to run the chat app.
 
 ### Testing with authorization
 If authorization is enabled on the test-bed (see previous section for enabling/disabling authorization), each Chat participant, i.e. Kafka client, except for the Admin Tool - the superadmin with all privileges - must be authorized explicitly (by a policy in the Authorization Service) to:
