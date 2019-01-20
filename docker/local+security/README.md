@@ -271,6 +271,8 @@ In this sample scenario, we assume the Admin Tool participant is started first i
     ```sh
     $ curl --verbose --include -k --cert admin-tool-client.p12:changeit --cert-type p12  -X PUT -H 'Content-Type: application/json' -H 'Accept: application/json' --data @permit-other-tool-rd.policy.json 'https://localhost:9443/services/authz/pap/policies/resource.type=GROUP/policies;resource.id=firefighters'
     ```
+    
+    You may do the same for other users (solutions) by copying the file `permit-other-tool-rd.policy.json` to some temporary file, e.g. `/tmp/permit-my-user.policy.json`, and replacing the `subject.id` value in the JSON content with the subject name in the user certificate (e.g. `CN=some.user.name,O=SomeOrganization`), then redo the same command with argument `--data @/tmp/permit-my-user.policy.json` instead of `--data @permit-other-tool-rd.policy.json`.
 
 1. If authorization enabled, in addition, you have to authorize the user to publish/subscribe the requested topics corresponding to the chatrooms (see `chat.rooms` property in the [config file](sec-kafka-chat-other-tool-1.yml) ). For demonstration purposes, we'll use group-based access control, i.e. grant permissions to the consumer group (`firefighters`) instead of granting to the user directly:
 
