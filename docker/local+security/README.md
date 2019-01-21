@@ -276,7 +276,7 @@ The first argument is the solution name, in a form of CommonName (CN), e.g. a FQ
 
 **The script requires Python 3.6 or later, and `requests_pkcs12` module (can be installed with `pip install requests_pkcs12`). On some platforms, you may have to use simply `python` instead of `python3`, depending on the name of the Python 3.x executable.**
 
-Then you have to use the [sec-kafka-chat-enrolled-user.yml](sample-ssl-clients/sec-kafka-chat-enrolled-user.yml) file as `spring-config-location` argument to run the chat app.
+Then you have to use the [sec-kafka-chat-enrolled-user.yml](sample-ssl-clients/sec-kafka-chat-enrolled-user.yml) file as `spring-config-location` argument to run the chat app. You'll have to change the keystore (.p12 file) location in that file, according to where the .p12 file was saved by the script.
 
 ### Testing with authorization
 If authorization is enabled on the test-bed (see previous section for enabling/disabling authorization), each Chat participant, i.e. Kafka client, except for the Admin Tool - the superadmin with all privileges - must be authorized explicitly (by a policy in the Authorization Service) to:
