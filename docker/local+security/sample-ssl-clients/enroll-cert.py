@@ -1,4 +1,4 @@
-import sys, subprocess, re, requests_pkcs12, json, base64
+import sys, os, subprocess, re, requests_pkcs12, json, base64, tempfile
 
 # Requires Python >= 3.6
 if sys.version_info.major < 3 or sys.version_info.minor < 6:
@@ -14,10 +14,12 @@ userPassword = "P@55w0/2d"
 
 inputOrganization = sys.argv[2] or "TheOrg"
 
-# Extract superadmin p12 from cert_mgt container to /tmp
-subprocess.run(['docker', 'cp', 'localsecurity_cert_mgt_1:/opt/pki/ejbca/p12/superadmin.p12', '/tmp'])
+# Extract superadmin p12 from cert_mgt container to temporary directory
+tmpDir = tempfile.TemporaryDirectory()
+subprocess.run(['docker', 'cp', 'localsecurity_cert_mgt_1:/opt/pki/ejbca/p12/superadmin.p12', tmpDir.name])
 
-print("Superadmin keystore extracted to: /tmp/superadmin.p12")
+superadminP12Path = os.path.join(tmpDir.name, 'superadmin.p12')
+print(f"Superadmin keystore extracted to file: {superadminP12Path}")
 
 # Extract superadmin password
 result = subprocess.run(['docker', 'exec', 'localsecurity_cert_mgt_1', 'grep', 'superadmin.password', '/opt/pki/ejbca/conf/web.properties'], stdout=subprocess.PIPE)
@@ -44,9 +46,10 @@ userDataJson = {
 # Get trusted Management CA for admin operations
 mgtCaUrl = 'http://localhost:9090/ejbca/publicweb/webdist/certdist?cmd=cacert&issuer=CN%3DManagementCA%2COU%3DWP923%2CO%3DDRIVER+PROJECT&level=0'
 response = requests_pkcs12.get(mgtCaUrl, allow_redirects=False)
-open('/tmp/mgt-ca-crt.pem', 'w').write(response.text)
+mgtCaCertPath = os.path.join(tmpDir.name, 'mgt-ca-crt.pem')
+open(mgtCaCertPath, 'w').write(response.text)
 
-response = requests_pkcs12.post(eesApiUrl, headers=headers, json=userDataJson, verify='/tmp/mgt-ca-crt.pem', pkcs12_filename='/tmp/superadmin.p12', pkcs12_password=superadminPass)
+response = requests_pkcs12.post(eesApiUrl, headers=headers, json=userDataJson, verify=mgtCaCertPath, pkcs12_filename=superadminP12Path, pkcs12_password=superadminPass)
 if response.status_code != 200:
     raise RuntimeError(f"User registration failed. Server response: {response.text}")
 
@@ -59,7 +62,7 @@ certReqJson = {
     "key_spec":"2048"
 }
 
-response = requests_pkcs12.post(certEnrollApiUrl, headers=headers, json=certReqJson, verify='/tmp/mgt-ca-crt.pem', pkcs12_filename='/tmp/superadmin.p12', pkcs12_password=superadminPass)
+response = requests_pkcs12.post(certEnrollApiUrl, headers=headers, json=certReqJson, verify=mgtCaCertPath, pkcs12_filename=superadminP12Path, pkcs12_password=superadminPass)
 if response.status_code != 200:
     raise RuntimeError(f"Certificate enrollment failed. Server response: {response.text}")
 
@@ -73,8 +76,8 @@ keystorePem = keystoreBytes.decode("utf-8")
 # Decode PEM to binary P12
 keystoreBin = base64.b64decode(keystorePem)
 # Save result to binary file username.p12
-p12Path = "/tmp/keystore.p12"
+p12Path = os.path.join(tmpDir.name, 'keystore.p12')
 open(p12Path, 'wb').write(keystoreBin)
 print(f"\nPKCS#12 keystore for username '{inputUsername}' saved to file: '{p12Path}'")
-print(f"You may display the content with this command (password: {userPassword}):\n keytool -list -v -keystore /tmp/keystore.p12")
+print(f"You may display the content with this command (password: {userPassword}):\n keytool -list -v -keystore {p12Path}")
 
