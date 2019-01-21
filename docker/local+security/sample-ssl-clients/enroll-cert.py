@@ -1,4 +1,4 @@
-import sys, os, subprocess, re, requests_pkcs12, json, base64, tempfile
+import sys, os, subprocess, re, requests_pkcs12, json, base64, tempfile, getpass
 
 # Requires Python >= 3.6
 if sys.version_info.major < 3 or sys.version_info.minor < 6:
@@ -10,15 +10,15 @@ if len(sys.argv) < 2:
     sys.exit(2)
 
 inputUsername = sys.argv[1]
-userPassword = "P@55w0/2d"
+userPassword = getpass.getpass()
 
 inputOrganization = sys.argv[2] or "TheOrg"
 
 # Extract superadmin p12 from cert_mgt container to temporary directory
-tmpDir = tempfile.TemporaryDirectory()
-subprocess.run(['docker', 'cp', 'localsecurity_cert_mgt_1:/opt/pki/ejbca/p12/superadmin.p12', tmpDir.name])
+tmpDir = tempfile.mkdtemp()
+subprocess.run(['docker', 'cp', 'localsecurity_cert_mgt_1:/opt/pki/ejbca/p12/superadmin.p12', tmpDir])
 
-superadminP12Path = os.path.join(tmpDir.name, 'superadmin.p12')
+superadminP12Path = os.path.join(tmpDir, 'superadmin.p12')
 print(f"Superadmin keystore extracted to file: {superadminP12Path}")
 
 # Extract superadmin password
@@ -46,7 +46,7 @@ userDataJson = {
 # Get trusted Management CA for admin operations
 mgtCaUrl = 'http://localhost:9090/ejbca/publicweb/webdist/certdist?cmd=cacert&issuer=CN%3DManagementCA%2COU%3DWP923%2CO%3DDRIVER+PROJECT&level=0'
 response = requests_pkcs12.get(mgtCaUrl, allow_redirects=False)
-mgtCaCertPath = os.path.join(tmpDir.name, 'mgt-ca-crt.pem')
+mgtCaCertPath = os.path.join(tmpDir, 'mgt-ca-crt.pem')
 open(mgtCaCertPath, 'w').write(response.text)
 
 response = requests_pkcs12.post(eesApiUrl, headers=headers, json=userDataJson, verify=mgtCaCertPath, pkcs12_filename=superadminP12Path, pkcs12_password=superadminPass)
@@ -76,8 +76,8 @@ keystorePem = keystoreBytes.decode("utf-8")
 # Decode PEM to binary P12
 keystoreBin = base64.b64decode(keystorePem)
 # Save result to binary file username.p12
-p12Path = os.path.join(tmpDir.name, 'keystore.p12')
+p12Path = os.path.join(tmpDir, 'keystore.p12')
 open(p12Path, 'wb').write(keystoreBin)
 print(f"\nPKCS#12 keystore for username '{inputUsername}' saved to file: '{p12Path}'")
-print(f"You may display the content with this command (password: {userPassword}):\n keytool -list -v -keystore {p12Path}")
+print(f"With JDK installed, you may display the content with this command (password: {userPassword}):\n keytool -list -v -keystore {p12Path}")
 
