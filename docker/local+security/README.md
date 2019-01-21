@@ -159,7 +159,7 @@ $ cd sample-ssl-clients
 $ python3 enroll-cert.py best.solution.com BestOrganization
 ```
 
-**The script requires Python 3.6 or later.**
+**The script requires Python 3.6 or later, and `requests_pkcs12` module (can be installed with `pip install requests_pkcs12`).**
 
 ## Kafka client authentication
 Once the services are running, Kafka clients must authenticate to the Kafka `broker` service using [SSL certificate authentication](https://kafka.apache.org/documentation/#security_ssl) with a client certificate issued by the Certificate Management Service mentioned previously. You can also find in folder [sample-ssl-clients](ca_service/sample-ssl-clients) a few examples of SSL client files (certificates and keystores) for testing:
@@ -257,7 +257,7 @@ $ cd sample-ssl-clients
 $ python3 enroll-cert.py best.solution.com BestOrganization
 ```
 
-**The script requires Python 3.6 or later.**
+**The script requires Python 3.6 or later, and `requests_pkcs12` module (can be installed with `pip install requests_pkcs12`).**
 
 Then you have to use the [sec-kafka-chat-enrolled-user.yml](sample-ssl-clients/sec-kafka-chat-enrolled-user.yml) file as `spring-config-location` argument to run the chat app.
 
