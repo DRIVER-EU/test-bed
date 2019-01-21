@@ -165,7 +165,7 @@ $ python3 enroll-cert.py best.solution.com BestOrganization
 Once the services are running, Kafka clients must authenticate to the Kafka `broker` service using [SSL certificate authentication](https://kafka.apache.org/documentation/#security_ssl) with a client certificate issued by the Certificate Management Service mentioned previously. You can also find in folder [sample-ssl-clients](ca_service/sample-ssl-clients) a few examples of SSL client files (certificates and keystores) for testing:
 - `admin-tool-client.p12`: PKCS#12 keystore of a test Admin Tool that can connect to Kafka broker as a super user, as defined by the environment variable `KAFKA_SUPER_USERS` in the [docker-compose file](docker-compose.yml).
 - `other-tool-1-client.p12`: PKCS#12 keystore of a test client that can connect to Kafka broker as a normal user.
-- `truststore.jks`: JKS keystore to be used as trusted certificate store (contains trusted CA certificate) when connecting to a SSL server (e.g. Kafka broker) with certificate issued by the aforementioned CA.
+- `truststore.jks` or `test-ca-crt.pem`: trusted CA certificate; for Java clients, you can use the JKS keystore [truststore.jks](sample-ssl-clients/truststore.jks) as trusted certificate store; for others, you can use the (root) CA certificate in PEM format: [test-ca-crt.pem](sample-ssl-clients/test-ca-crt.pem), this is the standard format that should be supported by most SSL/TLS stacks.
 
 Example with Kafka console script (Kafka Console Producer):
 
