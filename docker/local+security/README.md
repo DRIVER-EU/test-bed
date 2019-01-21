@@ -159,6 +159,7 @@ $ cd sample-ssl-clients
 $ python3 enroll-cert.py best.solution.com BestOrganization
 ```
 
+The first argument is the solution name, in a form of CommonName (CN), e.g. a FQDN (Fully Qualified Domain Name) that uniquely identifies your solution. The second argument is the name of the solution's organization (use the short form preferably). It will prompt for the password you want to use to protect the .p12 (private key in particular).
 
 **The script requires Python 3.6 or later, and `requests_pkcs12` module (can be installed with `pip install requests_pkcs12`). On some platforms, you may have to use simply `python` instead of `python3`, depending on the name of the Python 3.x executable.**
 
@@ -184,7 +185,7 @@ $ cd sample-ssl-clients
 $ python3 enroll-cert.py best.solution.com BestOrganization
 ```
 
-The first argument is the solution name, in a form of CommonName (CN), e.g. a FQDN (Fully Qualified Domain Name) that uniquely identifies your solution. The second argument is the name of the solution's organization (use the short form preferably).
+The first argument is the solution name, in a form of CommonName (CN), e.g. a FQDN (Fully Qualified Domain Name) that uniquely identifies your solution. The second argument is the name of the solution's organization (use the short form preferably). It will prompt for the password you want to use to protect the .p12 (private key in particular).
 
 **The script requires Python 3.6 or later, and `requests_pkcs12` module (can be installed with `pip install requests_pkcs12`). On some platforms, you may have to use simply `python` instead of `python3`, depending on the name of the Python 3.x executable.**
 
@@ -271,7 +272,7 @@ $ cd sample-ssl-clients
 $ python3 enroll-cert.py best.solution.com BestOrganization
 ```
 
-The first argument is the solution name, in a form of CommonName (CN), e.g. a FQDN (Fully Qualified Domain Name) that uniquely identifies your solution. The second argument is the name of the solution's organization (use the short form preferably).
+The first argument is the solution name, in a form of CommonName (CN), e.g. a FQDN (Fully Qualified Domain Name) that uniquely identifies your solution. The second argument is the name of the solution's organization (use the short form preferably). It will prompt for the password you want to use to protect the .p12 (private key in particular).
 
 **The script requires Python 3.6 or later, and `requests_pkcs12` module (can be installed with `pip install requests_pkcs12`). On some platforms, you may have to use simply `python` instead of `python3`, depending on the name of the Python 3.x executable.**
 
