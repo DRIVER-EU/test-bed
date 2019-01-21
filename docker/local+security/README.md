@@ -159,13 +159,14 @@ $ cd sample-ssl-clients
 $ python3 enroll-cert.py best.solution.com BestOrganization
 ```
 
-**The script requires Python 3.6 or later, and `requests_pkcs12` module (can be installed with `pip install requests_pkcs12`).**
+
+**The script requires Python 3.6 or later, and `requests_pkcs12` module (can be installed with `pip install requests_pkcs12`). On some platforms, you may have to use simply `python` instead of `python3`, depending on the name of the Python 3.x executable.**
 
 ## Kafka client authentication
 Once the services are running, Kafka clients must authenticate to the Kafka `broker` service using [SSL certificate authentication](https://kafka.apache.org/documentation/#security_ssl) with a client certificate issued by the Certificate Management Service mentioned previously. You can also find in folder [sample-ssl-clients](ca_service/sample-ssl-clients) a few examples of SSL client files (certificates and keystores) for testing:
 - `admin-tool-client.p12`: PKCS#12 keystore of a test Admin Tool that can connect to Kafka broker as a super user, as defined by the environment variable `KAFKA_SUPER_USERS` in the [docker-compose file](docker-compose.yml).
 - `other-tool-1-client.p12`: PKCS#12 keystore of a test client that can connect to Kafka broker as a normal user.
-- `truststore.jks`: JKS keystore to be used as trusted certificate store (contains trusted CA certificate) when connecting to a SSL server (e.g. Kafka broker) with certificate issued by the aforementioned CA.
+- `truststore.jks` or `test-ca-crt.pem`: trusted CA certificate; for Java clients, you can use the JKS keystore [truststore.jks](sample-ssl-clients/truststore.jks) as trusted certificate store; for others, you can use the (root) CA certificate in PEM format: [test-ca-crt.pem](sample-ssl-clients/test-ca-crt.pem), this is the standard format that should be supported by most SSL/TLS stacks.
 
 Example with Kafka console script (Kafka Console Producer):
 
@@ -175,6 +176,19 @@ $ /path/to/kafka_home_dir/bin/kafka-console-producer.sh --broker-list localhost:
 ```
 
 More info in [Kafka documentation](https://kafka.apache.org/documentation/#security_configclients).
+
+Instead of using the provided .p12 files, you can request one from the Certificate Management Service for your own solution/organization, by using the provided [python script](sample-ssl-clients/enroll-cert.py). This script enables you to request a certificate from the command line for a given solution in a given organization in one shot (by running the script):
+
+```sh
+$ cd sample-ssl-clients
+$ python3 enroll-cert.py best.solution.com BestOrganization
+```
+
+The first argument is the solution name, in a form of CommonName (CN), e.g. a FQDN (Fully Qualified Domain Name) that uniquely identifies your solution. The second argument is the name of the solution's organization (use the short form preferably).
+
+**The script requires Python 3.6 or later, and `requests_pkcs12` module (can be installed with `pip install requests_pkcs12`). On some platforms, you may have to use simply `python` instead of `python3`, depending on the name of the Python 3.x executable.**
+
+In the near future, you'll be able to request a certificate via the Admin Tool GUI as well, instead of CLI.
 
 ## Stop and remove services 
 
@@ -257,7 +271,9 @@ $ cd sample-ssl-clients
 $ python3 enroll-cert.py best.solution.com BestOrganization
 ```
 
-**The script requires Python 3.6 or later, and `requests_pkcs12` module (can be installed with `pip install requests_pkcs12`).**
+The first argument is the solution name, in a form of CommonName (CN), e.g. a FQDN (Fully Qualified Domain Name) that uniquely identifies your solution. The second argument is the name of the solution's organization (use the short form preferably).
+
+**The script requires Python 3.6 or later, and `requests_pkcs12` module (can be installed with `pip install requests_pkcs12`). On some platforms, you may have to use simply `python` instead of `python3`, depending on the name of the Python 3.x executable.**
 
 Then you have to use the [sec-kafka-chat-enrolled-user.yml](sample-ssl-clients/sec-kafka-chat-enrolled-user.yml) file as `spring-config-location` argument to run the chat app.
 
