@@ -17,6 +17,8 @@ $ docker-compose up -d
 ## Kafka client authentication
 Once the services are running, Kafka clients must authenticate to the Kafka `broker` service using [SSL certificate authentication](https://kafka.apache.org/documentation/#security_ssl) with client certificates issued by the test-bed Certificate Management Service. More details on this service in the last section.
 
+The next sections will explain how to make your CIS/CSS adapter (or other Kafka client) authenticate successfully to the CIS/CSS (Kafka) broker.
+
 ### Testing client authentication with existing sample certificates in `sample-ssl-clients` folder
 
 As a convenience and especially for initial security testing, you should use the examples of SSL client files, certificates and keystores in folder [sample-ssl-clients](ca_service/sample-ssl-clients):
