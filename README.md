@@ -23,6 +23,11 @@ As a quick recap of what I normally do to get a local Test-bed up-and-running:
 2. Checkout (download the zip or fork) this project: git clone https://github.com/DRIVER-EU/test-bed.git. In the near future, use the [GUI](https://driver-eu.github.io/docker-composer/#/), and we are working on a Cloud-based solution where we provide a hosted version for you. 
 3. Follow the README: https://github.com/DRIVER-EU/test-bed/tree/master/docker  
 
+Optionally, refresh all Docker images before you start using:
+```console
+docker images | grep -v REPOSITORY | awk '{print $1}' | uniq -u | xargs -L1 docker pull
+```
+
 ## Select and test the adapter in one of the available languages
 Next, depending on your application’s programming language, checkout an adapter and get the example (producer and consumer) working: [Java](https://github.com/DRIVER-EU/java-test-bed-adapter), [C#](https://github.com/DRIVER-EU/csharp-test-bed-adapter), [JavaScript/TypeScript/Node.js](https://github.com/DRIVER-EU/node-test-bed-adapter), [REST](https://github.com/DRIVER-EU/test-bed-rest-service).
 
@@ -89,6 +94,3 @@ In order to integrate different tools within the test-bed, and to make it easy t
 - It is simple to setup and run, and performs very well. Where similar software systems cannot deal with more than 10.000 messages per second, Kafka can process a tenfold.
 
 Although there are other environments that could satisfy our needs, this current reference implementation relies on Kafka, as we want to create a good reference implementation leveraging the efforts of the Kafka community, and by being more generic, i.e. supporting multiple backends, would require a lot more work, as well as not being able to leverage the particular strengths of the backend.
-
-
-
