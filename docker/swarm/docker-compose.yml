@@ -100,6 +100,71 @@ services:
         - "traefik.enable=true"
         - "traefik.docker.network=traefik-net"
         - "traefik.frontend.rule=Host:${TESTBED_HOST};PathPrefixStrip:/schema-ui/"
+        
+  postgres:
+    image: postgres:9.6
+    hostname: postgres
+    networks:
+      - traefik-net
+      - testbed-net
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: TRIAL_ADMIN
+    volumes:
+       - postgres-data:/var/lib/postgresql/data
+    restart: unless-stopped
+    
+  admintool:
+    image: drivereu/test-bed-admin:latest
+    depends_on:
+      - postgres
+      - broker
+      - schema_registry
+    networks:
+      - traefik-net
+      - testbed-net
+    volumes:
+      - ./admintool-config/gateways.json:/opt/application/config/gateways.json
+      - ./admintool-config/solutions.json:/opt/application/config/solutions.json
+      - ./admintool-config/topics.json:/opt/application/config/topics.json
+      - ./admintool-config/standards.json:/opt/application/config/standards.json
+    deploy:
+      labels:
+        - "traefik.port=8090"
+        - "traefik.enable=true"
+        - "traefik.docker.network=traefik-net"
+        - "traefik.frontend.rule=Host:${TESTBED_HOST};PathPrefix:/test-bed-admin/"
+
+  afteractionreview:
+    image: drivereu/after-action-review:latest
+    depends_on:
+      - postgres
+      - broker
+      - schema_registry
+    networks:
+      - traefik-net
+      - testbed-net
+    ports:
+      - "8095:8095"
+    deploy:
+      labels:
+        - "traefik.port=8095"
+        - "traefik.enable=true"
+        - "traefik.docker.network=traefik-net"
+        - "traefik.frontend.rule=Host:${TESTBED_HOST};PathPrefix:/after-action-review/"
+  
+  pgadmin:
+    image: fenglc/pgadmin4
+    depends_on:
+      - postgres
+    restart: unless-stopped
+    deploy:
+      labels:
+        - "traefik.port=5050"
+        - "traefik.enable=true"
+        - "traefik.docker.network=traefik-net"
+        - "traefik.frontend.rule=Host:${TESTBED_HOST};PathPrefix:/pgadmin/"
     
   time_service:
     image: drivereu/test-bed-time-service:develop-latest
