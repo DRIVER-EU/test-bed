@@ -21,7 +21,7 @@
 		"name":"geojson",
 		"versions":["1.0"]
 	},{
-		"name":"geojson_sim",
+		"name":"geojson-sim",
 		"versions":["1.0"]
 	}
 ]

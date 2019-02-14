@@ -107,6 +107,15 @@ services:
       - ./admintool-config/solutions.json:/opt/application/config/solutions.json
       - ./admintool-config/topics.json:/opt/application/config/topics.json
       - ./admintool-config/standards.json:/opt/application/config/standards.json
+
+  afteractionreview:
+    image: drivereu/after-action-review:latest
+    depends_on:
+      - postgres
+      - broker
+      - schema_registry
+    ports:
+      - "8095:8095"
   
   pgadmin:
     image: fenglc/pgadmin4
