@@ -1,0 +1,21 @@
+{
+    "rules": [
+        {
+            "subject.group": "firefighters",
+            "permissions": [
+                {
+                    "allow": true,
+                    "action": "READ"
+                },
+                {
+                    "allow": true,
+                    "action": "WRITE"
+                },
+                {
+                    "allow": true,
+                    "action": "DESCRIBE"
+                }
+            ]
+        }
+    ]
+}

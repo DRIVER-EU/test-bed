@@ -1,0 +1,17 @@
+#!/bin/sh
+# Optional arguments: timeout (seconds) to wait for server to be listening to server.port configured in file application.properties, and interval (seconds); default: no wait, interval=1s
+set -e
+set -x
+
+java "-Djava.security.egd=file:/dev/./urandom" "-Djava.awt.headless=true" "-Djavax.xml.accessExternalSchema=all" -Xms1024m -Xmx2048m "-XX:+UseConcMarkSweepGC" -server -jar /app.jar
+
+# If at least one arg (optional one)
+#if [ $# -ge 2 ]; then
+#    if [ "$1" -le 0 ] || [ "$2" -le 0 ]; then
+#        echo "Invalid timeout or interval arg"
+#        exit 1
+#    fi
+
+    #server_port=$(grep "^server\.port=" application.properties|cut -d "=" -f2)
+#    ./wtfc.sh --progress --timeout="$1" --interval=1 --status=0 nc -w 1 -vz 127.0.0.1 8443
+#fi

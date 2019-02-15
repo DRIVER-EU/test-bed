@@ -1,0 +1,81 @@
+---
+version: '3.4'
+services:
+  
+  authorization_service:
+    depends_on:
+      - cert_mgt
+    build: 
+      context: ./authorization_service
+      args:
+        JAR_VERSION: "2.1.1"
+    image: drivereu/authorization_service:2.1.1
+    hostname: authz
+    links: 
+     - cert_mgt:certmgt
+    ports:
+     - "9443:8443"
+    volumes:
+     # This allows to disable SSL or modify SSL settings temporarily (or other global Spring Boot settings)
+     - ./authorization_service/application.yml:/application.yml:ro
+     # This allows to change app-specific configuration files temporarily such as logging configuration (logback.xml) for debugging. 
+     # Changes to 'default-policies' folder are ignored unless you rebuild the Docker image. 
+     - ./authorization_service/conf:/opt/driver-testbed-sec-authz-service/conf:ro
+     - ./wtfc.sh:/opt/wtfc.sh
+    environment:
+      JAVA_OPTS: "-Djava.security.egd=file:/dev/./urandom -Djava.awt.headless=true -Djavax.xml.accessExternalSchema=all -Xms1024m -Xmx1024m -XX:+UseConcMarkSweepGC -server"
+
+    # healthcheck start_period option does not stop other services to start although this service is not "healthy" yet :-( Intended Docker design? 
+    # Using alternative "wait-for-it" script to prevent dependent services from starting too soon. More info:
+    # https://docs.docker.com/compose/startup-order/
+    # https://stackoverflow.com/questions/31746182/docker-compose-wait-for-container-x-before-starting-y/35202892
+
+    #healthcheck:
+    #  test: nc -vz authz 8443
+    #  interval: 10s
+    #  #timeout: 10s
+    #  retries: 10
+    #  start_period: 60s
+    command: sh -c "/opt/wtfc.sh --progress --timeout=120 --interval=10 --status=0 nc -w 5 -vz certmgt 8442 && java $${JAVA_OPTS} -jar /app.jar"
+    
+  zookeeper:
+    depends_on:
+      - authorization_service
+
+  kafka_sec_extensions:
+    depends_on:
+      - authorization_service
+    build: 
+      context: ./kafka_sec_extensions
+      args:
+         AUTHZFORCE_EXT_VERSION: "1.3.0"
+    image: drivereu/kafka_sec_extensions:1.3.0
+    volumes:
+     - kafka-sec-ext-data:/kafka_sec_extensions:ro
+
+  broker:
+    links: 
+     - authorization_service:authz
+    depends_on:
+      - zookeeper  
+      - kafka_sec_extensions
+    volumes:
+      - kafka-sec-ext-data:/opt/kafka_sec_extensions:ro
+      - ./broker/config/authorizer:/etc/kafka/authorizer:ro
+      - ./wtfc.sh:/opt/wtfc.sh
+      # For debugging, create log4j.properties based on log4j.properties.orig in folder 'broker/config' and customize it.
+      #      - ./broker/config/log4j.properties:/etc/kafka/log4j.properties
+    command: sh -c "/opt/wtfc.sh --progress --timeout=120 --interval=10 --status=0 nc -w 5 -vz authz 8443 && /etc/confluent/docker/run"    
+    environment:
+      # Kafka Authorizer extension
+      CLASSPATH: '/opt/kafka_sec_extensions/lib/*' 
+      KAFKA_AUTHORIZER_CLASS_NAME: 'org.ow2.authzforce.kafka.pep.CombinedXacmlAclAuthorizer'
+      KAFKA_SUPER_USERS: 'User:CN=Admin Tool,OU=Authz Service Dev Project,OU=WP923,O=DRIVER-PROJECT.EU'
+      KAFKA_ORG_OW2_AUTHZFORCE_KAFKA_PEP_XACML_PDP_URL: 'https://authz:8443/services/authz/pdp' 
+      KAFKA_ORG_OW2_AUTHZFORCE_KAFKA_PEP_XACML_REQ_TMPL_LOCATION: 'file:///etc/kafka/authorizer/request.xacml.json.ftl'
+      KAFKA_ORG_OW2_AUTHZFORCE_KAFKA_PEP_HTTP_CLIENT_CFG_LOCATION: '/etc/kafka/authorizer/http-client.xml'
+      # Max size of authorization decision cache (use negative or zero value to disable)
+      KAFKA_ORG_OW2_AUTHZFORCE_KAFKA_PEP_AUTHZ_CACHE_SIZE_MAX: -1
+      
+volumes:
+  kafka-sec-ext-data:
