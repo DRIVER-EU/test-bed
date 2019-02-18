@@ -1,0 +1,17 @@
+{
+    "rules": [
+        {
+            "subject.id": "CN=Other Tool 1,OU=Authz Service Dev Project,OU=WP923,O=DRIVER-PROJECT.EU",
+            "permissions": [
+                {
+                    "allow": true,
+                    "action": "READ"
+                },
+                {
+                    "allow": true,
+                    "action": "DESCRIBE"
+                }
+            ]
+        }
+    ]
+}

@@ -1,6 +1,16 @@
 ---
-version: '3'
+version: '3.4'
 services:
+
+  # Certificate Management Service
+  cert_mgt:
+    build: ./cert_mgt
+    image: drivereu/cert_mgt:1.0.1
+    hostname: certmgt
+    ports:
+     - "8442:8442"
+     - "8443:8443"
+     - "9090:8080"
 
   zookeeper:
     image: confluentinc/cp-zookeeper:5.0.0
@@ -14,34 +24,18 @@ services:
       KAFKA_OPTS: '-Djava.security.auth.login.config=/etc/kafka/zookeeper_jaas.conf'
       ZOOKEEPER_CLIENT_PORT: 3500
       ZOOKEEPER_TICK_TIME: 2000
-  
-  authorization_service:
-    image: drivereu/driver-testbed-sec-authz-service:release-1.1.0
-    hostname: authz
-    ports:
-     - "8443:8443"
-    volumes:
-     - ./authorization_service/application.properties:/application.properties
-     - ./authorization_service/config:/opt/driver-testbed-sec-authz-service
-    environment:
-      JAVA_OPTS: "-Djava.security.egd=file:/dev/./urandom -Djava.awt.headless=true -Djavax.xml.accessExternalSchema=all -Xms2048m -Xmx2048m -XX:+UseConcMarkSweepGC -server"
 
   broker:
     image: confluentinc/cp-kafka:5.0.0
     hostname: broker
-    links: 
-     - authorization_service:authz
     depends_on:
-      - zookeeper
-      - authorization_service  
+      - zookeeper  
     ports:
       - "3501:3501"
-      - "9092:9092"
     volumes:
-      - ./authzforce-ce-kafka-extensions:/opt/authzforce-ce-kafka-extensions
       - ./broker/config/ssl:/etc/kafka/secrets
-      - ./broker/config/authorizer:/etc/kafka/authorizer
-      - ./broker/config/log4j.properties:/etc/kafka/log4j.properties
+      # For debugging, create log4j.properties based on log4j.properties.orig in folder 'broker/config' and customize it.
+      #      - ./broker/config/log4j.properties:/etc/kafka/log4j.properties   
     environment:
       # https://docs.confluent.io/current/installation/docker/docs/configuration.html#confluent-kafka-cp-kafka
       KAFKA_BROKER_ID: 1
@@ -52,7 +46,7 @@ services:
       KAFKA_ADVERTISED_LISTENERS: 'SSL://localhost:3501,PLAINTEXT://broker:9092'
       KAFKA_LISTENERS: 'SSL://0.0.0.0:3501,PLAINTEXT://0.0.0.0:9092'
       # KAFKA_SECURITY_INTER_BROKER_PROTOCOL: 'PLAINTEXT'
-      KAFKA_INTER_BROKER_LISTENER_NAME: 'PLAINTEXT'
+      KAFKA_INTER_BROKER_LISTENER_NAME: 'SSL'
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_DEFAULT_REPLICATION_FACTOR: 1
       KAFKA_MESSAGE_MAX_BYTES: 100000000
@@ -80,16 +74,6 @@ services:
       KAFKA_SSL_KEYSTORE_CREDENTIALS: keystore_creds
       KAFKA_SSL_KEY_CREDENTIALS: keystore_creds
       KAFKA_SSL_CLIENT_AUTH: required
-      
-      # Kafka Authorizer extension
-      CLASSPATH: '/opt/authzforce-ce-kafka-extensions/lib/*' 
-      KAFKA_AUTHORIZER_CLASS_NAME: 'org.ow2.authzforce.kafka.pep.CombinedXacmlAclAuthorizer'
-      KAFKA_SUPER_USERS: 'User:CN=Admin Tool,OU=Authz Service Dev Project,OU=WP923,O=DRIVER-PROJECT.EU'
-      KAFKA_ORG_OW2_AUTHZFORCE_KAFKA_PEP_XACML_PDP_URL: 'https://authz:8443/services/authz/pdp' 
-      KAFKA_ORG_OW2_AUTHZFORCE_KAFKA_PEP_XACML_REQ_TMPL_LOCATION: 'file:///etc/kafka/authorizer/request.xacml.json.ftl'
-      KAFKA_ORG_OW2_AUTHZFORCE_KAFKA_PEP_HTTP_CLIENT_CFG_LOCATION: '/etc/kafka/authorizer/http-client.xml'
-      # Max size of authorization decision cache (use negative or zero value to disable)
-      KAFKA_ORG_OW2_AUTHZFORCE_KAFKA_PEP_AUTHZ_CACHE_SIZE_MAX: -1
 
   schema_registry:
     image: confluentinc/cp-schema-registry:5.0.0
@@ -102,13 +86,14 @@ services:
     environment:
       # By default, ConsumerConfig 'fetch.max.wait.ms' = 500 triggering READ on <kafkastore.topic> ('_schemas' by default) via broker every 500 ms! Increase this value if you need to reduce network traffic or debug
       # ConsumerConfig properties, e.g. fetch.max.wait.ms can be set via SchemaRegistryConfig by prefixing with 'kafkastore.'
-      SCHEMA_REGISTRY_KAFKASTORE_FETCH_MAX_WAIT_MS: 10000
+      SCHEMA_REGISTRY_KAFKASTORE_FETCH_MAX_WAIT_MS: 30000
       # SCHEMA_REGISTRY_LOG4J_LOGGERS: "kafka=TRACE"      
       SCHEMA_REGISTRY_HOST_NAME: schema_registry
       SCHEMA_REGISTRY_LISTENERS: 'http://0.0.0.0:3502'
       SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: 'zookeeper:3500'
       SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: 'PLAINTEXT://broker:9092'
-      # SCHEMA_REGISTRY_KAFKASTORE_TIMEOUT_MS: 15000
+      # SCHEMA_REGISTRY_KAFKASTORE_INIT_TIMEOUT_MS: 300000
+      SCHEMA_REGISTRY_CUB_KAFKA_TIMEOUT: 300
 
   kafka_rest:
     image: confluentinc/cp-kafka-rest:5.0.0
@@ -128,6 +113,7 @@ services:
       KAFKA_CONSUMER_REQUEST_TIMEOUT_MS: 30000
       KAFKA_REST_ACCESS_CONTROL_ALLOW_METHODS: 'GET,POST,PUT,DELETE,OPTIONS'
       KAFKA_REST_ACCESS_CONTROL_ALLOW_ORIGIN: '*'
+      KAFKA_REST_CUB_KAFKA_TIMEOUT: 300
 
   kafka_topics_ui:
     image: landoop/kafka-topics-ui:0.9.4

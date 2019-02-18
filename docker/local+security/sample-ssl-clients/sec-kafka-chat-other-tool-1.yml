@@ -1,0 +1,23 @@
+#debug: false # Enable debug logs.
+#trace: false # Enable trace logs.
+
+# Web UI
+server.port: 8080
+
+chat.rooms: all,COP
+
+# Kafka client - General
+spring.kafka.template.default-topic: all
+spring.kafka.bootstrap-servers: localhost:3501
+spring.kafka.consumer.group-id: firefighters
+spring.kafka.properties.security.protocol: SSL
+
+# Kafka client - SSL
+spring.kafka.properties.ssl.protocol: TLSv1
+spring.kafka.properties.ssl.truststore.location: truststore.jks
+spring.kafka.properties.ssl.truststore.password: changeit
+spring.kafka.properties.ssl.truststore.type: JKS
+spring.kafka.properties.ssl.keystore.location: other-tool-1-client.p12
+spring.kafka.properties.ssl.keystore.type: PKCS12
+spring.kafka.properties.ssl.keystore.password: changeit
+spring.kafka.properties.ssl.key.password: changeit
