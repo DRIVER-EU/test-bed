@@ -125,10 +125,11 @@ services:
       - traefik-net
       - testbed-net
     volumes:
-      - ./admintool-config/gateways.json:/opt/application/config/gateways.json
-      - ./admintool-config/solutions.json:/opt/application/config/solutions.json
-      - ./admintool-config/topics.json:/opt/application/config/topics.json
-      - ./admintool-config/standards.json:/opt/application/config/standards.json
+      - admintool-config:/opt/application/config
+#      - ./admintool-config/gateways.json:/opt/application/config/gateways.json
+#      - ./admintool-config/solutions.json:/opt/application/config/solutions.json
+#      - ./admintool-config/topics.json:/opt/application/config/topics.json
+#      - ./admintool-config/standards.json:/opt/application/config/standards.json
     environment:
       KAFKA_BROKER_URL: broker:${BROKER_PORT}
       SCHEMA_REGISTRY_URL: http://schema_registry:${SCHEMA_REGISTRY_PORT}
