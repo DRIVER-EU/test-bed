@@ -164,7 +164,7 @@ services:
         - "traefik.port=8095"
         - "traefik.enable=true"
         - "traefik.docker.network=traefik-net"
-        - "traefik.frontend.rule=Host:${TESTBED_HOST};PathPrefix:/after-action-review/"
+        - "traefik.frontend.rule=Host:${TESTBED_HOST};PathPrefixStrip:/after-action-review/"
   
   pgadmin:
     image: fenglc/pgadmin4
@@ -195,7 +195,7 @@ services:
         - "traefik.port=8100"
         - "traefik.enable=true"
         - "traefik.docker.network=traefik-net"
-        - "traefik.frontend.rule=Host:${TESTBED_HOST};PathPrefix:/time-service/"
+        - "traefik.frontend.rule=Host:${TESTBED_HOST};PathPrefixStrip:/time-service/"
       
   large_file_service:
     image: drivereu/large-file-service:develop-latest
