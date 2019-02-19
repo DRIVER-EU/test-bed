@@ -116,6 +116,19 @@ services:
       - ./admintool-config/solutions.json:/opt/application/config/solutions.json
       - ./admintool-config/topics.json:/opt/application/config/topics.json
       - ./admintool-config/standards.json:/opt/application/config/standards.json
+    environment:
+      KAFKA_BROKER_URL: broker:9092
+      SCHEMA_REGISTRY_URL: http://schema_registry:3502
+      zookeeper_host: zookeeper
+      zookeeper_port: 32181
+      schema_registry_url: http://schema_registry:3502
+      testbed_secure_mode: 'false'
+      testbed_init_auto: 'false'
+      management_ca_cert_path: http://localhost:9090
+      cert_handler_url: https://localhost:8443
+      cert_pem_handler_url: https://localhost:8443
+      security_rest_path_group: https://localhost:9443
+      security_rest_path_topic: https://localhost:9443
     labels:
       - "traefik.frontend.rule=PathPrefixStrip:/admin-tool/"
       
@@ -127,6 +140,12 @@ services:
       - schema_registry
     ports:
       - 8095
+    environment:
+      KAFKA_BROKER_URL: broker:9092
+      SCHEMA_REGISTRY_URL: http://schema_registry:3502
+      zookeeper_host: zookeeper
+      zookeeper_port: 32181
+      schema_registry_url: http://schema_registry:3502
     labels:
       - "traefik.frontend.rule=PathPrefixStrip:/after-action-review/"
   

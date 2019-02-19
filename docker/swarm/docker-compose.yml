@@ -158,6 +158,12 @@ services:
     networks:
       - traefik-net
       - testbed-net
+    environment:
+      KAFKA_BROKER_URL: broker:${BROKER_PORT}
+      SCHEMA_REGISTRY_URL: http://schema_registry:${SCHEMA_REGISTRY_PORT}
+      zookeeper_host: zookeeper
+      zookeeper_port: 32181
+      schema_registry_url: http://schema_registry:${SCHEMA_REGISTRY_PORT}
     deploy:
       labels:
         - "traefik.port=8095"
