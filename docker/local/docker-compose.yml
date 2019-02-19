@@ -118,6 +118,17 @@ services:
       - ./admintool-config/standards.json:/opt/application/config/standards.json
     labels:
       - "traefik.frontend.rule=PathPrefixStrip:/admin-tool/"
+      
+  afteractionreview:
+    image: drivereu/after-action-review:latest
+    depends_on:
+      - postgres
+      - broker
+      - schema_registry
+    ports:
+      - 8095
+    labels:
+      - "traefik.frontend.rule=PathPrefixStrip:/after-action-review/"
   
   pgadmin:
     image: fenglc/pgadmin4
