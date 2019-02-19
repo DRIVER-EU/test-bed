@@ -1,0 +1,220 @@
+---
+version: '3'
+services:     
+  zookeeper:
+    image: confluentinc/cp-zookeeper:5.0.0
+    networks:
+      - testbed-net
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 32181
+      ZOOKEEPER_TICK_TIME: 2000
+
+  broker:
+    image: confluentinc/cp-kafka:5.0.0
+    hostname: broker
+    depends_on:
+      - zookeeper
+    networks:
+      - testbed-net
+    ports:
+      - "${BROKER_PORT}:${BROKER_PORT}"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:32181'
+      KAFKA_ADVERTISED_LISTENERS: 'EXTERNAL://${TESTBED_HOST}:${BROKER_PORT},PLAINTEXT://broker:9092'
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: 'EXTERNAL:PLAINTEXT,PLAINTEXT:PLAINTEXT'
+      KAFKA_LISTENERS: 'EXTERNAL://0.0.0.0:${BROKER_PORT},PLAINTEXT://0.0.0.0:9092'
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_DEFAULT_REPLICATION_FACTOR: 1
+      KAFKA_MESSAGE_MAX_BYTES: 100000000
+      KAFKA_REPLICA_FETCH_MAX_BYTES: 100000000
+
+  schema_registry:
+    image: confluentinc/cp-schema-registry:5.0.0
+    depends_on:
+      - zookeeper
+      - broker
+    networks:
+      - testbed-net
+    ports:
+      - "${SCHEMA_REGISTRY_PORT}:${SCHEMA_REGISTRY_PORT}"
+    environment:
+      SCHEMA_REGISTRY_HOST_NAME: schema_registry
+      SCHEMA_REGISTRY_LISTENERS: 'http://0.0.0.0:${SCHEMA_REGISTRY_PORT}'
+      SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: 'zookeeper:32181'
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: 'PLAINTEXT://broker:9092'
+
+  kafka_rest:
+    image: confluentinc/cp-kafka-rest:5.0.0
+    hostname: kafka_rest
+    depends_on:
+      - zookeeper
+      - schema_registry
+      - broker
+    networks:
+      - testbed-net
+    environment:
+      KAFKA_REST_HOST_NAME: kafka_rest
+      KAFKA_REST_BOOTSTRAP_SERVERS: 'PLAINTEXT://broker:9092'
+      KAFKA_REST_ZOOKEEPER_CONNECT: 'zookeeper:32181'
+      KAFKA_REST_LISTENERS: 'http://0.0.0.0:8082'
+      KAFKA_REST_SCHEMA_REGISTRY_URL: 'http://schema_registry:${SCHEMA_REGISTRY_PORT}'
+      KAFKA_CONSUMER_REQUEST_TIMEOUT_MS: 30000
+      KAFKA_REST_ACCESS_CONTROL_ALLOW_METHODS: 'GET,POST,PUT,DELETE,OPTIONS'
+      KAFKA_REST_ACCESS_CONTROL_ALLOW_ORIGIN: '*'
+
+  kafka_topics_ui:
+    image: drivereu/kafka-topics-ui:0.0.1
+    depends_on:
+      - kafka_rest
+    networks:
+      - traefik-net
+      - testbed-net
+    environment:
+      KAFKA_REST_PROXY_URL: 'http://kafka_rest:8082'
+      PROXY: 'true'
+      MAX_BYTES: 5000000
+      RELATIVE_PROXY_URL: 'true'
+      RECORD_POLL_TIMEOUT: 10000
+    deploy:
+      labels:
+        - "traefik.port=8000"
+        - "traefik.enable=true"
+        - "traefik.docker.network=traefik-net"
+        - "traefik.frontend.rule=Host:${TESTBED_HOST};PathPrefixStrip:/topics-ui/"
+
+  kafka_schema_registry_ui:
+    image: drivereu/schema-registry-ui:0.0.1
+    depends_on:
+      - schema_registry
+    networks:
+      - traefik-net
+      - testbed-net
+    environment:
+      SCHEMAREGISTRY_URL: 'http://schema_registry:${SCHEMA_REGISTRY_PORT}'
+      RELATIVE_PROXY_URL: 'true'
+      PROXY: 'true'
+    deploy:
+      labels:
+        - "traefik.port=8000"
+        - "traefik.enable=true"
+        - "traefik.docker.network=traefik-net"
+        - "traefik.frontend.rule=Host:${TESTBED_HOST};PathPrefixStrip:/schema-ui/"
+        
+  postgres:
+    image: postgres:9.6
+    hostname: postgres
+    networks:
+      - traefik-net
+      - testbed-net
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: TRIAL_ADMIN
+    volumes:
+       - postgres-data:/var/lib/postgresql/data
+    restart: unless-stopped
+    
+  admintool:
+    image: drivereu/test-bed-admin:latest
+    depends_on:
+      - postgres
+      - broker
+      - schema_registry
+    networks:
+      - traefik-net
+      - testbed-net
+    volumes:
+      - ./admintool-config/gateways.json:/opt/application/config/gateways.json
+      - ./admintool-config/solutions.json:/opt/application/config/solutions.json
+      - ./admintool-config/topics.json:/opt/application/config/topics.json
+      - ./admintool-config/standards.json:/opt/application/config/standards.json
+    environment:
+      KAFKA_BROKER_URL: broker:${BROKER_PORT}
+      SCHEMA_REGISTRY_URL: http://schema_registry:${SCHEMA_REGISTRY_PORT}
+      zookeeper_host: zookeeper
+      zookeeper_port: 32181
+      schema_registry_url: http://schema_registry:${SCHEMA_REGISTRY_PORT}
+      testbed_secure_mode: 'false'
+      testbed_init_auto: 'false'
+      management_ca_cert_path: http://localhost:9090
+      cert_handler_url: https://localhost:8443
+      cert_pem_handler_url: https://localhost:8443
+      security_rest_path_group: https://localhost:9443
+      security_rest_path_topic: https://localhost:9443
+    deploy:
+      labels:
+        - "traefik.port=8090"
+        - "traefik.enable=true"
+        - "traefik.docker.network=traefik-net"
+        - "traefik.frontend.rule=Host:${TESTBED_HOST};PathPrefix:/test-bed-admin/"
+
+  afteractionreview:
+    image: drivereu/after-action-review:latest
+    depends_on:
+      - postgres
+      - broker
+      - schema_registry
+    networks:
+      - traefik-net
+      - testbed-net
+    deploy:
+      labels:
+        - "traefik.port=8095"
+        - "traefik.enable=true"
+        - "traefik.docker.network=traefik-net"
+        - "traefik.frontend.rule=Host:${TESTBED_HOST};PathPrefix:/after-action-review/"
+  
+  pgadmin:
+    image: fenglc/pgadmin4
+    depends_on:
+      - postgres
+    restart: unless-stopped
+    deploy:
+      labels:
+        - "traefik.port=5050"
+        - "traefik.enable=true"
+        - "traefik.docker.network=traefik-net"
+        - "traefik.frontend.rule=Host:${TESTBED_HOST};PathPrefix:/pgadmin/"
+    
+  time_service:
+    image: drivereu/test-bed-time-service:develop-latest
+    depends_on:
+      - broker
+      - schema_registry
+    networks:
+      - traefik-net
+      - testbed-net
+    environment:
+      KAFKA_BROKER_URL: broker:9092
+      SCHEMA_REGISTRY_URL: http://schema_registry:${SCHEMA_REGISTRY_PORT}
+      AUTO_REGISTER_SCHEMAS: 'true'
+    deploy:
+      labels:
+        - "traefik.port=8100"
+        - "traefik.enable=true"
+        - "traefik.docker.network=traefik-net"
+        - "traefik.frontend.rule=Host:${TESTBED_HOST};PathPrefix:/time-service/"
+      
+  large_file_service:
+    image: drivereu/large-file-service:develop-latest
+    environment:
+      URL: http://${TESTBED_HOST}/large-file-service/
+    networks:
+      - traefik-net
+    deploy:
+      labels:
+        - "traefik.port=80"
+        - "traefik.enable=true"
+        - "traefik.docker.network=traefik-net"
+        - "traefik.frontend.rule=Host:${TESTBED_HOST};PathPrefixStrip:/large-file-service/"
+      
+networks:
+  traefik-net:
+    external: true
+  testbed-net:
+    driver: overlay
+    
+volumes:
+  postgres-data:
+ 

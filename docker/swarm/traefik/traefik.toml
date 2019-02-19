@@ -1,0 +1,52 @@
+logLevel = "DEBUG"
+defaultEntryPoints = ["https","http"]
+
+[entryPoints]
+  [entryPoints.http]
+  address = ":80"
+    [entryPoints.http.redirect]
+    regex = "^http://(.*)"
+    replacement = "https://$1"
+    permanent = true
+    entryPoint = "https"
+  [entryPoints.https]
+  address = ":443"
+  [entryPoints.https.tls]
+
+[retry]
+
+[docker]
+endpoint = "unix:///var/run/docker.sock"
+watch = true
+exposedByDefault = false
+domain = "traefik"
+swarmMode = true
+
+[acme]
+email = "pieter.hameete@tno.nl"
+storage = "acme.json"
+entryPoint = "https"
+onHostRule = true
+[acme.httpChallenge]
+entryPoint = "http"
+
+[[acme.domains]]
+  main = "tb1.driver-testbed.eu"
+[[acme.domains]]
+  main = "tb2.driver-testbed.eu"
+[[acme.domains]]
+  main = "tb3.driver-testbed.eu"
+[[acme.domains]]
+  main = "tb4.driver-testbed.eu"
+[[acme.domains]]
+  main = "tb5.driver-testbed.eu"
+[[acme.domains]]
+  main = "tb6.driver-testbed.eu"
+[[acme.domains]]
+  main = "tb7.driver-testbed.eu"
+[[acme.domains]]
+  main = "tb8.driver-testbed.eu"
+[[acme.domains]]
+  main = "tb9.driver-testbed.eu"
+[[acme.domains]]
+  main = "tb10.driver-testbed.eu"
