@@ -218,4 +218,5 @@ networks:
     
 volumes:
   postgres-data:
+  admintool-config:
  
