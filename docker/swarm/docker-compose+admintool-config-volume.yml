@@ -148,7 +148,7 @@ services:
         - "traefik.port=8090"
         - "traefik.enable=true"
         - "traefik.docker.network=traefik-net"
-        - "traefik.frontend.rule=Host:${TESTBED_HOST};PathPrefix:/test-bed-admin/"
+        - "traefik.frontend.rule=Host:${TESTBED_HOST};PathPrefixStrip:/test-bed-admin/"
 
   afteractionreview:
     image: drivereu/after-action-review:latest
