@@ -129,6 +129,12 @@ services:
       - schema_registry
     ports:
       - "8095:8095"
+    environment:
+      KAFKA_BROKER_URL: broker:9092
+      SCHEMA_REGISTRY_URL: http://schema_registry:3502
+      zookeeper_host: zookeeper
+      zookeeper_port: 3500
+      schema_registry_url: http://schema_registry:3502
   
   pgadmin:
     image: fenglc/pgadmin4
