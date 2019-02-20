@@ -16,17 +16,27 @@ services:
     hostname: certmgt
     networks:
       - testbed-net
-    # ports:
+      - traefik-net
+    ports:
      #- "8442:8442"
-     #- "8443:8443"
+     # Traefik config down below results in "Internal Server Error" when trying to connect via Traefik proxy, so exposing ports directly for now
+     # This endpoint is for admins, requires authentication with admin certificate
+     - "${CERT_MGT_PORT}:8443"
      #- "9090:8080"
     deploy:
       labels:
+        # Proxying https via traefik doesn't work
         - "traefik.docker.network=traefik-net"
         - "traefik.enable=true"
         # We could have routes for all ports, using segment labels: https://docs.traefik.io/configuration/backends/docker/#on-containers-with-multiple-ports-segment-labels
-        - "traefik.frontend.rule=Host:${TESTBED_HOST};PathPrefix:/ejbca/"
-        - "traefik.port=8442"
+        #- "traefik.https8442.frontend.rule=Host:${TESTBED_HOST};PathPrefix:/ejbca/"
+        #- "traefik.https8442.port=8442"
+        #- "traefik.https8443.frontend.rule=Host:${TESTBED_HOST};PathPrefix:/ejbca-admin/;ReplacePath:/ejbca"
+        #- "traefik.https8443.port=8443"
+        - "traefik.frontend.rule=Host:${TESTBED_HOST};PathPrefixStrip:/pki/"
+        - "traefik.port=8443"
+        - "traefik.protocol=https"
+        - "traefik.frontend.auth.forward.tls.insecureSkipVerify=true"
 
   broker:
     image: confluentinc/cp-kafka:5.0.0
@@ -186,7 +196,11 @@ services:
     
   admintool:
     image: drivereu/test-bed-admin:1.2.7
+    links: 
+      - cert_mgt:certmgt
+      #- authorization_service:authz
     depends_on:
+      - cert_mgt
       - postgres
       - broker
       - schema_registry
@@ -197,7 +211,9 @@ services:
     ports: 
       - "${ADMINTOOL_PORT}:8090"
     # Volumes replaced by command (down below) using curl to download all JSON config files
-#    volumes:
+    volumes:
+       # wtfc.sh has to be put on the docker host
+       - /home/driver/git/test-bed/docker/swarm/wtfc.sh:/opt/wtfc.sh
 #      - ./admintool-config/gateways.json:/opt/application/config/gateways.json
 #      - ./admintool-config/solutions.json:/opt/application/config/solutions.json
 #      - ./admintool-config/topics.json:/opt/application/config/topics.json
@@ -210,12 +226,12 @@ services:
       schema_registry_url: http://schema_registry:${SCHEMA_REGISTRY_PORT}
       testbed_secure_mode: 'false'
       testbed_init_auto: 'false'
-      management_ca_cert_path: http://certmgt:9090
+      management_ca_cert_path: http://certmgt:8080
       cert_handler_url: https://certmgt:8443
       cert_pem_handler_url: https://certmgt:8443
-      security_rest_path_group: https://authz:9443
-      security_rest_path_topic: https://authz:9443
-    command: sh -c "curl 'https://raw.githubusercontent.com/DRIVER-EU/test-bed/master/docker/swarm/admintool-config/{gateways,solutions,standards,topics}.json' -o '/opt/application/config/#1.json' && cd /opt/application && java -jar ./admin-service-1.2.7.jar --server.use-forward-headers=true"
+      security_rest_path_group: https://authz:8443
+      security_rest_path_topic: https://authz:8443
+    command: sh -c "curl 'https://raw.githubusercontent.com/DRIVER-EU/test-bed/master/docker/swarm/admintool-config/{gateways,solutions,standards,topics}.json' -o '/opt/application/config/#1.json' && /opt/wtfc.sh --progress --timeout=240 --interval=10 --status=0 nc -w 5 -vz certmgt 8442 && cd /opt/application && java -jar ./admin-service-1.2.7.jar --server.use-forward-headers=true"
     deploy:
       labels:
         - "traefik.port=8090"
@@ -253,6 +269,8 @@ services:
     depends_on:
       - postgres
     restart: unless-stopped
+    networks:
+      - traefik-net
     deploy:
       labels:
         - "traefik.port=5050"
