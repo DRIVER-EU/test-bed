@@ -13,7 +13,6 @@ services:
   cert_mgt:
     build: ./cert_mgt
     image: drivereu/cert_mgt:1.0.1
-    hostname: certmgt
     networks:
       - testbed-net
       - traefik-net
@@ -196,9 +195,6 @@ services:
     
   admintool:
     image: drivereu/test-bed-admin:1.2.7
-    links: 
-      - cert_mgt:certmgt
-      #- authorization_service:authz
     depends_on:
       - cert_mgt
       - postgres
@@ -226,12 +222,13 @@ services:
       schema_registry_url: http://schema_registry:${SCHEMA_REGISTRY_PORT}
       testbed_secure_mode: 'false'
       testbed_init_auto: 'false'
-      management_ca_cert_path: http://certmgt:8080
-      cert_handler_url: https://certmgt:8443
-      cert_pem_handler_url: https://certmgt:8443
-      security_rest_path_group: https://authz:8443
-      security_rest_path_topic: https://authz:8443
-    command: sh -c "curl 'https://raw.githubusercontent.com/DRIVER-EU/test-bed/master/docker/swarm/admintool-config/{gateways,solutions,standards,topics}.json' -o '/opt/application/config/#1.json' && /opt/wtfc.sh --progress --timeout=240 --interval=10 --status=0 nc -w 5 -vz certmgt 8442 && cd /opt/application && java -jar ./admin-service-1.2.7.jar --server.use-forward-headers=true"
+      management_ca_cert_path: http://cert_mgt:8080
+      cert_handler_url: https://cert_mgt:8443
+      cert_pem_handler_url: https://cert_mgt:8443
+      # Unused
+      security_rest_path_group: https://authorization_service:8443
+      security_rest_path_topic: https://authorization_service:8443
+    command: sh -c "curl 'https://raw.githubusercontent.com/DRIVER-EU/test-bed/master/docker/swarm/admintool-config/{gateways,solutions,standards,topics}.json' -o '/opt/application/config/#1.json' && /opt/wtfc.sh --progress --timeout=240 --interval=10 --status=0 nc -w 5 -vz cert_mgt 8442 && cd /opt/application && java -jar ./admin-service-1.2.7.jar --server.use-forward-headers=true"
     deploy:
       labels:
         - "traefik.port=8090"
