@@ -116,7 +116,7 @@ services:
     restart: unless-stopped
     
   admintool:
-    image: drivereu/test-bed-admin:latest
+    image: drivereu/test-bed-admin:1.2.7
     depends_on:
       - postgres
       - broker
@@ -124,11 +124,15 @@ services:
     networks:
       - traefik-net
       - testbed-net
-    volumes:
-      - ./admintool-config/gateways.json:/opt/application/config/gateways.json
-      - ./admintool-config/solutions.json:/opt/application/config/solutions.json
-      - ./admintool-config/topics.json:/opt/application/config/topics.json
-      - ./admintool-config/standards.json:/opt/application/config/standards.json
+    # As a temporary workaround for the AdminTool frontend not working behind traefik (non-secure WebSocket over HTTPS issue), we open the AdminTool port to the outside (not secure!) directly like for the schema registry
+    ports: 
+      - ${ADMINTOOL_PORT}:8090
+    # Volumes replaced by command (down below) using curl to download all JSON config files
+#    volumes:
+#      - ./admintool-config/gateways.json:/opt/application/config/gateways.json
+#      - ./admintool-config/solutions.json:/opt/application/config/solutions.json
+#      - ./admintool-config/topics.json:/opt/application/config/topics.json
+#      - ./admintool-config/standards.json:/opt/application/config/standards.json
     environment:
       KAFKA_BROKER_URL: broker:${BROKER_PORT}
       SCHEMA_REGISTRY_URL: http://schema_registry:${SCHEMA_REGISTRY_PORT}
@@ -142,12 +146,23 @@ services:
       cert_pem_handler_url: https://localhost:8443
       security_rest_path_group: https://localhost:9443
       security_rest_path_topic: https://localhost:9443
+      
+    command: sh -c "curl 'https://raw.githubusercontent.com/DRIVER-EU/test-bed/master/docker/swarm/admintool-config/{gateways,solutions,standards,topics}.json' -o '/opt/application/config/#1.json' && cd /opt/application && java -jar ./admin-service-1.2.6.jar --server.use-forward-headers=true"
     deploy:
       labels:
         - "traefik.port=8090"
         - "traefik.enable=true"
         - "traefik.docker.network=traefik-net"
-        - "traefik.frontend.rule=Host:${TESTBED_HOST};PathPrefix:/test-bed-admin/"
+        # We should use a "PathPrefixStrip:/test-bed-admin/" but this doesn't work, probably because the webpack of the admintool frontend is not configured to handle a path prefix.
+        # One solution seems to customize the webpack configuration with the 'publicPath' property. TO BE TESTED.
+        # More info: https://stackoverflow.com/questions/54069708/how-to-host-a-webpack-app-behind-a-reverse-proxy-on-a-specific-path
+        - "traefik.frontend.rule=Host:${TESTBED_HOST};PathPrefixStrip:/test-bed-admin/"
+        # Using PathPrefix:/ doesn't work either. Seems the issue is attempt to use ws (non-secure websocket) over https (blocked by browser Chrome/Firefox):
+        # https://github.com/webpack/webpack-dev-server/issues/763
+        # - "traefik.frontend.rule=Host:${TESTBED_HOST};PathPrefix:/"
+        - "traefik.frontend.passHostHeader=true"
+        # https://docs.traefik.io/configuration/backends/docker/#custom-headers
+        - "traefik.frontend.headers.customRequestHeaders=X-Forwarded-Proto:https||X-Forwarded-Port:443"
 
   afteractionreview:
     image: drivereu/after-action-review:latest
@@ -163,7 +178,7 @@ services:
         - "traefik.port=8095"
         - "traefik.enable=true"
         - "traefik.docker.network=traefik-net"
-        - "traefik.frontend.rule=Host:${TESTBED_HOST};PathPrefix:/after-action-review/"
+        - "traefik.frontend.rule=Host:${TESTBED_HOST};PathPrefixStrip:/after-action-review/"
   
   pgadmin:
     image: fenglc/pgadmin4
@@ -175,7 +190,7 @@ services:
         - "traefik.port=5050"
         - "traefik.enable=true"
         - "traefik.docker.network=traefik-net"
-        - "traefik.frontend.rule=Host:${TESTBED_HOST};PathPrefix:/pgadmin/"
+        - "traefik.frontend.rule=Host:${TESTBED_HOST};PathPrefixStrip:/pgadmin/"
     
   time_service:
     image: drivereu/test-bed-time-service:develop-latest
@@ -194,7 +209,7 @@ services:
         - "traefik.port=8100"
         - "traefik.enable=true"
         - "traefik.docker.network=traefik-net"
-        - "traefik.frontend.rule=Host:${TESTBED_HOST};PathPrefix:/time-service/"
+        - "traefik.frontend.rule=Host:${TESTBED_HOST};PathPrefixStrip:/time-service/"
       
   large_file_service:
     image: drivereu/large-file-service:develop-latest

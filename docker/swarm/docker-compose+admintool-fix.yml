@@ -116,7 +116,7 @@ services:
     restart: unless-stopped
     
   admintool:
-    image: drivereu/test-bed-admin:1.2.6
+    image: drivereu/test-bed-admin:1.2.7
     depends_on:
       - postgres
       - broker
@@ -124,6 +124,10 @@ services:
     networks:
       - traefik-net
       - testbed-net
+    # As a temporary workaround for the AdminTool frontend not working behind traefik (non-secure WebSocket over HTTPS issue), we open the AdminTool port to the outside (not secure!) directly like for the schema registry
+    ports: 
+      - ${ADMINTOOL_PORT}:8090
+    # Volumes replaced by command (down below) using curl to download all JSON config files
 #    volumes:
 #      - ./admintool-config/gateways.json:/opt/application/config/gateways.json
 #      - ./admintool-config/solutions.json:/opt/application/config/solutions.json
@@ -143,13 +147,20 @@ services:
       security_rest_path_group: https://localhost:9443
       security_rest_path_topic: https://localhost:9443
       
-    command: sh -c "curl 'https://raw.githubusercontent.com/DRIVER-EU/test-bed/master/docker/swarm/admintool-config/{gateways,topics}.json' -o '/opt/application/config/#1.json' && cd /opt/application && java -jar ./admin-service-$VERSION.jar --server.use-forward-headers=true"
+    command: sh -c "curl 'https://raw.githubusercontent.com/DRIVER-EU/test-bed/master/docker/swarm/admintool-config/{gateways,solutions,standards,topics}.json' -o '/opt/application/config/#1.json' && cd /opt/application && java -jar ./admin-service-1.2.6.jar --server.use-forward-headers=true"
     deploy:
       labels:
         - "traefik.port=8090"
         - "traefik.enable=true"
         - "traefik.docker.network=traefik-net"
+        # We should use a "PathPrefixStrip:/test-bed-admin/" but this doesn't work, probably because the webpack of the admintool frontend is not configured to handle a path prefix.
+        # One solution seems to customize the webpack configuration with the 'publicPath' property. TO BE TESTED.
+        # More info: https://stackoverflow.com/questions/54069708/how-to-host-a-webpack-app-behind-a-reverse-proxy-on-a-specific-path
         - "traefik.frontend.rule=Host:${TESTBED_HOST};PathPrefixStrip:/test-bed-admin/"
+        # Using PathPrefix:/ doesn't work either. Seems the issue is attempt to use ws (non-secure websocket) over https (blocked by browser Chrome/Firefox):
+        # https://github.com/webpack/webpack-dev-server/issues/763
+        # - "traefik.frontend.rule=Host:${TESTBED_HOST};PathPrefix:/"
+        - "traefik.frontend.passHostHeader=true"
         # https://docs.traefik.io/configuration/backends/docker/#custom-headers
         - "traefik.frontend.headers.customRequestHeaders=X-Forwarded-Proto:https||X-Forwarded-Port:443"
 
@@ -221,5 +232,4 @@ networks:
     
 volumes:
   postgres-data:
-#  admintool-config:
  
