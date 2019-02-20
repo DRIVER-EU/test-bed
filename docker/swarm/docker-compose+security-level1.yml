@@ -38,7 +38,9 @@ services:
     ports:
       - "${BROKER_PORT}:${BROKER_PORT}"
     volumes:
-      - ./broker/config/ssl:/etc/kafka/secrets
+      # Broker's SSL keypair is private (the private key actually) therefore should be generated on the trial's testbed docker host during the trial setup
+      #- ./broker/config/ssl:/etc/kafka/secrets
+      - /home/driver/git/test-bed/docker/swarm/broker/config/ssl:/etc/kafka/secrets
       # For debugging, create log4j.properties based on log4j.properties.orig in folder 'broker/config' and customize it.
       #      - ./broker/config/log4j.properties:/etc/kafka/log4j.properties
     environment:
@@ -78,7 +80,6 @@ services:
       KAFKA_SSL_KEYSTORE_CREDENTIALS: keystore_creds
       KAFKA_SSL_KEY_CREDENTIALS: keystore_creds
       KAFKA_SSL_CLIENT_AUTH: required
-
 
   schema_registry:
     image: confluentinc/cp-schema-registry:5.0.0
