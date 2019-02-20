@@ -42,7 +42,8 @@ services:
       # and a certificate must be generated for the new broker's DNS domain name, e.g. "tb5.driver-testbed.eu"
       #- ./broker/config/ssl:/etc/kafka/secrets
       # Process to generate the keypair and certificate for domain "tb5.driver-testbed.eu" as main domain and "tb4.driver-testbed.eu" as alternative one:
-      #   1) Generate keypair
+      #   1) Generate keypair (remove any previous existing keypair)
+      #     $ rm keystore.p12
       #     $ keytool -genkeypair -alias tb5.driver-testbed.eu -dname "CN=tb5.driver-testbed.eu,O=DRIVER-PROJECT.EU" -keyalg RSA -keysize 4096 -storetype pkcs12 -keystore keystore.p12
       #   2) Generate CSR (Certificate Signing Request for the CA)
       #     $ keytool -certreq -alias tb5.driver-testbed.eu -keystore keystore.p12 -file server.csr
