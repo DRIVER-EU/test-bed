@@ -38,8 +38,18 @@ services:
     ports:
       - "${BROKER_PORT}:${BROKER_PORT}"
     volumes:
-      # Broker's SSL keypair is private (the private key actually) therefore should be generated on the trial's testbed docker host during the trial setup
+      # Broker's SSL keypair is private (the private key actually) therefore should be generated on the trial's testbed docker host during the trial setup, 
+      # and a certificate must be generated for the new broker's DNS domain name, e.g. "tb5.driver-testbed.eu"
       #- ./broker/config/ssl:/etc/kafka/secrets
+      # Process to generate the keypair and certificate for domain "tb5.driver-testbed.eu" as main domain and "tb4.driver-testbed.eu" as alternative one:
+      #   1) Generate keypair
+      #     $ keytool -genkeypair -alias tb5.driver-testbed.eu -dname "CN=tb5.driver-testbed.eu,O=DRIVER-PROJECT.EU" -keyalg RSA -keysize 4096 -storetype pkcs12 -keystore keystore.p12
+      #   2) Generate CSR (Certificate Signing Request for the CA)
+      #     $ keytool -certreq -alias tb5.driver-testbed.eu -keystore keystore.p12 -file server.csr
+      #   3) Get the certificate signed by the root CA
+      #     $ keytool -keystore ../../../cert_mgt/root-ca.p12 -alias ca -gencert -rfc -infile server.csr -outfile server-crt-by-ca.pem -dname "CN=tb5.driver-testbed.eu,O=DRIVER-PROJECT.EU" -ext "san=dns:tb5.driver-testbed.eu,dns:tb4.driver-testbed.eu" -ext "eku=clientAuth,serverAuth" -validity 9999
+      #   4) Import the new signed certificate into the broker's keystore
+      #     $ keytool -keystore keystore.p12 -alias tb5.driver-testbed.eu -importcert -file server-crt-by-ca.pem
       - /home/driver/git/test-bed/docker/swarm/broker/config/ssl:/etc/kafka/secrets
       # For debugging, create log4j.properties based on log4j.properties.orig in folder 'broker/config' and customize it.
       #      - ./broker/config/log4j.properties:/etc/kafka/log4j.properties
