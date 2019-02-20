@@ -222,7 +222,7 @@ services:
         - "traefik.port=80"
         - "traefik.enable=true"
         - "traefik.docker.network=traefik-net"
-        - "traefik.frontend.rule=Host:${TESTBED_HOST};PathPrefixStrip:/large-file-service/"
+        - "traefik.frontend.rule=Host:${TESTBED_HOST};PathPrefix:/large-file-service/"
       
 networks:
   traefik-net:
