@@ -228,7 +228,7 @@ services:
       # Unused
       security_rest_path_group: https://authorization_service:8443
       security_rest_path_topic: https://authorization_service:8443
-    command: sh -c "curl 'https://raw.githubusercontent.com/DRIVER-EU/test-bed/master/docker/swarm/admintool-config/{gateways,solutions,standards,topics}.json' -o '/opt/application/config/#1.json' && /opt/wtfc.sh --progress --timeout=240 --interval=10 --status=0 nc -w 5 -vz cert_mgt 8442 && cd /opt/application && java -jar ./admin-service-1.2.14.jar --server.use-forward-headers=true"
+    command: sh -c "curl 'https://raw.githubusercontent.com/DRIVER-EU/test-bed/master/docker/swarm/admintool-config/{gateways,solutions,standards,topics}.json' -o '/opt/application/config/#1.json' && /opt/wtfc.sh --progress --timeout=240 --interval=10 --status=0 nc -w 5 -vz cert_mgt 8442 && cd /opt/application && java -jar ./admin-service-1.2.15.jar --server.use-forward-headers=true"
     deploy:
       labels:
         - "traefik.port=8090"

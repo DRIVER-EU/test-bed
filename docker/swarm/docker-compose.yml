@@ -147,7 +147,7 @@ services:
       security_rest_path_group: https://localhost:9443
       security_rest_path_topic: https://localhost:9443
       
-    command: sh -c "curl 'https://raw.githubusercontent.com/DRIVER-EU/test-bed/master/docker/swarm/admintool-config/{gateways,solutions,standards,topics}.json' -o '/opt/application/config/#1.json' && cd /opt/application && java -jar ./admin-service-1.2.7.jar --server.use-forward-headers=true"
+    command: sh -c "curl 'https://raw.githubusercontent.com/DRIVER-EU/test-bed/master/docker/swarm/admintool-config/{gateways,solutions,standards,topics}.json' -o '/opt/application/config/#1.json' && cd /opt/application && java -jar ./admin-service-1.2.15.jar --server.use-forward-headers=true"
     deploy:
       labels:
         - "traefik.port=8090"
