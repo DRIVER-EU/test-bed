@@ -60,6 +60,7 @@ services:
       #     $ keytool -keystore ../../../cert_mgt/root-ca.p12 -alias ca -gencert -rfc -infile server.csr -outfile server-crt-by-ca.pem -dname "CN=tb5.driver-testbed.eu,O=DRIVER-PROJECT.EU" -ext "san=dns:tb5.driver-testbed.eu,dns:tb4.driver-testbed.eu" -ext "eku=clientAuth,serverAuth" -validity 9999
       #   4) Import the new signed certificate into the broker's keystore
       #     $ keytool -keystore keystore.p12 -alias tb5.driver-testbed.eu -importcert -file server-crt-by-ca.pem
+      # WARNING: make sure the CN of the broker cert matches this public FQDN ($TESTBED_HOST here)
       - /home/driver/git/test-bed/docker/swarm/broker/config/ssl:/etc/kafka/secrets
       # For debugging, create log4j.properties based on log4j.properties.orig in folder 'broker/config' and customize it.
       #      - ./broker/config/log4j.properties:/etc/kafka/log4j.properties
@@ -69,6 +70,7 @@ services:
       
       # The listener name must be 'PLAINTEXT' like the protocol name, as workaround for https://github.com/confluentinc/schema-registry/issues/648
       # SSL is enabled in Kafka Docker image only if KAFKA_ADVERTISED_LISTENERS has SSL://
+      # WARNING: make sure the CN of the broker cert matches this public FQDN ($TESTBED_HOST here)
       KAFKA_ADVERTISED_LISTENERS: 'SSL://${TESTBED_HOST}:${BROKER_PORT},PLAINTEXT://broker:9092'
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: 'SSL:SSL,PLAINTEXT:PLAINTEXT'
       KAFKA_LISTENERS: 'SSL://0.0.0.0:${BROKER_PORT},PLAINTEXT://0.0.0.0:9092'
