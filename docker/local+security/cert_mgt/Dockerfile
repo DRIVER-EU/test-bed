@@ -29,9 +29,9 @@ ENV LAUNCH_JBOSS_IN_BACKGROUND=true
 
 RUN chmod +x ejbca.git/bin/extra/custom-ejbca-setup.sh &&\
     ejbca.git/bin/extra/custom-ejbca-setup.sh &&\
-    ejbca/bin/ejbca.sh ca init --verbose --caname Issuing_CA --dn "O=DRIVER_PROJECT,OU=WP923,CN=Issuing_CA" --tokenType soft --tokenPass null --keytype RSA --keyspec 2048 -v 730 --policy null -s SHA256WithRSA --signedby External -externalcachain /opt/pki/root-ca-crt.pem &&\
+    ejbca/bin/ejbca.sh ca init --verbose --caname Issuing_CA --dn "O=DRIVER_PROJECT,OU=WP923,CN=Issuing_CA" --tokenType soft --tokenPass null --keytype RSA --keyspec 2048 -v 1460 --policy null -s SHA256WithRSA --signedby External -externalcachain /opt/pki/root-ca-crt.pem &&\
     openssl req -inform DER -outform PEM -in ejbca/Issuing_CA_csr.der -out ejbca/Issuing_CA_csr.pem &&\
-    keytool -keystore root-ca.p12 -storepass changeit -gencert -v -alias ca -ext BasicConstraints:critical=0 -keypass changeit -infile ejbca/Issuing_CA_csr.pem -rfc -outfile Issuing_CA_crt.pem &&\
+    keytool -keystore root-ca.p12 -storepass changeit -gencert -v -alias ca -ext BasicConstraints:critical=0 -validity 1460 -keypass changeit -infile ejbca/Issuing_CA_csr.pem -rfc -outfile Issuing_CA_crt.pem &&\
     ejbca/bin/ejbca.sh ca importcacert --verbose --caname Issuing_CA -f /opt/pki/Issuing_CA_crt.pem &&\
     ejbca/bin/ejbca.sh ca importprofiles --verbose -d /opt/pki/ejbca-profiles &&\
     ejbca/bin/ejbca.sh ra addendentity --verbose --username testadmintool --password changeit --dn "CN=testadmintool,O=DRIVER_PROJECT" --email "cyril.dangerville@projectdriver.eu" --caname Issuing_CA --type 1 --token P12 --eeprofile TLS_EE &&\
