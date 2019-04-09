@@ -1,0 +1,320 @@
+---
+version: '3'
+services: 
+  zookeeper:
+    image: confluentinc/cp-zookeeper:5.0.0
+    networks:
+      testbed-net:
+        aliases:
+          - driver-testbed.eu
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 32181
+      ZOOKEEPER_TICK_TIME: 2000
+
+  # Certificate Management Service
+  cert_mgt:
+    build: ./cert_mgt
+    image: drivereu/cert_mgt:1.0.1
+    networks:
+      - testbed-net
+      - traefik-net
+    ports:
+     #- "8442:8442"
+     # Traefik config down below results in "Internal Server Error" when trying to connect via Traefik proxy, so exposing ports directly for now
+     # This endpoint is for admins, requires authentication with admin certificate
+     - "8445:8443"
+     #- "9090:8080"
+    deploy:
+      labels:
+        # Proxying https via traefik doesn't work
+        - "traefik.docker.network=traefik-net"
+        - "traefik.enable=true"
+        # We could have routes for all ports, using segment labels: https://docs.traefik.io/configuration/backends/docker/#on-containers-with-multiple-ports-segment-labels
+        #- "traefik.https8442.frontend.rule=Host:driver-testbed.eu;PathPrefix:/ejbca/"
+        #- "traefik.https8442.port=8442"
+        #- "traefik.https8443.frontend.rule=Host:driver-testbed.eu;PathPrefix:/ejbca-admin/;ReplacePath:/ejbca"
+        #- "traefik.https8443.port=8443"
+        - "traefik.frontend.rule=Host:driver-testbed.eu;PathPrefixStrip:/pki/"
+        - "traefik.port=8443"
+        - "traefik.protocol=https"
+        - "traefik.frontend.auth.forward.tls.insecureSkipVerify=true"
+
+  broker:
+    image: confluentinc/cp-kafka:5.0.0
+    hostname: broker
+    depends_on:
+      - zookeeper
+    networks:
+      - testbed-net
+    ports:
+      - "3551:3551"
+    volumes:
+      # Broker's SSL keypair is private (the private key actually) therefore should be generated on the trial's testbed docker host during the trial setup, 
+      # and a certificate must be generated for the new broker's DNS domain name, e.g. "tb5.driver-testbed.eu"
+      #- ./broker/config/ssl:/etc/kafka/secrets
+      # Process to generate the keypair and certificate for domain "tb5.driver-testbed.eu" as main domain and "tb4.driver-testbed.eu" as alternative one:
+      #   1) Generate keypair (remove any previous existing keypair)
+      #     $ rm keystore.p12
+      #     $ keytool -genkeypair -alias tb5.driver-testbed.eu -dname "CN=tb5.driver-testbed.eu,O=DRIVER-PROJECT.EU" -keyalg RSA -keysize 4096 -storetype pkcs12 -keystore keystore.p12
+      #   2) Generate CSR (Certificate Signing Request for the CA)
+      #     $ keytool -certreq -alias tb5.driver-testbed.eu -keystore keystore.p12 -file server.csr
+      #   3) Get the certificate signed by the root CA
+      #     $ keytool -keystore ../../../cert_mgt/root-ca.p12 -alias ca -gencert -rfc -infile server.csr -outfile server-crt-by-ca.pem -dname "CN=tb5.driver-testbed.eu,O=DRIVER-PROJECT.EU" -ext "san=dns:tb5.driver-testbed.eu,dns:tb4.driver-testbed.eu" -ext "eku=clientAuth,serverAuth" -validity 9999
+      #   4) Import the new signed certificate into the broker's keystore
+      #     $ keytool -keystore keystore.p12 -alias tb5.driver-testbed.eu -importcert -file server-crt-by-ca.pem
+      #EV - /home/driver/git/test-bed/docker/swarm/broker/config/ssl:/etc/kafka/secrets
+      - /home/admin/dev/test-bed/docker/swarm/broker/config/ssl:/etc/kafka/secrets
+      # For debugging, create log4j.properties based on log4j.properties.orig in folder 'broker/config' and customize it.
+      #      - ./broker/config/log4j.properties:/etc/kafka/log4j.properties
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:32181'
+      
+      # The listener name must be 'PLAINTEXT' like the protocol name, as workaround for https://github.com/confluentinc/schema-registry/issues/648
+      # SSL is enabled in Kafka Docker image only if KAFKA_ADVERTISED_LISTENERS has SSL://
+      KAFKA_ADVERTISED_LISTENERS: 'PLAINTEXT://broker:9092,SSL://driver-testbed.eu:3551'
+      #EV KAFKA_ADVERTISED_LISTENERS: 'SSL://driver-testbed.eu:3551,PLAINTEXT://broker:9092'
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: 'SSL:SSL,PLAINTEXT:PLAINTEXT'
+      KAFKA_LISTENERS: 'SSL://0.0.0.0:3551,PLAINTEXT://0.0.0.0:9092'
+      KAFKA_INTER_BROKER_LISTENER_NAME: 'SSL'
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_DEFAULT_REPLICATION_FACTOR: 1
+      KAFKA_MESSAGE_MAX_BYTES: 100000000
+      KAFKA_REPLICA_FETCH_MAX_BYTES: 100000000
+
+      # Change log levels for debugging
+      # More info: https://github.com/confluentinc/cp-docker-images/blob/master/debian/kafka/include/etc/confluent/docker/log4j.properties.template
+      # KAFKA_LOG4J_LOGGERS: "kafka.controller=INFO,kafka=INFO,org.apache.cxf=INFO,org.ow2.authzforce=INFO"
+      # KAFKA_LOG4J_ROOT_LOGLEVEL: "INFO"
+      # KAFKA_TOOLS_LOG4J_LOGLEVEL: "INFO"
+
+      # SSL settings
+      # See https://docs.confluent.io/current/installation/docker/docs/tutorials/clustered-deployment-ssl.html#id2 for docker image specifics, 
+      # and https://docs.confluent.io/current/kafka/authentication_ssl.html in general
+      # Uncomment line below for SSL debugging
+      # KAFKA_OPTS: '-Djavax.net.debug=all'
+      # PLAINTEXT protocol used by schema_registry and kafka_rest services. TODO: make them use SSL.
+      # Name of file in /etc/kafka/secrets
+      KAFKA_SSL_TRUSTSTORE_FILENAME: truststore.jks
+      KAFKA_SSL_TRUSTSTORE_CREDENTIALS: truststore_creds
+      # Name of file in /etc/kafka/secrets
+      KAFKA_SSL_KEYSTORE_FILENAME: keystore.p12
+      KAFKA_SSL_KEYSTORE_TYPE: PKCS12
+      KAFKA_SSL_KEYSTORE_CREDENTIALS: keystore_creds
+      KAFKA_SSL_KEY_CREDENTIALS: keystore_creds
+      KAFKA_SSL_CLIENT_AUTH: required
+
+  schema_registry:
+    image: confluentinc/cp-schema-registry:5.0.0
+    depends_on:
+      - zookeeper
+      - broker
+    networks:
+      - testbed-net
+    ports:
+      - "3552:3552"
+    environment:
+      SCHEMA_REGISTRY_HOST_NAME: schema_registry
+      SCHEMA_REGISTRY_LISTENERS: 'http://0.0.0.0:3552'
+      SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: 'zookeeper:32181'
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: 'PLAINTEXT://broker:9092'
+      # By default, ConsumerConfig 'fetch.max.wait.ms' = 500 triggering READ on <kafkastore.topic> ('_schemas' by default) via broker every 500 ms! Increase this value if you need to reduce network traffic or debug
+      # ConsumerConfig properties, e.g. fetch.max.wait.ms can be set via SchemaRegistryConfig by prefixing with 'kafkastore.'
+      SCHEMA_REGISTRY_KAFKASTORE_FETCH_MAX_WAIT_MS: 30000
+      # SCHEMA_REGISTRY_KAFKASTORE_INIT_TIMEOUT_MS: 300000
+      SCHEMA_REGISTRY_CUB_KAFKA_TIMEOUT: 300
+
+  kafka_rest:
+    image: confluentinc/cp-kafka-rest:5.0.0
+    hostname: kafka_rest
+    depends_on:
+      - zookeeper
+      - schema_registry
+      - broker
+    networks:
+      - testbed-net
+    environment:
+      KAFKA_REST_HOST_NAME: kafka_rest
+      KAFKA_REST_BOOTSTRAP_SERVERS: 'PLAINTEXT://broker:9092'
+      KAFKA_REST_ZOOKEEPER_CONNECT: 'zookeeper:32181'
+      KAFKA_REST_LISTENERS: 'http://0.0.0.0:8082'
+      KAFKA_REST_SCHEMA_REGISTRY_URL: 'http://schema_registry:3552'
+      KAFKA_CONSUMER_REQUEST_TIMEOUT_MS: 30000
+      KAFKA_REST_ACCESS_CONTROL_ALLOW_METHODS: 'GET,POST,PUT,DELETE,OPTIONS'
+      KAFKA_REST_ACCESS_CONTROL_ALLOW_ORIGIN: '*'
+      KAFKA_REST_CUB_KAFKA_TIMEOUT: 300
+  
+  kafka_topics_ui:
+    image: drivereu/kafka-topics-ui:0.0.1
+    depends_on:
+      - kafka_rest
+    networks:
+      - traefik-net
+      - testbed-net
+    environment:
+      KAFKA_REST_PROXY_URL: 'http://kafka_rest:8082'
+      PROXY: 'true'
+      MAX_BYTES: 5000000
+      RELATIVE_PROXY_URL: 'true'
+      RECORD_POLL_TIMEOUT: 10000
+    deploy:
+      labels:
+        - "traefik.port=8000"
+        - "traefik.enable=true"
+        - "traefik.docker.network=traefik-net"
+        - "traefik.frontend.rule=Host:driver-testbed.eu;PathPrefixStrip:/topics-ui/"
+
+  kafka_schema_registry_ui:
+    image: drivereu/schema-registry-ui:0.0.1
+    depends_on:
+      - schema_registry
+    networks:
+      - traefik-net
+      - testbed-net
+    environment:
+      SCHEMAREGISTRY_URL: 'http://schema_registry:3552'
+      RELATIVE_PROXY_URL: 'true'
+      PROXY: 'true'
+    deploy:
+      labels:
+        - "traefik.port=8000"
+        - "traefik.enable=true"
+        - "traefik.docker.network=traefik-net"
+        - "traefik.frontend.rule=Host:driver-testbed.eu;PathPrefixStrip:/schema-ui/"
+        
+  postgres:
+    image: postgres:9.6
+    hostname: postgres
+    networks:
+      - traefik-net
+      - testbed-net
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: TRIAL_ADMIN
+    volumes:
+       - postgres-data:/var/lib/postgresql/data
+    restart: unless-stopped
+    
+  admintool:
+    image: drivereu/test-bed-admin:1.2.15
+    depends_on:
+      - cert_mgt
+      - postgres
+      - broker
+      - schema_registry
+    networks:
+      - traefik-net
+      - testbed-net
+     # As a temporary workaround for the AdminTool frontend not working behind traefik (non-secure WebSocket over HTTPS issue), we open the AdminTool port to the outside (not secure!) directly like for the schema registry
+    ports: 
+      - "8095:8090"
+    # Volumes replaced by command (down below) using curl to download all JSON config files
+    volumes:
+       # wtfc.sh has to be put on the docker host
+       - /home/admin/dev/test-bed/docker/swarm/wtfc.sh:/opt/wtfc.sh
+#      - ./admintool-config/gateways.json:/opt/application/config/gateways.json
+#      - ./admintool-config/solutions.json:/opt/application/config/solutions.json
+#      - ./admintool-config/topics.json:/opt/application/config/topics.json
+#      - ./admintool-config/standards.json:/opt/application/config/standards.json
+    environment:
+      KAFKA_BROKER_URL: broker:3551
+      SCHEMA_REGISTRY_URL: http://schema_registry:3552
+      zookeeper_host: zookeeper
+      zookeeper_port: 32181
+      schema_registry_url: http://schema_registry:3552
+      testbed_secure_mode: 'false'
+      testbed_init_auto: 'false'
+      management_ca_cert_path: http://cert_mgt:8080
+      cert_handler_url: https://cert_mgt:8443
+      cert_pem_handler_url: https://cert_mgt:8443
+      # Unused
+      security_rest_path_group: https://authorization_service:8443
+      security_rest_path_topic: https://authorization_service:8443
+    command: sh -c "curl 'https://raw.githubusercontent.com/DRIVER-EU/test-bed/master/docker/swarm/admintool-config/{gateways,solutions,standards,topics}.json' -o '/opt/application/config/#1.json' && /opt/wtfc.sh --progress --timeout=240 --interval=10 --status=0 nc -w 5 -vz cert_mgt 8442 && cd /opt/application && java -jar ./admin-service-1.2.15.jar --server.use-forward-headers=true"
+    deploy:
+      labels:
+        - "traefik.port=8090"
+        - "traefik.enable=true"
+        - "traefik.docker.network=traefik-net"
+        # We should use a "PathPrefixStrip:/test-bed-admin/" but this doesn't work, probably because the webpack of the admintool frontend is not configured to handle a path prefix.
+        # One solution seems to customize the webpack configuration with the 'publicPath' property. TO BE TESTED.
+        # More info: https://stackoverflow.com/questions/54069708/how-to-host-a-webpack-app-behind-a-reverse-proxy-on-a-specific-path
+        - "traefik.frontend.rule=Host:driver-testbed.eu;PathPrefixStrip:/test-bed-admin/"
+        # Using PathPrefix:/ doesn't work either. Seems the issue is attempt to use ws (non-secure websocket) over https (blocked by browser Chrome/Firefox):
+        # https://github.com/webpack/webpack-dev-server/issues/763
+        # - "traefik.frontend.rule=Host:driver-testbed.eu;PathPrefix:/"
+        - "traefik.frontend.passHostHeader=true"
+        # https://docs.traefik.io/configuration/backends/docker/#custom-headers
+        - "traefik.frontend.headers.customRequestHeaders=X-Forwarded-Proto:https||X-Forwarded-Port:443"
+
+  afteractionreview:
+    image: drivereu/after-action-review:latest
+    depends_on:
+      - postgres
+      - broker
+      - schema_registry
+    networks:
+      - traefik-net
+      - testbed-net
+    deploy:
+      labels:
+        - "traefik.port=8095"
+        - "traefik.enable=true"
+        - "traefik.docker.network=traefik-net"
+        - "traefik.frontend.rule=Host:driver-testbed.eu;PathPrefixStrip:/after-action-review/"
+  
+  pgadmin:
+    image: fenglc/pgadmin4
+    depends_on:
+      - postgres
+    restart: unless-stopped
+    networks:
+      - traefik-net
+    deploy:
+      labels:
+        - "traefik.port=5050"
+        - "traefik.enable=true"
+        - "traefik.docker.network=traefik-net"
+        - "traefik.frontend.rule=Host:driver-testbed.eu;PathPrefixStrip:/pgadmin/"
+    
+  time_service:
+    image: drivereu/test-bed-time-service:develop-latest
+    depends_on:
+      - broker
+      - schema_registry
+    networks:
+      - traefik-net
+      - testbed-net
+    environment:
+      KAFKA_BROKER_URL: broker:9092
+      SCHEMA_REGISTRY_URL: http://schema_registry:3552
+      AUTO_REGISTER_SCHEMAS: 'true'
+    deploy:
+      labels:
+        - "traefik.port=8100"
+        - "traefik.enable=true"
+        - "traefik.docker.network=traefik-net"
+        - "traefik.frontend.rule=Host:driver-testbed.eu;PathPrefixStrip:/time-service/"
+      
+  large_file_service:
+    image: drivereu/large-file-service:develop-latest
+    environment:
+      URL: http://driver-testbed.eu/large-file-service/
+    networks:
+      - traefik-net
+    deploy:
+      labels:
+        - "traefik.port=80"
+        - "traefik.enable=true"
+        - "traefik.docker.network=traefik-net"
+        - "traefik.frontend.rule=Host:driver-testbed.eu;PathPrefix:/large-file-service/"
+      
+networks:
+  traefik-net:
+    external: true
+  testbed-net:
+    driver: overlay
+    
+volumes:
+  postgres-data:
