@@ -81,6 +81,8 @@ services:
     networks:
       - traefik-net
       - testbed-net
+    ports:
+      - "3600:8000"
     environment:
       KAFKA_REST_PROXY_URL: 'http://kafka_rest:8082'
       PROXY: 'true'
@@ -101,6 +103,8 @@ services:
     networks:
       - traefik-net
       - testbed-net
+    ports:
+      - "3601:8000"
     environment:
       SCHEMAREGISTRY_URL: 'http://schema_registry:3542'
       RELATIVE_PROXY_URL: 'true'
@@ -139,7 +143,7 @@ services:
       - testbed-net
      # As a temporary workaround for the AdminTool frontend not working behind traefik (non-secure WebSocket over HTTPS issue), we open the AdminTool port to the outside (not secure!) directly like for the schema registry
     ports: 
-      - "8095:8090"
+      - "8097:8090"
     # Volumes replaced by command (down below) using curl to download all JSON config files
     volumes:
        # wtfc.sh has to be put on the docker host
@@ -189,7 +193,7 @@ services:
       - traefik-net
       - testbed-net
     ports:
-      - "8096:8095"
+      - "8098:8095"
     deploy:
       labels:
         - "traefik.port=8095"
