@@ -197,7 +197,7 @@ services:
     restart: unless-stopped
     
   admintool:
-    image: drivereu/test-bed-admin:1.2.15
+    image: drivereu/test-bed-admin:1.2.16
     depends_on:
       - cert_mgt
       - postgres
@@ -224,7 +224,7 @@ services:
       zookeeper_host: zookeeper
       zookeeper_port: 32181
       schema_registry_url: http://schema_registry:3552
-      testbed_secure_mode: 'true'
+      testbed_secure_mode: 'AUTHENTICATION'
       testbed_init_auto: 'false'
       management_ca_cert_path: http://cert_mgt:8080
       cert_handler_url: https://cert_mgt:8443
