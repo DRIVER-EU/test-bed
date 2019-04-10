@@ -191,7 +191,7 @@ services:
       - traefik-net
       - testbed-net
     ports:
-      - "8098:8095"
+      - "${AARTOOL_PORT}:8095"
     deploy:
       labels:
         - "traefik.port=8095"
@@ -209,6 +209,8 @@ services:
     restart: unless-stopped
     networks:
       - traefik-net
+    ports:
+      - "${PGADMIN_PORT}:5050"
     deploy:
       labels:
         - "traefik.port=5050"
