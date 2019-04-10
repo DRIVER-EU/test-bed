@@ -197,7 +197,7 @@ services:
     restart: unless-stopped
     
   admintool:
-    image: drivereu/test-bed-admin:1.2.16
+    image: drivereu/test-bed-admin:latest
     depends_on:
       - cert_mgt
       - postgres
