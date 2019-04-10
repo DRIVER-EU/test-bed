@@ -133,11 +133,9 @@ services:
   admintool:
     image: drivereu/test-bed-admin:latest
     depends_on:
-      - cert_mgt
       - postgres
       - broker
       - schema_registry
-    dns: 8.8.8.8
     networks:
       - traefik-net
       - testbed-net
@@ -160,10 +158,10 @@ services:
       schema_registry_url: http://schema_registry:3542
       testbed_secure_mode: 'DEVELOP'
       testbed_init_auto: 'false'
-      management_ca_cert_path: http://cert_mgt:8080
-      cert_handler_url: https://cert_mgt:8443
-      cert_pem_handler_url: https://cert_mgt:8443
       # Unused
+      #management_ca_cert_path: http://cert_mgt:8080
+      #cert_handler_url: https://cert_mgt:8443
+      #cert_pem_handler_url: https://cert_mgt:8443
       security_rest_path_group: https://authorization_service:8443
       security_rest_path_topic: https://authorization_service:8443
 #    command: sh -c "curl -k 'https://151.101.192.133/DRIVER-EU/test-bed/master/docker/swarm/admintool-config/{gateways,solutions,standards,topics}.json' -o '/opt/application/config/#1.json' && /opt/wtfc.sh --progress --timeout=240 --interval=10 --status=0 nc -w 5 -vz cert_mgt 8442 && cd /opt/application && java -jar ./admin-service-1.2.15.jar --server.use-forward-headers=true"
@@ -211,6 +209,8 @@ services:
     restart: unless-stopped
     networks:
       - traefik-net
+    ports:
+       - "5054:5050" 
     deploy:
       labels:
         - "traefik.port=5050"
@@ -251,7 +251,7 @@ services:
         - "traefik.frontend.rule=Host:driver-testbed.eu;PathPrefix:/large-file-service/"
       
   wms_service:
-    image: drivereu/test-bed-wms-service:latest
+    image: drivereu/test-bed-wms-service:1.0.11
     hostname: wmsservice
     environment:
       URL: http://driver-testbed.eu:4101
