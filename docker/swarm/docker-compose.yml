@@ -254,29 +254,28 @@ services:
     image: drivereu/test-bed-wms-service:1.0.11
     hostname: wmsservice
     environment:
-      URL: http://driver-testbed.eu:4101
-      WMS_PORT: 4101
+      URL: http://driver-testbed.eu:3488
+      WMS_PORT: 3488
       WMS_HOST: wmsservice
       WMS_FOLDER: /server/data
-      WMS_EXTERNAL_PORT: 4101
+      WMS_EXTERNAL_PORT: 3488
       WMS_EXTERNAL_HOST: http://driver-testbed.eu
-      WMS_EXTERNAL_ADDRESS: http://driver-testbed.eu:4101/
+      WMS_EXTERNAL_ADDRESS: http://driver-testbed.eu:3488/
       WMS_KAFKA_HOST: broker:9092
       WMS_SCHEMA_REGISTRY: http://schema_registry:3542
       WMS_CORS_ORIGIN: https://oefen-veiligheidsregio.lcms.nl
       WMS_CORS_HEADERS: 'authorization, content-type'
     ports:
-      - 4101:5101
+      - 3488:3488
     depends_on:
       - broker
       - schema_registry
-
     networks:
       - traefik-net
       - testbed-net
     deploy:
       labels:
-        - "traefik.port=4101"
+        - "traefik.port=3488"
         - "traefik.enable=true"
         - "traefik.docker.network=traefik-net"
         - "traefik.frontend.rule=Host:driver-testbed.eu;PathPrefix:/wms/"
