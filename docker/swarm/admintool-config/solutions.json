@@ -24,14 +24,6 @@
  		"state":false,
  		"description":"This is the Trial Manager"
 	},{
-		"id":"TB-TrialMgmtC2View",
-		"subject.id":"O=DRIVER-PROJECT.EU,CN=TrialMgmtC2View",
- 		"name":"TrialManagerC2Viewer",
- 		"isTestbed":false,
- 		"isService":true,
- 		"state":false,
- 		"description":"This is the Trial Manager C2 Viewer"
-	},{
 		"id":"TB-TimeService",
 		"subject.id":"O=DRIVER-PROJECT.EU,CN=TimeService",
  		"name":"TimeService",
