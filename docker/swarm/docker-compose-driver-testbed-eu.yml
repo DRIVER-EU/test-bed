@@ -349,8 +349,8 @@ services:
     image: drivereu/ost-app:ost_database
     hostname: db
     container_name: ost_db
-    ports:
-      - "5437:5432"
+    #ports:
+    #  - "5437:5432"
     networks:
       - testbed-net
     volumes:
@@ -376,7 +376,7 @@ services:
     container_name: ost_api
     network_mode: host
     ports:
-      - "8584:8080"
+      - "8085:8080"
     networks:
       - testbed-net
     volumes:
