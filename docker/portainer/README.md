@@ -50,6 +50,8 @@ Important labels are:
   3. `SCHEMA_REGISTRY_PORT` the port to be used by the schema registry (e.g. 3502). This port must not already be in use by another stack or service.
   4. `ADMINTOOL_PORT` (temporary) the port to be used by the AdminTool Web UI (e.g. 809*X*, for domain tb*X*.driver-testbed.eu). **TODO: make it work behind `Traefik` proxy (WebSocket issue to be solved)**
   5. `CERT_MGT_PORT` the port to be used by the Certificate Management's Admin Web UI for testbed security experts (e.g. 844*X*, for domain tb*X*.driver-testbed.eu)
+  6. `AARTOOL_PORT` the port to be used by the After Action Review Tool Web UI (e.g. 8*X*95, for domain tb*X*.driver-testbed.eu). **TODO: make it work behind `Traefik` proxy (WebSocket issue to be solved)**
+  7. `PGADMIN_PORT` the port to be used by the PG Amin Web UI for accessing the DB (e.g. 505*X*, for domain tb*X*.driver-testbed.eu))
 7. Press 'Deploy the stack'.
 8. `Traefik` (running in the `Traefik` stack) will now automatically pick up the starting pack and handle routing for the configured domain.
 
