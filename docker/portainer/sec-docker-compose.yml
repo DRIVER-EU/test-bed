@@ -171,6 +171,8 @@ services:
     networks:
       - traefik-net
       - testbed-net
+    ports:
+      - "3501:8000"
     environment:
       SCHEMAREGISTRY_URL: 'http://schema_registry:${SCHEMA_REGISTRY_PORT}'
       RELATIVE_PROXY_URL: 'true'
@@ -276,6 +278,8 @@ services:
     restart: unless-stopped
     networks:
       - traefik-net
+    ports:
+      - "${PGADMIN_PORT}:5050" 
     deploy:
       labels:
         - "traefik.port=5050"
@@ -330,11 +334,55 @@ services:
       WMS_SCHEMA_REGISTRY: http://schema_registry:3542
       WMS_CORS_ORIGIN: https://oefen-veiligheidsregio.lcms.nl
       WMS_CORS_HEADERS: 'authorization, content-type'
+    networks:
+      - traefik-net
+      - testbed-net
     ports:
-      - 5101:5101
+      - 3588:3588
     depends_on:
       - broker
       - schema_registry
+
+  ost_db:
+    image: drivereu/ost-app:ost_database
+    hostname: db
+    container_name: ost_db
+    #ports:
+    #  - "5437:5432"
+    networks:
+      - testbed-net
+    volumes:
+      - ost-database:/var/lib/postgresql/data
+    restart: always
+
+  ost_web:
+    image: drivereu/ost-app:ost_frontend
+    container_name: ost_web
+    links:
+      - ost_api
+    pid: "host"
+    ports:
+      - "5084:80"
+    networks:
+      - testbed-net
+    volumes:
+      - nginx-conf:/etc/nginx/conf.d
+    restart: always
+
+  ost_api:
+    image: drivereu/ost-app:ost_backend
+    container_name: ost_api
+    network_mode: host
+    ports:
+      - "8085:8080"
+    networks:
+      - testbed-net
+    volumes:
+      - apiconfig:/opt/config
+    restart: always
+    environment:
+      KAFKA_BROKER_URL: broker:9092
+      SCHEMA_REGISTRY_URL: http://schema_registry:3552
 
 networks:
   traefik-net:
@@ -344,3 +392,6 @@ networks:
     
 volumes:
   postgres-data:
+  ost-database:
+  nginx-conf:
+  apiconfig:
