@@ -320,18 +320,18 @@ services:
         - "traefik.frontend.rule=Host:${TESTBED_HOST};PathPrefix:/large-file-service/"
 
   wms_service:
-    image: drivereu/test-bed-wms-service:latest
+    image: drivereu/test-bed-wms-service:1.0.11
     hostname: wmsservice
     environment:
       URL: http://${TESTBED_HOST}/wms/
-      WMS_PORT: 5101
+      WMS_PORT: 3588
       WMS_HOST: wmsservice
       WMS_FOLDER: /server/data
-      WMS_EXTERNAL_PORT: 5101
+      WMS_EXTERNAL_PORT: 3588
       WMS_EXTERNAL_HOST: http://${TESTBED_HOST}/wms/
       WMS_EXTERNAL_ADDRESS: http://${TESTBED_HOST}/wms/
       WMS_KAFKA_HOST: broker:9092
-      WMS_SCHEMA_REGISTRY: http://schema_registry:3542
+      WMS_SCHEMA_REGISTRY: http://schema_registry:${SCHEMA_REGISTRY_PORT}
       WMS_CORS_ORIGIN: https://oefen-veiligheidsregio.lcms.nl
       WMS_CORS_HEADERS: 'authorization, content-type'
     networks:
@@ -342,6 +342,13 @@ services:
     depends_on:
       - broker
       - schema_registry
+
+    deploy:
+      labels:
+        - "traefik.port=3588"
+        - "traefik.enable=true"
+        - "traefik.docker.network=traefik-net"
+        - "traefik.frontend.rule=Host:${TESTBED_HOST};PathPrefix:/wms/"
 
   ost_db:
     image: drivereu/ost-app:ost_database
