@@ -315,7 +315,28 @@ services:
         - "traefik.enable=true"
         - "traefik.docker.network=traefik-net"
         - "traefik.frontend.rule=Host:driver-testbed.eu;PathPrefix:/large-file-service/"
-      
+
+  wms_service:
+    image: drivereu/test-bed-wms-service:latest
+    hostname: wmsservice
+    environment:
+      URL: http://driver-testbed.eu/wms/
+      WMS_PORT: 5101
+      WMS_HOST: wmsservice
+      WMS_FOLDER: /server/data
+      WMS_EXTERNAL_PORT: 5101
+      WMS_EXTERNAL_HOST: http://driver-testbed.eu/wms/
+      WMS_EXTERNAL_ADDRESS: http://driver-testbed.eu/wms/
+      WMS_KAFKA_HOST: broker:9092
+      WMS_SCHEMA_REGISTRY: http://schema_registry:3542
+      WMS_CORS_ORIGIN: https://oefen-veiligheidsregio.lcms.nl
+      WMS_CORS_HEADERS: 'authorization, content-type'
+    ports:
+      - 5101:5101
+    depends_on:
+      - broker
+      - schema_registry
+
 networks:
   traefik-net:
     external: true
