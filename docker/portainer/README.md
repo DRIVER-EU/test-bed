@@ -44,14 +44,15 @@ Important labels are:
 3. Click 'Add Stack'
 4. Provide a suitable name for the Test-Bed stack (e.g. tb4 or test-bed-4)
 5. Paste the docker-compose file located in `docker/swarm/docker-compose.yml` (see [here](https://github.com/DRIVER-EU/test-bed/blob/treafik/docker/swarm/docker-compose.yml)) into the web editor. Alternatively use the upload form and upload the docker-compose file directly.
-6. Scroll down. Under Environment: add 3 environment variables:
-  1. `TESTBED_HOST` the hostname to be used for the test-bed (e.g. `tb4.driver-testbed.eu`)
-  2. `BROKER_PORT` the port to be used by the Kafka broker (e.g. 3501). This port must not already be in use by another stack or service.
-  3. `SCHEMA_REGISTRY_PORT` the port to be used by the schema registry (e.g. 3502). This port must not already be in use by another stack or service.
-  4. `ADMINTOOL_PORT` (temporary) the port to be used by the AdminTool Web UI (e.g. 809*X*, for domain tb*X*.driver-testbed.eu). **TODO: make it work behind `Traefik` proxy (WebSocket issue to be solved)**
-  5. `CERT_MGT_PORT` the port to be used by the Certificate Management's Admin Web UI for testbed security experts (e.g. 844*X*, for domain tb*X*.driver-testbed.eu)
-  6. `AARTOOL_PORT` the port to be used by the After Action Review Tool Web UI (e.g. 8*X*95, for domain tb*X*.driver-testbed.eu). **TODO: make it work behind `Traefik` proxy (WebSocket issue to be solved)**
-  7. `PGADMIN_PORT` the port to be used by the PG Amin Web UI for accessing the DB (e.g. 505*X*, for domain tb*X*.driver-testbed.eu))
+6. Scroll down. Under Environment: add 3 environment variables: **!!!WARNING: only ports 3XXX and 8XXX may be used due to TNO firewall rules!!!**
+   1. `TESTBED_HOST` the hostname to be used for the test-bed (e.g. `tb4.driver-testbed.eu`)
+   2. `BROKER_PORT` the port to be used by the Kafka broker (e.g. 35*X*1 for domain tb*X*.driver-testbed.eu). This port must not a lready be in use by another stack or service.
+   3. `SCHEMA_REGISTRY_PORT` the port to be used by the schema registry (e.g. 35*X*2 for domain tb*X*.driver-testbed.eu). This port must not already be in use by another stack or service.
+   4. `ADMINTOOL_PORT` (temporary) the port to be used by the AdminTool Web UI (e.g. 8*X*97, for domain tb*X*.driver-testbed.eu). **TODO: make it work behind `Traefik` proxy (WebSocket issue to be solved)**
+   5. `CERT_MGT_PORT` the port to be used by the Certificate Management's Admin Web UI for testbed security experts (e.g. 844*X*, for domain tb*X*.driver-testbed.eu)
+   6. `AARTOOL_PORT` the port to be used by the After Action Review Tool Web UI (e.g. 8*X*95, for domain tb*X*.driver-testbed.eu). **TODO: make it work behind `Traefik` proxy (WebSocket issue to be solved)**
+   7. `PGADMIN_PORT` the port to be used by the PG Amin Web UI for accessing the DB (e.g. 305*X*, for domain tb*X*.driver-testbed.eu))
+   8. `OST_PORT` the port to be used by the Observer Tool's Web UI for accessing the DB (e.g. 805*X*, for domain tb*X*.driver-testbed.eu))
 7. Press 'Deploy the stack'.
 8. `Traefik` (running in the `Traefik` stack) will now automatically pick up the starting pack and handle routing for the configured domain.
 
