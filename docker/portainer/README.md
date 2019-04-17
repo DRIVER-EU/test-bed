@@ -43,11 +43,12 @@ Important labels are:
 2. Go to the 'Stacks' page by clicking Stacks in the left menu bar.
 3. Click 'Add Stack'
 4. Provide a suitable name for the Test-Bed stack (e.g. tb4 or test-bed-4)
-5. Paste the docker-compose file located in `docker/swarm/docker-compose.yml` (see [here](https://github.com/DRIVER-EU/test-bed/blob/treafik/docker/swarm/docker-compose.yml)) into the web editor. Alternatively use the upload form and upload the docker-compose file directly.
-6. Scroll down. Under Environment: add 3 environment variables: **!!!WARNING: only ports 3XXX and 8XXX may be used due to TNO firewall rules!!!**
+5. Paste the docker-compose file located in `docker/portainer/docker-compose.yml` (see [here](https://github.com/DRIVER-EU/test-bed/blob/traefik/docker/portainer/docker-compose.yml)) into the web editor. Alternatively use the upload form and upload the docker-compose file directly.
+6. Scroll down. Under Environment: add the following environment variables:
+   **!!!WARNING: only ports 3XXX and 8XXX may be used due to TNO firewall rules!!!**
    1. `TESTBED_HOST` the hostname to be used for the test-bed (e.g. `tb4.driver-testbed.eu`)
-   2. `BROKER_PORT` the port to be used by the Kafka broker (e.g. 35*X*1 for domain tb*X*.driver-testbed.eu). This port must not a lready be in use by another stack or service.
-   3. `SCHEMA_REGISTRY_PORT` the port to be used by the schema registry (e.g. 35*X*2 for domain tb*X*.driver-testbed.eu). This port must not already be in use by another stack or service.
+   2. `BROKER_PORT` the port to be used by the Kafka broker (e.g. 35*X*1 for domain tb*X*.driver-testbed.eu). This port must not already be in use by another stack or service. For example, use 3541 for tb4.
+   3. `SCHEMA_REGISTRY_PORT` the port to be used by the schema registry (e.g. 35*X*2 for domain tb*X*.driver-testbed.eu). This port must not already be in use by another stack or service. For example, use 3542 for tb4.
    4. `ADMINTOOL_PORT` (temporary) the port to be used by the AdminTool Web UI (e.g. 8*X*97, for domain tb*X*.driver-testbed.eu). **TODO: make it work behind `Traefik` proxy (WebSocket issue to be solved)**
    5. `CERT_MGT_PORT` the port to be used by the Certificate Management's Admin Web UI for testbed security experts (e.g. 844*X*, for domain tb*X*.driver-testbed.eu)
    6. `AARTOOL_PORT` the port to be used by the After Action Review Tool Web UI (e.g. 8*X*95, for domain tb*X*.driver-testbed.eu). **TODO: make it work behind `Traefik` proxy (WebSocket issue to be solved)**
