@@ -151,6 +151,8 @@ services:
     networks:
       - traefik-net
       - testbed-net
+    ports:
+      - "3500:8000"
     environment:
       KAFKA_REST_PROXY_URL: 'http://kafka_rest:8082'
       PROXY: 'true'
