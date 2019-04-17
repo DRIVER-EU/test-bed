@@ -14,12 +14,12 @@ The following services can be reached via HTTPS on these relative URL's, where T
 
 ## Starting `Traefik`
 
-Configuration for running `Traefik` can be found in the `docker/swarm/`Traefik`` folder. It is also present on the Test-bed master machine at `/opt/`Traefik`/`.
+Configuration for running `Traefik` can be found in the `docker/portainer/Traefik` folder. It is also present on the Test-bed master machine at `/opt/Traefik/`.
 
 For more info on the `Traefik` config with lets-encrypt, please consult the [`Traefik` Documentation](https://docs.`Traefik`.io/user-guide/docker-and-lets-encrypt/).
 
-1. SSH to the test-bed master machine, and navigate to `/opt/`Traefik``.
-2. Run `sudo docker stack deploy --compose-file docker-compose.yml `Traefik``
+1. SSH to the test-bed master machine, and navigate to `/opt/Traefik`.
+2. Run `sudo docker stack deploy --compose-file docker-compose.yml Traefik`
 
 ## Stopping `Traefik`
 
