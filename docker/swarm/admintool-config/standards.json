@@ -23,8 +23,5 @@
 	},{
 		"name":"geojson-sim",
 		"versions":["1.0"]
-	},{
-		"name":"named-geojson",
-		"versions":["1.0"]
 	}
 ]

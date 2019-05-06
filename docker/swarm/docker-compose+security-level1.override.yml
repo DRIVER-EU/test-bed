@@ -1,0 +1,64 @@
+# Overrides docker-compose.yml to enable Kafka SSL authentication and require SSL client certificate authentication from Kafka clients.
+# Create a symbolic link from 'docker-compose.override.yml' to this to combine the two with docker-compose commands (without having to use -f option)
+---
+version: '3.4'
+services: 
+
+  # Certificate Management Service
+  cert_mgt:
+    build: ./cert_mgt
+    image: drivereu/cert_mgt:1.0.1
+    hostname: certmgt
+    networks:
+      - testbed-net
+    ports:
+     - "8442:8442"
+     - "8443:8443"
+     - "9090:8080"
+
+  broker:
+    volumes:
+      - ./broker/config/ssl:/etc/kafka/secrets
+      # For debugging, create log4j.properties based on log4j.properties.orig in folder 'broker/config' and customize it.
+      #      - ./broker/config/log4j.properties:/etc/kafka/log4j.properties
+    environment:
+      # The listener name must be 'PLAINTEXT' like the protocol name, as workaround for https://github.com/confluentinc/schema-registry/issues/648
+      # SSL is enabled in Kafka Docker image only if KAFKA_ADVERTISED_LISTENERS has SSL://
+      KAFKA_ADVERTISED_LISTENERS: 'SSL://${TESTBED_HOST}:${BROKER_PORT},PLAINTEXT://broker:9092'
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: 'SSL:SSL,PLAINTEXT:PLAINTEXT'
+      KAFKA_LISTENERS: 'SSL://0.0.0.0:${BROKER_PORT},PLAINTEXT://0.0.0.0:9092'
+      KAFKA_INTER_BROKER_LISTENER_NAME: 'SSL'
+      # Change log levels for debugging
+      # More info: https://github.com/confluentinc/cp-docker-images/blob/master/debian/kafka/include/etc/confluent/docker/log4j.properties.template
+      # KAFKA_LOG4J_LOGGERS: "kafka.controller=INFO,kafka=INFO,org.apache.cxf=INFO,org.ow2.authzforce=INFO"
+      # KAFKA_LOG4J_ROOT_LOGLEVEL: "INFO"
+      # KAFKA_TOOLS_LOG4J_LOGLEVEL: "INFO"
+
+      # SSL settings
+      # See https://docs.confluent.io/current/installation/docker/docs/tutorials/clustered-deployment-ssl.html#id2 for docker image specifics, 
+      # and https://docs.confluent.io/current/kafka/authentication_ssl.html in general
+      # Uncomment line below for SSL debugging
+      # KAFKA_OPTS: '-Djavax.net.debug=all'
+      # PLAINTEXT protocol used by schema_registry and kafka_rest services. TODO: make them use SSL.
+      # Name of file in /etc/kafka/secrets
+      KAFKA_SSL_TRUSTSTORE_FILENAME: truststore.jks
+      KAFKA_SSL_TRUSTSTORE_CREDENTIALS: truststore_creds
+      # Name of file in /etc/kafka/secrets
+      KAFKA_SSL_KEYSTORE_FILENAME: keystore.p12
+      KAFKA_SSL_KEYSTORE_TYPE: PKCS12
+      KAFKA_SSL_KEYSTORE_CREDENTIALS: keystore_creds
+      KAFKA_SSL_KEY_CREDENTIALS: keystore_creds
+      KAFKA_SSL_CLIENT_AUTH: required
+
+
+  schema_registry:
+    environment:
+      # By default, ConsumerConfig 'fetch.max.wait.ms' = 500 triggering READ on <kafkastore.topic> ('_schemas' by default) via broker every 500 ms! Increase this value if you need to reduce network traffic or debug
+      # ConsumerConfig properties, e.g. fetch.max.wait.ms can be set via SchemaRegistryConfig by prefixing with 'kafkastore.'
+      SCHEMA_REGISTRY_KAFKASTORE_FETCH_MAX_WAIT_MS: 30000
+      # SCHEMA_REGISTRY_KAFKASTORE_INIT_TIMEOUT_MS: 300000
+      SCHEMA_REGISTRY_CUB_KAFKA_TIMEOUT: 300
+
+  kafka_rest:
+    environment:
+      KAFKA_REST_CUB_KAFKA_TIMEOUT: 300
