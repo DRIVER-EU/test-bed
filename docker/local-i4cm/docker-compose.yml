@@ -206,5 +206,24 @@ services:
       - broker
       - schema_registry
 
+  trial_management_tool:
+    image: drivereu/trial-management-tool:latest
+    depends_on:
+      - broker
+      - schema_registry
+    ports:
+      - "3000:3000"
+    environment:
+      CLIENT_ID: TB-TrialMgmt
+      KAFKA_HOST: broker:9092
+      SCHEMA_REGISTRY: http://schema_registry:3502
+      TRIAL_MANAGER_SERVER_PORT: 3000
+      SSL: 'false'
+      SSL_PFX: certs/TB-TrialMgmt.p12
+      SSL_PASSPHRASE: changeit
+      SSL_CA: certs/test-ca.pem
+    volumes:
+      - ./trials
+
 volumes:
   postgres-data:
