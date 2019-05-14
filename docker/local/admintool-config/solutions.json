@@ -48,37 +48,61 @@
  		"state":false,
  		"description":"This is the Testbed ObserverTool"
 	},{
-		"id":"pfa",
-		"subject.id":"O=Danish-RK,CN=DRK",
- 		"name":"PFA",
+		"id":"asign-mission",
+		"subject.id":"O=Ansur,CN=ASIGN-MISSION",
+ 		"name":"Asign Mission",
  		"isTestbed":false,
  		"isService":false,
  		"state":false,
- 		"description":"Psychological First Aid"
+ 		"description":"ASIGN Mission application!"
 	},{
-		"id":"asign",
-		"subject.id":"O=Ansur,CN=ASIGN",
- 		"name":"Asign",
+		"id":"asign-photo",
+		"subject.id":"O=Ansur,CN=ASIGN-PHOTO",
+ 		"name":"Asign Photo",
  		"isTestbed":false,
  		"isService":false,
  		"state":false,
- 		"description":"ASIGN application!"
+ 		"description":"ASIGN Photo application!"
 	},{
-		"id":"view-terra",
-		"subject.id":"O=VWORLD,CN=vieWTerra",
- 		"name":"vieWTerra",
+		"id":"view-terra-1",
+		"subject.id":"O=VWORLD,CN=vieWTerra1",
+ 		"name":"vieWTerra 1",
  		"isTestbed":false,
  		"isService":false,
  		"state":false,
- 		"description":"vieWTerra application!"
+ 		"description":"vieWTerra1 application!"
 	},{
-		"id":"crowd-tasker",
+		"id":"view-terra-2",
+		"subject.id":"O=VWORLD,CN=vieWTerra2",
+ 		"name":"vieWTerrac2",
+ 		"isTestbed":false,
+ 		"isService":false,
+ 		"state":false,
+ 		"description":"vieWTerra2 application!"
+	},{
+		"id":"view-terra-3",
+		"subject.id":"O=VWORLD,CN=vieWTerra3",
+ 		"name":"vieWTerra 3",
+ 		"isTestbed":false,
+ 		"isService":false,
+ 		"state":false,
+ 		"description":"vieWTerra3 application!"
+	},{
+		"id":"CrowdTaskerProducer",
 		"subject.id":"O=AIT,CN=CrowdTasker",
  		"name":"CrowdTasker",
  		"isTestbed":false,
  		"isService":false,
  		"state":false,
  		"description":"Crowd Tasker application!"
+	},{
+		"id":"CrowdTaskerProducer2",
+		"subject.id":"O=AIT,CN=CrowdTasker2",
+ 		"name":"CrowdTasker 2",
+ 		"isTestbed":false,
+ 		"isService":false,
+ 		"state":false,
+ 		"description":"Crowd Tasker Backup application!"
 	},{
 		"id":"airborn",
 		"subject.id":"O=DLR,CN=AIRBORNE",
@@ -88,12 +112,12 @@
  		"state":false,
  		"description":"Airborn application!"
 	},{
-		"id":"gateway-xvr-geojson",
-		"subject.id":"O=TNO,CN=XVR-GeoJson",
- 		"name":"XVR-GeoJson converter",
+		"id":"airborn-staff",
+		"subject.id":"O=DLR,CN=AIRBORNE-STAFF",
+ 		"name":"AIRBORN Staff",
  		"isTestbed":false,
  		"isService":false,
  		"state":false,
- 		"description":"Test-bed XVR-GeoJson converter!"
+ 		"description":"Airborn Staff application!"
 	}
 ]

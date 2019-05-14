@@ -98,7 +98,7 @@
 	},{
 		"id":"standart.topic.asign.info",
 		"type":"standard.topic",
- 		"name":"standard_asign_info",
+ 		"name":"asign_info",
  		"msgType": "geojson",
  		"msgTypeVersion": "1.0",
  		"state": false,
@@ -108,7 +108,7 @@
 	},{
 		"id":"standart.topic.crowd.tasker.info",
 		"type":"standard.topic",
- 		"name":"standard_crowd_takser_info",
+ 		"name":"crowd-takser_info",
  		"msgType": "geojson",
  		"msgTypeVersion": "1.0",
  		"state": false,
@@ -116,9 +116,9 @@
  		"subscribedSolutionIDs": ["all", "TB-AARTool"],
  		"description":"This is the standard CrowdTasker geoJSON topic."
 	},{
-		"id":"standart.topic.flight.data",
+		"id":"standart.topic.large.data.update",
 		"type":"standard.topic",
- 		"name":"standard_flight_data",
+ 		"name":"large_data_update",
  		"msgType": "largedata",
  		"msgTypeVersion": "1.0",
  		"state": false,
@@ -126,19 +126,9 @@
  		"subscribedSolutionIDs": ["all", "TB-AARTool"],
  		"description":"This is the standard Flightdata topic."
 	},{
-		"id":"standart.topic.geojson.sim.unit",
-		"type":"standard.topic",
- 		"name":"standard_geojson_sim_unit",
- 		"msgType": "geojson-sim",
- 		"msgTypeVersion": "1.0",
- 		"state": false,
- 		"publishSolutionIDs":["all"],
- 		"subscribedSolutionIDs": ["all", "TB-AARTool"],
- 		"description":"This is the standard GeoJson topic for  Simulationed units."
-	},{
 		"id":"standart.topic.photo.data",
 		"type":"standard.topic",
- 		"name":"standard_photo_data",
+ 		"name":"photo_data",
  		"msgType": "photo-geojson",
  		"msgTypeVersion": "1.0",
  		"state": false,
