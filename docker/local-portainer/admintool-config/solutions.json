@@ -1,0 +1,99 @@
+[
+	{
+		"id":"TB-AdminTool",
+		"subject.id":"CN=Admin Tool,OU=Authz Service Dev Project,OU=WP923,O=DRIVER-PROJECT.EU",
+ 		"name":"AdminTool",
+ 		"isTestbed":true,
+ 		"isService":true,
+ 		"state":false,
+ 		"description":"This is the AdminTool"
+	},{
+		"id":"TB-AARTool",
+		"subject.id":"O=DRIVER-PROJECT.EU,CN=AARTool",
+ 		"name":"AARTool",
+ 		"isTestbed":false,
+ 		"isService":true,
+ 		"state":false,
+ 		"description":"This is the AfterActionReview Tool"
+	},{
+		"id":"TB-TrialMgmt",
+		"subject.id":"O=DRIVER-PROJECT.EU,CN=TrialMgmt",
+ 		"name":"TrialManager",
+ 		"isTestbed":false,
+ 		"isService":true,
+ 		"state":false,
+ 		"description":"This is the Trial Manager"
+	},{
+		"id":"TB-TrialMgmtC2View",
+		"subject.id":"O=DRIVER-PROJECT.EU,CN=TrialMgmtC2View",
+ 		"name":"TrialManagerC2Viewer",
+ 		"isTestbed":false,
+ 		"isService":true,
+ 		"state":false,
+ 		"description":"This is the Trial Manager C2 Viewer"
+	},{
+		"id":"TB-TimeService",
+		"subject.id":"O=DRIVER-PROJECT.EU,CN=TimeService",
+ 		"name":"TimeService",
+ 		"isTestbed":false,
+ 		"isService":true,
+ 		"state":false,
+ 		"description":"This is the Testbed TimeService"
+	},{
+		"id":"TB-Ost",
+		"subject.id":"O=DRIVER-PROJECT.EU,CN=Ost",
+ 		"name":"ObserverTool",
+ 		"isTestbed":false,
+ 		"isService":true,
+ 		"state":false,
+ 		"description":"This is the Testbed ObserverTool"
+	},{
+		"id":"pfa",
+		"subject.id":"O=Danish-RK,CN=DRK",
+ 		"name":"PFA",
+ 		"isTestbed":false,
+ 		"isService":false,
+ 		"state":false,
+ 		"description":"Psychological First Aid"
+	},{
+		"id":"asign",
+		"subject.id":"O=Ansur,CN=ASIGN",
+ 		"name":"Asign",
+ 		"isTestbed":false,
+ 		"isService":false,
+ 		"state":false,
+ 		"description":"ASIGN application!"
+	},{
+		"id":"view-terra",
+		"subject.id":"O=VWORLD,CN=vieWTerra",
+ 		"name":"vieWTerra",
+ 		"isTestbed":false,
+ 		"isService":false,
+ 		"state":false,
+ 		"description":"vieWTerra application!"
+	},{
+		"id":"crowd-tasker",
+		"subject.id":"O=AIT,CN=CrowdTasker",
+ 		"name":"CrowdTasker",
+ 		"isTestbed":false,
+ 		"isService":false,
+ 		"state":false,
+ 		"description":"Crowd Tasker application!"
+	},{
+		"id":"airborn",
+		"subject.id":"O=DLR,CN=AIRBORNE",
+ 		"name":"AIRBORN",
+ 		"isTestbed":false,
+ 		"isService":false,
+ 		"state":false,
+ 		"description":"Airborn application!"
+	},{
+		"id":"gateway-xvr-geojson",
+		"subject.id":"O=TNO,CN=XVR-GeoJson",
+ 		"name":"XVR-GeoJson converter",
+ 		"isTestbed":false,
+ 		"isService":false,
+ 		"state":false,
+ 		"description":"Test-bed XVR-GeoJson converter!"
+	}
+]
