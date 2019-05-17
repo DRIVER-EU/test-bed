@@ -236,8 +236,9 @@ services:
       - copper_server
     environment:
       VUE_APP_COPPER_LAYER_URL: "'http://localhost:3007'"
-      VUE_APP_COPPER_LOG_URL: "'http://lolocalhost:3007'"
+      VUE_APP_COPPER_LOG_URL: "'http://localhost:3007'"
       VUE_APP_COPPER_SOCKET_SERVER_URL: "'http://localhost:3007'"
+    command: ["sh", "-c", "echo \"var VUE_APP_COPPER_LAYER_URL=$$VUE_APP_COPPER_LAYER_URL;var VUE_APP_COPPER_LOG_URL=$$VUE_APP_COPPER_LOG_URL;var VUE_APP_COPPER_SOCKET_SERVER_URL=$$VUE_APP_COPPER_SOCKET_SERVER_URL\" > /copper/global-vars-copper.js && http-server /copper"]
 
   copper_server:
     image: drivereu/copper-server:0.0.1
