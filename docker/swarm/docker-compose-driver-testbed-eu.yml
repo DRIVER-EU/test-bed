@@ -281,7 +281,7 @@ services:
     networks:
       - traefik-net
     ports:
-      - "5055:5050"
+      - "3055:5050"
     deploy:
       labels:
         - "traefik.port=5050"
