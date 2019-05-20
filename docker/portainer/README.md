@@ -14,12 +14,12 @@ The following services can be reached via HTTPS on these relative URL's, where T
 
 ## Starting `Traefik`
 
-Configuration for running `Traefik` can be found in the `docker/swarm/`Traefik`` folder. It is also present on the Test-bed master machine at `/opt/`Traefik`/`.
+Configuration for running `Traefik` can be found in the `docker/portainer/Traefik` folder. It is also present on the Test-bed master machine at `/opt/Traefik/`.
 
-For more info on the `Traefik` config with lets-encrypt, please consult the [`Traefik` Documentation](https://docs.`Traefik`.io/user-guide/docker-and-lets-encrypt/).
+For more info on the `Traefik` config with lets-encrypt, please consult the [`Traefik` Documentation](https://docs.traefik.io/user-guide/docker-and-lets-encrypt/).
 
-1. SSH to the test-bed master machine, and navigate to `/opt/`Traefik``.
-2. Run `sudo docker stack deploy --compose-file docker-compose.yml `Traefik``
+1. SSH to the test-bed master machine, and navigate to `/opt/Traefik`.
+2. Run `sudo docker stack deploy --compose-file docker-compose.yml Traefik`
 
 ## Stopping `Traefik`
 
@@ -32,10 +32,10 @@ For more info on the `Traefik` config with lets-encrypt, please consult the [`Tr
 
 Important labels are:
 
-* ``Traefik`.port=xxxx` the port on which the web service runs. `Traefik` will route from port 443 (HTTPS) to this port on the container.
-* ``Traefik`.enable=true` ensures that `Traefik` will function as a reverse proxy for this service. By default it will NOT in the current configuration.
-* ``Traefik`.docker.network=`Traefik`-net` The Docker network that is used by `Traefik` to route to the container. This network '`Traefik`-net' has been predefined and is already present for the Docker Swarm at TNO.
-* ``Traefik`.frontend.rule=Host:${TESTBED_HOST};PathPrefixStrip:/relative-path/` specifies on which hostname and relative URL the service can be reached. Also allows modifying the request URL before forwarding requests to the service.  Many things are possible here, for more details please check the [`Traefik` Documentation](https://docs.`Traefik`.io/basics/#frontends).
+* `traefik.port=xxxx` the port on which the web service runs. `Traefik` will route from port 443 (HTTPS) to this port on the container.
+* `traefik.enable=true` ensures that `Traefik` will function as a reverse proxy for this service. By default it will NOT in the current configuration.
+* `traefik.docker.network=traefik-net` The Docker network that is used by `Traefik` to route to the container. This network 'traefik-net' has been predefined and is already present for the Docker Swarm at TNO.
+* `traefik.frontend.rule=Host:${TESTBED_HOST};PathPrefixStrip:/relative-path/` specifies on which hostname and relative URL the service can be reached. Also allows modifying the request URL before forwarding requests to the service.  Many things are possible here, for more details please check the [`Traefik` Documentation](https://docs.traefik.io/basics/#frontends).
 
 ## Starting a new Cloud Test-Bed with `Portainer`
 
@@ -43,15 +43,17 @@ Important labels are:
 2. Go to the 'Stacks' page by clicking Stacks in the left menu bar.
 3. Click 'Add Stack'
 4. Provide a suitable name for the Test-Bed stack (e.g. tb4 or test-bed-4)
-5. Paste the docker-compose file located in `docker/swarm/docker-compose.yml` (see [here](https://github.com/DRIVER-EU/test-bed/blob/treafik/docker/swarm/docker-compose.yml)) into the web editor. Alternatively use the upload form and upload the docker-compose file directly.
-6. Scroll down. Under Environment: add 3 environment variables:
-  1. `TESTBED_HOST` the hostname to be used for the test-bed (e.g. `tb4.driver-testbed.eu`)
-  2. `BROKER_PORT` the port to be used by the Kafka broker (e.g. 3501). This port must not already be in use by another stack or service.
-  3. `SCHEMA_REGISTRY_PORT` the port to be used by the schema registry (e.g. 3502). This port must not already be in use by another stack or service.
-  4. `ADMINTOOL_PORT` (temporary) the port to be used by the AdminTool Web UI (e.g. 809*X*, for domain tb*X*.driver-testbed.eu). **TODO: make it work behind `Traefik` proxy (WebSocket issue to be solved)**
-  5. `CERT_MGT_PORT` the port to be used by the Certificate Management's Admin Web UI for testbed security experts (e.g. 844*X*, for domain tb*X*.driver-testbed.eu)
-  6. `AARTOOL_PORT` the port to be used by the After Action Review Tool Web UI (e.g. 8*X*95, for domain tb*X*.driver-testbed.eu). **TODO: make it work behind `Traefik` proxy (WebSocket issue to be solved)**
-  7. `PGADMIN_PORT` the port to be used by the PG Amin Web UI for accessing the DB (e.g. 505*X*, for domain tb*X*.driver-testbed.eu))
+5. Paste the docker-compose file located in `docker/portainer/docker-compose.yml` (see [here](https://github.com/DRIVER-EU/test-bed/blob/traefik/docker/portainer/docker-compose.yml)) into the web editor. Alternatively use the upload form and upload the docker-compose file directly.
+6. Scroll down. Under Environment: add the following environment variables:
+   **!!!WARNING: only ports 3XXX and 8XXX may be used due to TNO firewall rules!!!**
+   1. `TESTBED_HOST` the hostname to be used for the test-bed (e.g. `tb4.driver-testbed.eu`)
+   2. `BROKER_PORT` the port to be used by the Kafka broker (e.g. 35*X*1 for domain tb*X*.driver-testbed.eu). This port must not already be in use by another stack or service. For example, use 3541 for tb4.
+   3. `SCHEMA_REGISTRY_PORT` the port to be used by the schema registry (e.g. 35*X*2 for domain tb*X*.driver-testbed.eu). This port must not already be in use by another stack or service. For example, use 3542 for tb4.
+   4. `ADMINTOOL_PORT` (temporary) the port to be used by the AdminTool Web UI (e.g. 8*X*97, for domain tb*X*.driver-testbed.eu). **TODO: make it work behind `Traefik` proxy (WebSocket issue to be solved)**
+   5. `CERT_MGT_PORT` the port to be used by the Certificate Management's Admin Web UI for testbed security experts (e.g. 844*X*, for domain tb*X*.driver-testbed.eu)
+   6. `AARTOOL_PORT` the port to be used by the After Action Review Tool Web UI (e.g. 8*X*95, for domain tb*X*.driver-testbed.eu). **TODO: make it work behind `Traefik` proxy (WebSocket issue to be solved)**
+   7. `PGADMIN_PORT` the port to be used by the PG Amin Web UI for accessing the DB (e.g. 305*X*, for domain tb*X*.driver-testbed.eu))
+   8. `OST_PORT` the port to be used by the Observer Tool's Web UI for accessing the DB (e.g. 805*X*, for domain tb*X*.driver-testbed.eu))
 7. Press 'Deploy the stack'.
 8. `Traefik` (running in the `Traefik` stack) will now automatically pick up the starting pack and handle routing for the configured domain.
 

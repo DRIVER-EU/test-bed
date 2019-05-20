@@ -1,0 +1,85 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "id": "2830768b-d11c-63a8-f10c-c49cd283c381",
+      "type": "Feature",
+      "properties": {
+        "title": "incident",
+        "description": "",
+        "type": "incident"
+      },
+      "geometry": {
+        "coordinates": [
+          8.802198417547856,
+          52.01095663916138
+        ],
+        "type": "Point"
+      }
+    },
+    {
+      "id": "31018b3c-22d7-ace1-faa2-8b151d516102",
+      "type": "Feature",
+      "properties": {
+        "title": "incident",
+        "description": "",
+        "type": "incident"
+      },
+      "geometry": {
+        "coordinates": [
+          5.009573955184408,
+          52.33026614088641
+        ],
+        "type": "Point"
+      }
+    },
+    {
+      "id": "f146cd63-125f-264c-fdee-9e2303362a4d",
+      "type": "Feature",
+      "properties": {
+        "title": "incident",
+        "description": "",
+        "type": "incident"
+      },
+      "geometry": {
+        "coordinates": [
+          4.656235149138325,
+          52.02308670633698
+        ],
+        "type": "Point"
+      }
+    },
+    {
+      "id": "e202f92a-1d02-87ec-3d16-b0b7d4065eae",
+      "type": "Feature",
+      "properties": {
+        "title": "incident",
+        "description": "",
+        "type": "incident"
+      },
+      "geometry": {
+        "coordinates": [
+          8.150482295475939,
+          52.94501471393926
+        ],
+        "type": "Point"
+      }
+    },
+    {
+      "id": "478d233f-29ea-219c-7e24-bbb9fdbd2380",
+      "type": "Feature",
+      "properties": {
+        "title": "incident",
+        "description": "",
+        "type": "incident"
+      },
+      "geometry": {
+        "coordinates": [
+          4.675111770648414,
+          51.927854557878334
+        ],
+        "type": "Point"
+      }
+    }
+  ]
+}
