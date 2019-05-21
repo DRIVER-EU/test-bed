@@ -185,7 +185,27 @@ services:
         - "traefik.enable=true"
         - "traefik.docker.network=traefik-net"
         - "traefik.frontend.rule=Host:${TESTBED_HOST};PathPrefixStrip:/schema-ui/"
-        
+  
+  trial_management_tool:
+    image: drivereu/trial-management-tool:latest
+    depends_on:
+      - broker
+      - schema_registry
+    ports:
+      - '${TMT_PORT}:3000'
+    environment:
+      CLIENT_ID: TB-TrialMgmt
+      KAFKA_HOST: broker:9092
+      SCHEMA_REGISTRY: http://schema_registry:3552
+      TRIAL_MANAGER_SERVER_PORT: 3000
+      SSL: 'false'
+      SSL_PFX: certs/TB-TrialMgmt.p12
+      SSL_PASSPHRASE: changeit
+      SSL_CA: certs/test-ca.pem
+    volumes:
+      - ./trials
+
+      
   postgres:
     image: postgres:9.6
     hostname: postgres
@@ -297,10 +317,13 @@ services:
     networks:
       - traefik-net
       - testbed-net
+    ports:
+     - '${TIME_SERVICE_PORT}:8100'
     environment:
       KAFKA_BROKER_URL: broker:9092
       SCHEMA_REGISTRY_URL: http://schema_registry:${SCHEMA_REGISTRY_PORT}
       AUTO_REGISTER_SCHEMAS: 'false'
+      INTERVAL: 1000
     deploy:
       labels:
         - "traefik.port=8100"
@@ -322,7 +345,7 @@ services:
         - "traefik.frontend.rule=Host:${TESTBED_HOST};PathPrefix:/large-file-service/"
 
   wms_service:
-    image: drivereu/test-bed-wms-service:1.0.11
+    image: drivereu/test-bed-wms-service:1.1.2
     hostname: wmsservice
     environment:
       URL: http://${TESTBED_HOST}/wms/
