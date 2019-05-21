@@ -202,8 +202,8 @@ services:
       SSL_PFX: certs/TB-TrialMgmt.p12
       SSL_PASSPHRASE: changeit
       SSL_CA: certs/test-ca.pem
-    volumes:
-      - ./trials
+    #volumes:
+    #  - ./trials
   
   postgres:
     image: postgres:9.6
@@ -345,7 +345,7 @@ services:
         - "traefik.frontend.rule=Host:driver-testbed.eu;PathPrefix:/large-file-service/"
 
   wms_service:
-    image: drivereu/test-bed-wms-service:1.1.4
+    image: drivereu/test-bed-wms-service:1.1.6
     hostname: wmsservice
     environment:
       URL: http://driver-testbed.eu:3588
