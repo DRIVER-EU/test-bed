@@ -202,8 +202,8 @@ services:
       SSL_PFX: certs/TB-TrialMgmt.p12
       SSL_PASSPHRASE: changeit
       SSL_CA: certs/test-ca.pem
-    volumes:
-      - ./trials
+    #volumes:
+    #  - ./trials
 
       
   postgres:
