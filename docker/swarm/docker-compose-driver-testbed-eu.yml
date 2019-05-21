@@ -186,6 +186,25 @@ services:
         - "traefik.docker.network=traefik-net"
         - "traefik.frontend.rule=Host:driver-testbed.eu;PathPrefixStrip:/schema-ui/"
         
+  trial_management_tool:
+    image: drivereu/trial-management-tool:latest
+    depends_on:
+      - broker
+      - schema_registry
+    ports:
+      - '8065:3000'
+    environment:
+      CLIENT_ID: TB-TrialMgmt
+      KAFKA_HOST: broker:9092
+      SCHEMA_REGISTRY: http://schema_registry:3552
+      TRIAL_MANAGER_SERVER_PORT: 3000
+      SSL: 'false'
+      SSL_PFX: certs/TB-TrialMgmt.p12
+      SSL_PASSPHRASE: changeit
+      SSL_CA: certs/test-ca.pem
+    #volumes:
+    #  - ./trials
+  
   postgres:
     image: postgres:9.6
     hostname: postgres
@@ -199,7 +218,8 @@ services:
     volumes:
        - postgres-data:/var/lib/postgresql/data
     restart: unless-stopped
-    
+  
+  
   admintool:
     image: drivereu/test-bed-admin:latest
     depends_on:
@@ -262,7 +282,7 @@ services:
       - traefik-net
       - testbed-net
     ports:
-      - "8096:8095"
+      - "8055:8095"
     deploy:
       labels:
         - "traefik.port=8095"
@@ -281,7 +301,7 @@ services:
     networks:
       - traefik-net
     ports:
-      - "5055:5050"
+      - "3055:5050"
     deploy:
       labels:
         - "traefik.port=5050"
@@ -297,10 +317,13 @@ services:
     networks:
       - traefik-net
       - testbed-net
+    ports:
+     - '8045:8100'
     environment:
       KAFKA_BROKER_URL: broker:9092
       SCHEMA_REGISTRY_URL: http://schema_registry:3552
       AUTO_REGISTER_SCHEMAS: 'false'
+      INTERVAL: 1000
     deploy:
       labels:
         - "traefik.port=8100"
@@ -322,7 +345,7 @@ services:
         - "traefik.frontend.rule=Host:driver-testbed.eu;PathPrefix:/large-file-service/"
 
   wms_service:
-    image: drivereu/test-bed-wms-service:1.0.11
+    image: drivereu/test-bed-wms-service:1.1.6
     hostname: wmsservice
     environment:
       URL: http://driver-testbed.eu:3588
@@ -345,46 +368,47 @@ services:
       - broker
       - schema_registry
 
-  ost_db:
-    image: drivereu/ost-app:ost_database
-    hostname: db
-    container_name: ost_db
+# In the end, ITTI decided not to run the OST within the testbed docker. Keeping it there just in case
+#  ost_db:
+#    image: drivereu/ost-app:ost_database
+#    hostname: db
+#    container_name: ost_db
     #ports:
     #  - "5437:5432"
-    networks:
-      - testbed-net
-    volumes:
-      - ost-database:/var/lib/postgresql/data
-    restart: always
+#    networks:
+#      - testbed-net
+#    volumes:
+#      - ost-database:/var/lib/postgresql/data
+#    restart: always
 
-  ost_web:
-    image: drivereu/ost-app:ost_frontend
-    container_name: ost_web
-    links:
-      - ost_api
-    pid: "host"
-    ports:
-      - "5084:80"
-    networks:
-      - testbed-net
-    volumes:
-      - nginx-conf:/etc/nginx/conf.d
-    restart: always
+#  ost_web:
+#    image: drivereu/ost-app:ost_frontend
+#    container_name: ost_web
+#    links:
+#      - ost_api
+#    pid: "host"
+#    ports:
+#      - "8075:80"
+#    networks:
+#      - testbed-net
+#    volumes:
+#      - nginx-conf:/etc/nginx/conf.d
+#    restart: always
 
-  ost_api:
-    image: drivereu/ost-app:ost_backend
-    container_name: ost_api
-    network_mode: host
-    ports:
-      - "8085:8080"
-    networks:
-      - testbed-net
-    volumes:
-      - apiconfig:/opt/config
-    restart: always
-    environment:
-      KAFKA_BROKER_URL: broker:9092
-      SCHEMA_REGISTRY_URL: http://schema_registry:3552
+#  ost_api:
+#    image: drivereu/ost-app:ost_backend
+#    container_name: ost_api
+#    network_mode: host
+#    ports:
+#      - "8085:8080"
+#    networks:
+#      - testbed-net
+#    volumes:
+#      - apiconfig:/opt/config
+#    restart: always
+#    environment:
+#      KAFKA_BROKER_URL: broker:9092
+#      SCHEMA_REGISTRY_URL: http://schema_registry:3552
 
 networks:
   traefik-net:
@@ -394,6 +418,7 @@ networks:
     
 volumes:
   postgres-data:
-  ost-database:
-  nginx-conf:
-  apiconfig:
+# Only used by OST, disabled
+#  ost-database:
+#  nginx-conf:
+#  apiconfig:

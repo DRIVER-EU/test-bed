@@ -54,6 +54,8 @@ Important labels are:
    6. `AARTOOL_PORT` the port to be used by the After Action Review Tool Web UI (e.g. 8*X*95, for domain tb*X*.driver-testbed.eu). **TODO: make it work behind `Traefik` proxy (WebSocket issue to be solved)**
    7. `PGADMIN_PORT` the port to be used by the PG Amin Web UI for accessing the DB (e.g. 305*X*, for domain tb*X*.driver-testbed.eu))
    8. `OST_PORT` the port to be used by the Observer Tool's Web UI for accessing the DB (e.g. 805*X*, for domain tb*X*.driver-testbed.eu))
+   9. `TMT_PORT` the port to be used by the Trial Management Tool's Web UI (e.g. 806*X*, for domain tb*X*.driver-testbed.eu))
+   10. `TIME_SERVICE_PORT` the port to be used by the Trial Management Tool's Web UI (e.g. 804*X*, for domain tb*X*.driver-testbed.eu))
 7. Press 'Deploy the stack'.
 8. `Traefik` (running in the `Traefik` stack) will now automatically pick up the starting pack and handle routing for the configured domain.
 
