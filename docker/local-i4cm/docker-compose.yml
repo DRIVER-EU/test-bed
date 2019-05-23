@@ -212,12 +212,12 @@ services:
       - broker
       - schema_registry
     ports:
-      - '3000:3000'
+      - '3210:3210'
     environment:
       CLIENT_ID: TB-TrialMgmt
       KAFKA_HOST: broker:9092
       SCHEMA_REGISTRY: http://schema_registry:3502
-      TRIAL_MANAGER_SERVER_PORT: 3000
+      TRIAL_MANAGER_SERVER_PORT: 3210
       SSL: 'false'
       SSL_PFX: certs/TB-TrialMgmt.p12
       SSL_PASSPHRASE: changeit
