@@ -345,7 +345,7 @@ services:
         - "traefik.frontend.rule=Host:driver-testbed.eu;PathPrefix:/large-file-service/"
 
   wms_service:
-    image: drivereu/test-bed-wms-service:1.1.6
+    image: drivereu/test-bed-wms-service:1.1.7
     hostname: wmsservice
     environment:
       URL: http://driver-testbed.eu:3588
