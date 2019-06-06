@@ -1,0 +1,32 @@
+---
+version: '3'
+  postgres:
+    image: postgres:9.6
+    hostname: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: TRIAL_ADMIN
+    volumes:
+       - postgres-data:/var/lib/postgresql/aaroffline/data
+    restart: unless-stopped
+
+  afteractionreview:
+    image: drivereu/after-action-review:latest
+    depends_on:
+      - postgres
+    ports:
+      - "8199:8095"
+    environment:
+      TESTBED_CONNECTION: false
+  
+  pgadmin:
+    image: fenglc/pgadmin4
+    depends_on:
+      - postgres
+    ports:
+        - "5150:5050"
+    restart: unless-stopped
+  
+volumes:
+  postgres-data:
