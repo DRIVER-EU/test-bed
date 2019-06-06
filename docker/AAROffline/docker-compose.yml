@@ -19,7 +19,7 @@ services:
     ports:
       - "8199:8095"
     environment:
-      TESTBED_CONNECTION: false
+      TESTBED_CONNECTION: 'false'
   
   pgadmin:
     image: fenglc/pgadmin4
