@@ -17,7 +17,7 @@ Configured services:
 ## Usage
 
 ```console
-git clone https://ci.tno.nl/gitlab/battlelab/infrastructure.git
+git clone https://github.com/DRIVER-EU/test-bed.git
 cd docker\local-i4cm
 docker-compose up -d
 ```
