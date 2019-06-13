@@ -9,7 +9,7 @@ docker-compose up -d
 docker ps | grep ost_backend
 # This will return the container id of ost_backend service
 # You typically only need the first 3 or 4 characters of the ID.
-docker ps [CONTAINER ID]
+docker restart [CONTAINER ID]
 ```
 
 ## Using the OST
