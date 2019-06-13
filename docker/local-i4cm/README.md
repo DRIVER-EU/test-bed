@@ -1,12 +1,24 @@
-# RAS Battlelab
+# I4CM workshop
 
-The Robot Autonomous Systems battlelab contains a suite of services that together create a Concept Development & Experimentation environment for trying out working with autonomous systems.
+Demonstrate the capabilities of the Test-bed technical infrastructure.
+
+Configured services:
+
+- Kafka & Zookeeper
+- Kafka topics UI
+- Kafka schema registry and UI
+- Admin tool
+- After Action Review tool
+- Trial-Guidance-Tool
+- COPPER COP tool
+- LCMS connector / gateway
+- Observer Support Tool
 
 ## Usage
 
 ```console
 git clone https://ci.tno.nl/gitlab/battlelab/infrastructure.git
-cd docker\ras
+cd docker\local-i4cm
 docker-compose up -d
 ```
 
@@ -14,4 +26,8 @@ After you have installed `nodejs` LTS, please initialize the infrastructure with
 
 ```console
 git clone https://github.com/DRIVER-EU/example-node-test-bed-adapter
+cd example-node-test-bed-adapter
+npm i
+tsc
+node dist/producer.js
 ```
