@@ -104,7 +104,7 @@ services:
       - traefik-net
       - testbed-net
     ports:
-      - "3601:8000"
+      - "${SCHEMA_REGISTRY_UI_PORT}:8000"
     environment:
       SCHEMAREGISTRY_URL: 'http://schema_registry:${SCHEMA_REGISTRY_PORT}'
       RELATIVE_PROXY_URL: 'true'
