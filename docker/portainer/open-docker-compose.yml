@@ -82,7 +82,7 @@ services:
       - traefik-net
       - testbed-net
     ports:
-      - "3600:8000"
+      - "${KAFKA_TOPICS_UI_PORT}:8000"
     environment:
       KAFKA_REST_PROXY_URL: 'http://kafka_rest:8082'
       PROXY: 'true'
@@ -127,7 +127,7 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: TRIAL_ADMIN
     volumes:
-       - postgres-data:/var/lib/postgresql/data
+       - postgres-data:/var/lib/postgresql/${DB_NAME}/data
     restart: unless-stopped
     
   admintool:
@@ -230,6 +230,8 @@ services:
       KAFKA_BROKER_URL: broker:9092
       SCHEMA_REGISTRY_URL: http://schema_registry:${SCHEMA_REGISTRY_PORT}
       AUTO_REGISTER_SCHEMAS: 'false'
+    ports:
+      - "${TIME_PORT}:8100"
     deploy:
       labels:
         - "traefik.port=8100"
