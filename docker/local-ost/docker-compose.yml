@@ -184,15 +184,15 @@ services:
       - broker
       - schema_registry
 
-  db:
+  ost-db: 
     image: drivereu/ost-app:ost_database
     ports:
     - "5437:5432"
     volumes:
-    - database-OST:/var/lib/postgresql/data
+    - ost-database:/var/lib/postgresql/data
     restart: always
 
-  web:
+  ost-web:
     image: drivereu/ost-app:ost_frontend
     links:
     - api
@@ -200,19 +200,17 @@ services:
     - "84:80"
     restart: always
 
-  api:
+  ost-api:
     image: drivereu/ost-app:ost_backend
+    environment:
+      KAFKA_BROKER_URL: broker:9092
+      SCHEMA_REGISTRY_URL: http://schema_registry:3502
     depends_on:
     - db
-    healthcheck:
-        test: ["CMD", "curl", "-f", "http://127.0.0.1:5050"]
-        interval: 30s
-        timeout: 10s
-        retries: 5
     ports:
     - "8084:8080"
     restart: always
 
 volumes:
+  ost-database:
   postgres-data:
-  database-OST:
