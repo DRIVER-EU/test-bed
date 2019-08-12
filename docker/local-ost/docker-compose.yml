@@ -195,7 +195,7 @@ services:
   ost-web:
     image: drivereu/ost-app:ost_frontend
     links:
-    - api
+    - ost-api
     ports:
     - "84:80"
     restart: always
@@ -206,7 +206,7 @@ services:
       KAFKA_BROKER_URL: broker:9092
       SCHEMA_REGISTRY_URL: http://schema_registry:3502
     depends_on:
-    - db
+    - ost-db
     ports:
     - "8084:8080"
     restart: always
