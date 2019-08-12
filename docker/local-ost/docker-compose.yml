@@ -106,6 +106,9 @@ services:
       - ./admintool-config/solutions.json:/opt/application/config/solutions.json
       - ./admintool-config/topics.json:/opt/application/config/topics.json
       - ./admintool-config/standards.json:/opt/application/config/standards.json
+      - ./admintool-config/testbed-solutions.json:/opt/application/config/testbed-solutions.json
+      - ./admintool-config/testbed-topics.json:/opt/application/config/testbed-topics.json
+      - ./admintool-config/configurations.json:/opt/application/config/configurations.json
     environment:
       KAFKA_BROKER_URL: broker:9092
       SCHEMA_REGISTRY_URL: http://schema_registry:3502
