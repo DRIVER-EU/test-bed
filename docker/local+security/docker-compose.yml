@@ -2,6 +2,51 @@
 version: '3.4'
 services:
 
+  # Identity Provider (OpenID Connect) for Web-SSO
+  idp:
+      build: 
+        context: ./idp
+        args:
+          WEBAUTHN_PLUGIN_VERSION: "0.3.RELEASE"
+      image: drivereu/keycloak:6.0.1-1
+      hostname: iam.corp-demo.com
+      volumes:
+        - ./sample-ssl-clients/test-ca-crt.pem:/tmp/test-ca-crt.pem
+        - ./idp/tls.crt:/etc/x509/https/tls.crt
+        - ./idp/tls.key:/etc/x509/https/tls.key
+        # - ./keycloak/themes/thales:/opt/jboss/keycloak/themes/thales
+        # The realm must have been exported with instructions from: https://github.com/jboss-dockerfiles/keycloak/tree/master/server#exporting-a-realm
+        # $ docker exec -it docker_keycloak_1 sh -c "keycloak/bin/standalone.sh -Djboss.socket.binding.port-offset=100 -Dkeycloak.migration.action=export -Dkeycloak.migration.provider=singleFile -Dkeycloak.migration.realmName=THALES -Dkeycloak.migration.usersExportStrategy=REALM_FILE -Dkeycloak.migration.file=/tmp/THALES-realm.json"
+        # Currently, it is not possible to import the realm with WebauthnRegister in the Required Actions of the users, else error occurs:
+        # "ERROR [org.keycloak.services.error.KeycloakErrorHandler] (default task-7) Uncaught server error: java.lang.IllegalArgumentException: No enum constant org.keycloak.models.UserModel.RequiredAction.WEBAUTHN-REGISTER"
+        # - ./keycloak/driver-realm.json:/tmp/driver-realm.json
+        
+      environment:
+        X509_CA_BUNDLE: /tmp/test-ca-crt.pem
+        DB_VENDOR: h2
+        KEYCLOAK_HOSTNAME: iam.corp-demo.com
+        KEYCLOAK_USER: admin
+        KEYCLOAK_PASSWORD: changeit
+        
+        # KEYCLOAK_IMPORT cannot be used here because refers to objects from Webauthn plugin which is deployed after attempt to import the realm from KEYCLOAK_IMPORT -> fail
+        # Workaround: in the command script , use Admin CLI to import the realm after startup if not there yet
+        # KEYCLOAK_IMPORT: /tmp/thales-realm.json
+        # Use another variable for realm import after keycloak startup (see docker-entrypoint.sh)
+        # KEYCLOAK_IMPORTED_REALM: /tmp/thales-realm.json
+
+        # To add a custom theme extend the Keycloak image add the theme to the /opt/jboss/keycloak/themes directory.
+        # KEYCLOAK_WELCOME_THEME: thales
+        # KEYCLOAK_DEFAULT_THEME: thales
+        # KEYCLOAK_LOGLEVEL: DEBUG
+        # ROOT_LOGLEVEL: INFO
+        # JDBC_PARAMS: "connectTimeout=30000"
+      ports:
+        - 8443:8443
+      #depends_on:
+      #  - mysql
+      entrypoint: sh "/opt/jboss/tools/docker-entrypoint-override.sh" 
+      command: ["-b", "0.0.0.0"]
+
   # Certificate Management Service
   cert_mgt:
     build: ./cert_mgt

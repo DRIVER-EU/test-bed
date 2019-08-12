@@ -1,5 +1,3 @@
-[![Stories in Ready](https://badge.waffle.io/DRIVER-EU/WP923-test-bed.png?label=ready&title=Ready)](http://waffle.io/DRIVER-EU/test-bed)
-
 ![test-bed](https://raw.githubusercontent.com/DRIVER-EU/test-bed/master/img/Common%20Information%20and%20Simulation%20Space.gif)
 
 For the specification document, please go [here](https://driver-eu.gitbooks.io/test-bed-specification/content).
