@@ -1,53 +1,30 @@
 [
 	{
-		"id":"TB-AdminTool",
-		"subject.id":"CN=Admin Tool,OU=Authz Service Dev Project,OU=WP923,O=DRIVER-PROJECT.EU",
- 		"name":"AdminTool",
- 		"isTestbed":true,
- 		"isService":true,
- 		"state":false,
- 		"description":"This is the AdminTool"
-	},{
-		"id":"TB-AARTool",
-		"subject.id":"O=DRIVER-PROJECT.EU,CN=AARTool",
- 		"name":"AARTool",
+		"id":"copper_gui",
+		"subject.id":"O=TNO,CN=Copper",
+ 		"name":"Copper GUI",
  		"isTestbed":false,
- 		"isService":true,
+ 		"isService":false,
  		"state":false,
- 		"description":"This is the AfterActionReview Tool"
+ 		"description":"Copper GUI from TNO1"
 	},{
-		"id":"TB-TrialMgmt",
-		"subject.id":"O=DRIVER-PROJECT.EU,CN=TrialMgmt",
- 		"name":"TrialManager",
+		"id":"copper_server",
+		"subject.id":"O=TNO,CN=Copper",
+ 		"name":"Copper Server",
  		"isTestbed":false,
- 		"isService":true,
+ 		"isService":false,
  		"state":false,
- 		"description":"This is the Trial Manager"
+ 		"description":"Copper Server from TNO1"
 	},{
-		"id":"TB-TrialMgmtC2View",
-		"subject.id":"O=DRIVER-PROJECT.EU,CN=TrialMgmtC2View",
- 		"name":"TrialManagerC2Viewer",
+		"id":"silent-producer",
+		"subject.id":"O=TNO,CN=Copper",
+ 		"name":"Silent Producer",
  		"isTestbed":false,
- 		"isService":true,
+ 		"isService":false,
  		"state":false,
- 		"description":"This is the Trial Manager C2 Viewer"
-	},{
-		"id":"TB-TimeService",
-		"subject.id":"O=DRIVER-PROJECT.EU,CN=TimeService",
- 		"name":"TimeService",
- 		"isTestbed":false,
- 		"isService":true,
- 		"state":false,
- 		"description":"This is the Testbed TimeService"
-	},{
-		"id":"TB-Ost",
-		"subject.id":"O=DRIVER-PROJECT.EU,CN=Ost",
- 		"name":"ObserverTool",
- 		"isTestbed":false,
- 		"isService":true,
- 		"state":false,
- 		"description":"This is the Testbed ObserverTool"
-	},{
+ 		"description":"The Silent Producer!"
+	},
+	{
 		"id":"sim-ci",
 		"subject.id":"O=SIM-CI,CN=SIM-CI",
  		"name":"SIM CI",
@@ -127,5 +104,85 @@
  		"isService":false,
  		"state":false,
  		"description":"Test-bed GeoJSON-WMS converter (used by LCMS)!"
+	},{
+		"id":"copper",
+		"subject.id":"O=TNO,CN=Copper",
+ 		"name":"Copper",
+ 		"isTestbed":false,
+ 		"isService":false,
+ 		"state":false,
+ 		"description":"Copper tool from TNO1"
+	},{
+		"id":"asign-mission",
+		"subject.id":"O=Ansur,CN=ASIGN-MISSION",
+ 		"name":"Asign Mission",
+ 		"isTestbed":false,
+ 		"isService":false,
+ 		"state":false,
+ 		"description":"ASIGN Mission application!"
+	},{
+		"id":"asign-photo",
+		"subject.id":"O=Ansur,CN=ASIGN-PHOTO",
+ 		"name":"Asign Photo",
+ 		"isTestbed":false,
+ 		"isService":false,
+ 		"state":false,
+ 		"description":"ASIGN Photo application!"
+	},{
+		"id":"view-terra-1",
+		"subject.id":"O=VWORLD,CN=vieWTerra1",
+ 		"name":"vieWTerra 1",
+ 		"isTestbed":false,
+ 		"isService":false,
+ 		"state":false,
+ 		"description":"vieWTerra1 application!"
+	},{
+		"id":"view-terra-2",
+		"subject.id":"O=VWORLD,CN=vieWTerra2",
+ 		"name":"vieWTerra 2",
+ 		"isTestbed":false,
+ 		"isService":false,
+ 		"state":false,
+ 		"description":"vieWTerra2 application!"
+	},{
+		"id":"view-terra-3",
+		"subject.id":"O=VWORLD,CN=vieWTerra3",
+ 		"name":"vieWTerra 3",
+ 		"isTestbed":false,
+ 		"isService":false,
+ 		"state":false,
+ 		"description":"vieWTerra3 application!"
+	},{
+		"id":"CrowdTaskerProducer",
+		"subject.id":"O=AIT,CN=CrowdTasker",
+ 		"name":"CrowdTasker",
+ 		"isTestbed":false,
+ 		"isService":false,
+ 		"state":false,
+ 		"description":"Crowd Tasker application!"
+	},{
+		"id":"CrowdTaskerProducer2",
+		"subject.id":"O=AIT,CN=CrowdTasker2",
+ 		"name":"CrowdTasker 2",
+ 		"isTestbed":false,
+ 		"isService":false,
+ 		"state":false,
+ 		"description":"Crowd Tasker Backup application!"
+	},{
+		"id":"airborn",
+		"subject.id":"O=DLR,CN=AIRBORNE",
+ 		"name":"AIRBORN",
+ 		"isTestbed":false,
+ 		"isService":false,
+ 		"state":false,
+ 		"description":"Airborn application!"
+	},{
+		"id":"airborn-staff",
+		"subject.id":"O=DLR,CN=AIRBORNE-STAFF",
+ 		"name":"AIRBORN Staff",
+ 		"isTestbed":false,
+ 		"isService":false,
+ 		"state":false,
+ 		"description":"Airborn Staff application!"
 	}
 ]
