@@ -145,7 +145,7 @@ services:
     ports:
         - "5050:5050"
     restart: unless-stopped
-  
+    
   time_service:
     image: drivereu/test-bed-time-service:latest
     depends_on:
@@ -166,26 +166,26 @@ services:
       HOST: localhost
       PORT: 9090
 
-  wms_service:
-    image: drivereu/test-bed-wms-service:1.0.10
-    hostname: wmsservice
-    environment:
-      URL: http://localhost/wms/
-      WMS_PORT: 5101
-      WMS_HOST: wmsservice
-      WMS_FOLDER: /server/data
-      WMS_EXTERNAL_PORT: 5101
-      WMS_EXTERNAL_HOST: http://localhost/wms/
-      WMS_EXTERNAL_ADDRESS: http://localhost/wms/
-      WMS_KAFKA_HOST: broker:9092
-      WMS_SCHEMA_REGISTRY: http://schema_registry:localhost
-      WMS_CORS_ORIGIN: https://oefen-veiligheidsregio.lcms.nl
-      WMS_CORS_HEADERS: 'authorization, content-type'
-    ports:
-      - 8101:5101
-    depends_on:
-      - broker
-      - schema_registry
+  # wms_service:
+  #   image: drivereu/test-bed-wms-service:1.0.10
+  #   hostname: wmsservice
+  #   environment:
+  #     URL: http://localhost/wms/
+  #     WMS_PORT: 5101
+  #     WMS_HOST: wmsservice
+  #     WMS_FOLDER: /server/data
+  #     WMS_EXTERNAL_PORT: 5101
+  #     WMS_EXTERNAL_HOST: http://localhost/wms/
+  #     WMS_EXTERNAL_ADDRESS: http://localhost/wms/
+  #     WMS_KAFKA_HOST: broker:9092
+  #     WMS_SCHEMA_REGISTRY: http://schema_registry:3501
+  #     WMS_CORS_ORIGIN: https://oefen-veiligheidsregio.lcms.nl
+  #     WMS_CORS_HEADERS: 'authorization, content-type'
+  #   ports:
+  #     - 8101:5101
+  #   depends_on:
+  #     - broker
+  #     - schema_registry
       
   trial_management_tool:
     image: drivereu/trial-management-tool:latest
@@ -199,12 +199,13 @@ services:
       KAFKA_HOST: broker:9092
       SCHEMA_REGISTRY: http://schema_registry:3502
       TRIAL_MANAGER_SERVER_PORT: 3210
+      PRODUCE: system_request_change_of_trial_stage,system_tm_phase_message,system_tm_role_player,system_tm_session_mgmt
       SSL: 'false'
       SSL_PFX: certs/TB-TrialMgmt.p12
       SSL_PASSPHRASE: changeit
       SSL_CA: certs/test-ca.pem
     volumes:
-      - ./trials
+      - trial-data:/app/trials
 
   itti_db:
     image: drivereu/ost-app:itti_database
@@ -234,3 +235,4 @@ services:
 volumes:
   database-OST:
   postgres-data:
+  trial-data:
