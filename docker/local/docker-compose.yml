@@ -20,7 +20,7 @@ services:
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:3500'
-      KAFKA_ADVERTISED_LISTENERS: 'EXTERNAL://localhost:3501,PLAINTEXT://broker:9092'
+      KAFKA_ADVERTISED_LISTENERS: 'EXTERNAL://213.173.64.19:3501,PLAINTEXT://broker:9092'
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: 'EXTERNAL:PLAINTEXT,PLAINTEXT:PLAINTEXT'
       KAFKA_LISTENERS: 'EXTERNAL://0.0.0.0:3501,PLAINTEXT://0.0.0.0:9092'
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
@@ -86,6 +86,8 @@ services:
   postgres:
     image: postgres:9.6
     hostname: postgres
+    ports:
+      - "5432:5342"
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
@@ -107,6 +109,9 @@ services:
       - ./admintool-config/solutions.json:/opt/application/config/solutions.json
       - ./admintool-config/topics.json:/opt/application/config/topics.json
       - ./admintool-config/standards.json:/opt/application/config/standards.json
+      - ./admintool-config/configurations.json:/opt/application/config/configurations.json
+      - ./admintool-config/testbed-solutions.json:/opt/application/config/testbed-solutions.json
+      - ./admintool-config/testbed-topics.json:/opt/application/config/testbed-topics.json
     environment:
       KAFKA_BROKER_URL: broker:9092
       SCHEMA_REGISTRY_URL: http://schema_registry:3502
@@ -141,7 +146,7 @@ services:
     depends_on:
       - postgres
     ports:
-        - "5050:5050"
+        - "8150:5050"
     restart: unless-stopped
   
   time_service:
@@ -155,35 +160,70 @@ services:
       KAFKA_BROKER_URL: broker:9092
       SCHEMA_REGISTRY_URL: http://schema_registry:3502
       AUTO_REGISTER_SCHEMAS: 'true'
-      
-  large_file_service:
-    image: drivereu/large-file-service:latest
-    ports:
-      - "9090:9090"
-    environment:
-      HOST: localhost
-      PORT: 9090
 
-  wms_service:
-    image: drivereu/test-bed-wms-service:1.0.10
-    hostname: wmsservice
-    environment:
-      URL: http://localhost/wms/
-      WMS_PORT: 5101
-      WMS_HOST: wmsservice
-      WMS_FOLDER: /server/data
-      WMS_EXTERNAL_PORT: 5101
-      WMS_EXTERNAL_HOST: http://localhost/wms/
-      WMS_EXTERNAL_ADDRESS: http://localhost/wms/
-      WMS_KAFKA_HOST: broker:9092
-      WMS_SCHEMA_REGISTRY: http://schema_registry:localhost
-      WMS_CORS_ORIGIN: https://oefen-veiligheidsregio.lcms.nl
-      WMS_CORS_HEADERS: 'authorization, content-type'
-    ports:
-      - 8101:5101
+  trial_management_tool:
+    image: drivereu/trial-management-tool:latest
     depends_on:
       - broker
       - schema_registry
+    ports:
+      - '3210:3210'
+    environment:
+      CLIENT_ID: TB-TrialMgmt
+      KAFKA_HOST: broker:9092
+      SCHEMA_REGISTRY: http://schema_registry:3502
+      TRIAL_MANAGER_SERVER_PORT: 3210
+      SSL: 'false'
+      SSL_PFX: certs/TB-TrialMgmt.p12
+      SSL_PASSPHRASE: changeit
+      SSL_CA: certs/test-ca.pem
+    volumes:
+      - ./trials
+
+  trial_management_tool:
+    image: drivereu/trial-management-tool:latest
+    depends_on:
+      - broker
+      - schema_registry
+    ports:
+      - '3210:3210'
+    environment:
+      CLIENT_ID: TB-TrialMgmt
+      KAFKA_HOST: broker:9092
+      SCHEMA_REGISTRY: http://schema_registry:3502
+      TRIAL_MANAGER_SERVER_PORT: 3210
+      SSL: 'false'
+      SSL_PFX: certs/TB-TrialMgmt.p12
+      SSL_PASSPHRASE: changeit
+      SSL_CA: certs/test-ca.pem
+    volumes:
+      - ./trials
+
+  itti_db:
+    image: drivereu/ost-app:itti_database2
+    ports:
+    - "5437:5432"
+    volumes:
+    - database-OST:/var/lib/postgresql/data
+    restart: always
+
+  itti_web:
+    image: drivereu/ost-app:itti_frontend2
+    links:
+    - itti_api
+    ports:
+    - "8050:80"
+    - "443:443"
+    restart: always
+
+  itti_api:
+    image: drivereu/ost-app:itti_backend2
+    links:
+    - itti_db
+    ports:
+    - "8080:8080"
+    restart: always
 
 volumes:
+  database-OST:
   postgres-data:

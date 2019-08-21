@@ -40,7 +40,7 @@
 	{
 		"id": "standart.topic.crowd.tasker.info",
 		"type": "standard.topic",
-		"name": "crowd-takser_info",
+		"name": "crowd-tasker_info",
 		"msgType": "geojson",
 		"msgTypeVersion": "1.0",
 		"state": false,
@@ -70,9 +70,25 @@
 		"description": "This is the standard Flightdata topic."
 	},
 	{
+		"id": "standart.topic.map.layer.update",
+		"type": "standard.topic",
+		"name": "map_layer_update",
+		"msgType": "maplayer",
+		"msgTypeVersion": "1.0",
+		"state": false,
+		"publishSolutionIDs": [
+			"all"
+		],
+		"subscribedSolutionIDs": [
+			"all",
+			"TB-AARTool"
+		],
+		"description": "This is the standard MapLayer topic."
+	},
+	{
 		"id": "standart.topic.photo.data",
 		"type": "standard.topic",
-		"name": "photo_data",
+		"name": "photo_geojson",
 		"msgType": "photo-geojson",
 		"msgTypeVersion": "1.0",
 		"state": false,
