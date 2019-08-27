@@ -20,7 +20,7 @@ services:
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:3500'
-      KAFKA_ADVERTISED_LISTENERS: 'EXTERNAL://213.173.64.19:3501,PLAINTEXT://broker:9092'
+      KAFKA_ADVERTISED_LISTENERS: 'EXTERNAL://localhost:3501,PLAINTEXT://broker:9092'
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: 'EXTERNAL:PLAINTEXT,PLAINTEXT:PLAINTEXT'
       KAFKA_LISTENERS: 'EXTERNAL://0.0.0.0:3501,PLAINTEXT://0.0.0.0:9092'
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
@@ -161,6 +161,14 @@ services:
       SCHEMA_REGISTRY_URL: http://schema_registry:3502
       AUTO_REGISTER_SCHEMAS: 'true'
 
+  large_file_service:
+    image: drivereu/large-file-service:latest
+    ports:
+      - '9090:9090'
+    environment:
+      HOST: localhost
+      PORT: 9090
+  
   trial_management_tool:
     image: drivereu/trial-management-tool:latest
     depends_on:
