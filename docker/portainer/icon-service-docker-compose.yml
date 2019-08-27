@@ -2,7 +2,7 @@
 version: '3'
 services: 
   icon_service:
-    image: drivereu/icon-service:develop-latest
+    image: drivereu/icon-service:latestt
     environment:
       URL: http://${TESTBED_HOST}/icon-service/
     networks:
