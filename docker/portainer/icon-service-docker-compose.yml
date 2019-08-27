@@ -19,6 +19,4 @@ networks:
     external: true
   testbed-net:
     driver: overlay
-    
-volumes:
   
