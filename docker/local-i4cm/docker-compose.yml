@@ -187,7 +187,7 @@ services:
   #     - schema_registry
 
   lcms_connector:
-    image: drivereu/lcms-connector:1.0.1
+    image: drivereu/lcms-connector:1.0.4
     hostname: lcms_connector
     environment:
       KAFKA_BROKER_URL: broker:9092
