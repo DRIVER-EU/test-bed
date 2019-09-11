@@ -197,7 +197,7 @@ services:
       LCMS_CONNECTOR_SERVER_MODE: 'true'
       LCMS_CONNECTOR_KAFKA_MODE: 'true'
       LCMS_CONNECTOR_DEBUG_MODE: 'true'
-      LCMS_CONNECTOR_EXCERCISE: 'DRIVER+ Dry Run Training'
+      LCMS_CONNECTOR_EXCERCISE: 'DRIVER+ I4CM'
       LCMS_CONNECTOR_USERNAME: '${LCMS_CONNECTOR_USERNAME}'
       LCMS_CONNECTOR_PASSWORD: '${LCMS_CONNECTOR_PASSWORD}'
     ports:
@@ -271,5 +271,35 @@ services:
       PRODUCE_TOPICS: simulation_request_unittransport,simulation_request_startinject,simulation_entity_item,sumo_AffectedArea,standard_cap,system_timing,system_topic_access_invite
     restart: on-failure
 
+  # ost-db:
+  #   image: drivereu/ost-app:ost_database
+  #   ports:
+  #   - "5437:5432"
+  #   volumes:
+  #   - database-OST:/var/lib/postgresql/data
+  #   restart: always
+
+  # ost-web:
+  #   image: drivereu/ost-app:ost_frontend
+  #   links:
+  #   - ost-api
+  #   ports:
+  #   - "84:80"
+  #   restart: always
+
+  # ost-api:
+  #   image: drivereu/ost-app:ost_backend
+  #   depends_on:
+  #   - ost-db
+  #   healthcheck:
+  #       test: ["CMD", "curl", "-f", "http://127.0.0.1:5050"]
+  #       interval: 30s
+  #       timeout: 10s
+  #       retries: 5
+  #   ports:
+  #   - "8084:8080"
+  #   restart: always
+
 volumes:
   postgres-data:
+  # database-OST:
