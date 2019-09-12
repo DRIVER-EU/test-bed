@@ -222,7 +222,9 @@ services:
       - '80:80'
       - '443:443'
     environment:
+      hostname: driver-testbed.eu
       title: Test-bed Final Demo
+      ssl: 'true'
       homepage: homepage:3050
       admin: admintool:8090
       tmt: trial_management_tool:3210
