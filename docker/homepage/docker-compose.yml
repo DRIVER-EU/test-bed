@@ -218,9 +218,15 @@ services:
 
   homepage:
     image: drivereu/homepage
+    # network_mode: "bridge"
     ports:
+      # http port 80 must be there for letsencrypt http challenge to succeed
       - '80:80'
       - '443:443'
+    extra_hosts:
+      # Workaround for container failing to resolve domain names required by redbird to get certificate from Letsencrypt on-the-fly
+      - "acme-v02.api.letsencrypt.org:104.66.96.217"
+      - "driver-testbed.eu:134.221.20.200"
     environment:
       hostname: driver-testbed.eu
       title: Test-bed Final Demo
