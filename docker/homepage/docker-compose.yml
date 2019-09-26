@@ -106,14 +106,6 @@ services:
       - schema_registry
     # ports:
     #   - "8090:8090"
-    volumes:
-      - ./admintool-config/gateways.json:/opt/application/config/gateways.json
-      - ./admintool-config/solutions.json:/opt/application/config/solutions.json
-      - ./admintool-config/topics.json:/opt/application/config/topics.json
-      - ./admintool-config/standards.json:/opt/application/config/standards.json
-      - ./admintool-config/configurations.json:/opt/application/config/configurations.json
-      - ./admintool-config/testbed-solutions.json:/opt/application/config/testbed-solutions.json
-      - ./admintool-config/testbed-topics.json:/opt/application/config/testbed-topics.json
     environment:
       KAFKA_BROKER_URL: broker:9092
       SCHEMA_REGISTRY_URL: http://schema_registry:3502
@@ -156,8 +148,8 @@ services:
     depends_on:
       - broker
       - schema_registry
-    ports:
-       - "8100:8100"
+    #ports:
+    #   - "8100:8100"
     environment:
       KAFKA_BROKER_URL: broker:9092
       SCHEMA_REGISTRY_URL: http://schema_registry:3502
@@ -237,8 +229,10 @@ services:
     volumes:
     #  - certs:/usr/src/app/certs
       - homepagestaticfiles:/usr/src/app/public
+    # Do not start the proxy.js from  as we are using the proxy service (Apache) instead
     command: sh
 
+  # HTTPS/WSS reverse-proxy based on Apache HTTP server
   proxy:
     build: proxy
     depends_on: 
@@ -261,9 +255,13 @@ services:
       - "80:80"
       - "443:443"
     environment:
-      LETS_ENCRYPT_EMAIL: "erik.vullings@tno.nl"
-      LETS_ENCRYPT_DOMAINS: "driver-testbed.eu"
-      #hostname: driver-testbed.eu
+      # Uncomment/define the variable below to enable automatic certificate retrieval from letsencrypt.org; else a default self-signed certificate is used
+      #LETS_ENCRYPT_EMAIL: "erik.vullings@tno.nl"
+      # Set this variable to empty string or leave undefined to use Letsencrypt production environment (instead of staging one). Prod environment is rate-limited therefore not recommended for development/testing.
+      #LETS_ENCRYPT_TEST_FLAG: "--test-cert"
+      
+      # Whitespace-separated list of domain names to set Apache's ServerName/ServerAlias to. If Letsencrypt usage enabled, a certificate for all those domains is requested from letsencrypt.org.
+      DOMAIN_NAMES: "driver-testbed.eu" 
       TESTBED_TITLE: "Test-bed Final Demo" 
       ADMINTOOL_HOST_PORT: admintool:8090
       TMT_HOST_PORT: trial_management_tool:3210
@@ -279,7 +277,7 @@ services:
     volumes:
       - etcletsencrypt:/etc/letsencrypt
       - varletsencrypt:/var/lib/letsencrypt   
-   
+  
 volumes:
   # database-OST:
   postgres-data:
