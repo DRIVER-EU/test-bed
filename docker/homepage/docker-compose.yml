@@ -106,14 +106,6 @@ services:
       - schema_registry
     # ports:
     #   - "8090:8090"
-    volumes:
-      - ./admintool-config/gateways.json:/opt/application/config/gateways.json
-      - ./admintool-config/solutions.json:/opt/application/config/solutions.json
-      - ./admintool-config/topics.json:/opt/application/config/topics.json
-      - ./admintool-config/standards.json:/opt/application/config/standards.json
-      - ./admintool-config/configurations.json:/opt/application/config/configurations.json
-      - ./admintool-config/testbed-solutions.json:/opt/application/config/testbed-solutions.json
-      - ./admintool-config/testbed-topics.json:/opt/application/config/testbed-topics.json
     environment:
       KAFKA_BROKER_URL: broker:9092
       SCHEMA_REGISTRY_URL: http://schema_registry:3502
@@ -156,7 +148,7 @@ services:
     depends_on:
       - broker
       - schema_registry
-    # ports:
+    #ports:
     #   - "8100:8100"
     environment:
       KAFKA_BROKER_URL: broker:9092
@@ -176,7 +168,7 @@ services:
     depends_on:
       - broker
       - schema_registry
-    # ports:
+    #ports:
     #   - '3210:3210'
     environment:
       CLIENT_ID: TB-TrialMgmt
@@ -218,13 +210,14 @@ services:
 
   homepage:
     image: drivereu/homepage
-    ports:
-      - '80:80'
-      - '443:443'
+    # network_mode: "bridge"
+    #ports:
+      # - '80:80'
+      #- '443:443'
     environment:
       hostname: driver-testbed.eu
       title: Test-bed Final Demo
-      ssl: 'true'
+      # ssl: 'False'
       homepage: homepage:3050
       admin: admintool:8090
       tmt: trial_management_tool:3210
@@ -234,10 +227,61 @@ services:
       schemas: kafka_schema_registry_ui:8000
       topics: kafka_topics_ui:8000
     volumes:
-      - certs:/usr/src/app/certs
+    #  - certs:/usr/src/app/certs
+      - homepagestaticfiles:/usr/src/app/public
+    # Do not start the proxy.js from  as we are using the proxy service (Apache) instead
+    command: sh
 
+  # HTTPS/WSS reverse-proxy based on Apache HTTP server
+  proxy:
+    build: proxy
+    depends_on: 
+      - letsencryptstore
+      - homepage 
+    # restart: always
+    volumes:
+      - etcletsencrypt:/etc/letsencrypt
+      - varletsencrypt:/var/lib/letsencrypt
+      - homepagestaticfiles:/var/www/html
+    extra_hosts:
+      # Workaround for container failing to resolve domain names required by redbird to get certificate from Letsencrypt on-the-fly
+      - "acme-v02.api.letsencrypt.org:104.66.96.217"
+      - "acme-staging-v02.api.letsencrypt.org:172.65.46.172"
+      - "driver-testbed.eu:134.221.20.200"
+      - "ocsp.stg-int-x1.letsencrypt.org:95.100.96.193"
+      - "ocsp.int-x3.letsencrypt.org:95.100.96.232"
+    ports:
+      # http 80 is required for the Letsencrypt challenge
+      - "80:80"
+      - "443:443"
+    environment:
+      # Uncomment/define the variable below to enable automatic certificate retrieval from letsencrypt.org; else a default self-signed certificate is used
+      #LETS_ENCRYPT_EMAIL: "erik.vullings@tno.nl"
+      # Set this variable to empty string or leave undefined to use Letsencrypt production environment (instead of staging one). Prod environment is rate-limited therefore not recommended for development/testing.
+      #LETS_ENCRYPT_TEST_FLAG: "--test-cert"
+      
+      # Whitespace-separated list of domain names to set Apache's ServerName/ServerAlias to. If Letsencrypt usage enabled, a certificate for all those domains is requested from letsencrypt.org.
+      DOMAIN_NAMES: "driver-testbed.eu" 
+      TESTBED_TITLE: "Test-bed Final Demo" 
+      ADMINTOOL_HOST_PORT: admintool:8090
+      TMT_HOST_PORT: trial_management_tool:3210
+      AAR_HOST_PORT: afteractionreview:8095
+      LFS_HOST_PORT: large_file_service:9090
+      TIME_SERVICE_HOST_PORT: time_service:8100
+      SCHEMA_REGISTRY_UI_HOST_PORT: kafka_schema_registry_ui:8000
+      TOPICS_UI_HOST_PORT: kafka_topics_ui:8000
+    command: sh -c "/usr/local/bin/launcher-verbose.sh"
+
+  letsencryptstore:
+    image: busybox
+    volumes:
+      - etcletsencrypt:/etc/letsencrypt
+      - varletsencrypt:/var/lib/letsencrypt   
+  
 volumes:
   # database-OST:
   postgres-data:
   trial-data:
-  certs:
+  varletsencrypt:
+  etcletsencrypt:
+  homepagestaticfiles:
