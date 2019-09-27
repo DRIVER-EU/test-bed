@@ -128,12 +128,6 @@ services:
       - admintool
     ports:
       - "${AARTOOL_PORT}:8095"
-    deploy:
-      labels:
-        - "traefik.port=8095"
-        - "traefik.enable=true"
-        - "traefik.docker.network=traefik-net"
-        - "traefik.frontend.rule=Host:${TESTBED_HOST};PathPrefixStrip:/after-action-review/"
     environment:
       KAFKA_BROKER_URL: broker:9092
       SCHEMA_REGISTRY_URL: http://schema_registry:${SCHEMA_REGISTRY_PORT}
