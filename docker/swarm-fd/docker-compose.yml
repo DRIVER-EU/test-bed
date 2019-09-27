@@ -3,8 +3,6 @@ version: '3'
 services: 
   zookeeper:
     image: confluentinc/cp-zookeeper:5.0.0
-    networks:
-      - testbed-net
     environment:
       ZOOKEEPER_CLIENT_PORT: 32181
       ZOOKEEPER_TICK_TIME: 2000
@@ -14,10 +12,6 @@ services:
     hostname: broker
     depends_on:
       - zookeeper
-    networks:
-      testbed-net:
-          aliases:
-            - ${TESTBED_HOST}
     ports:
       - "${BROKER_PORT}:${BROKER_PORT}"
     environment:
@@ -39,8 +33,6 @@ services:
     depends_on:
       - zookeeper
       - broker
-    networks:
-      - testbed-net
     ports:
       - "${SCHEMA_REGISTRY_PORT}:${SCHEMA_REGISTRY_PORT}"
     environment:
@@ -61,8 +53,6 @@ services:
       - zookeeper
       - schema_registry
       - broker
-    networks:
-      - testbed-net
     environment:
       KAFKA_REST_HOST_NAME: kafka_rest
       KAFKA_REST_BOOTSTRAP_SERVERS: 'PLAINTEXT://broker:9092'
@@ -78,9 +68,6 @@ services:
     image: drivereu/kafka-topics-ui:0.0.1
     depends_on:
       - kafka_rest
-    networks:
-      - traefik-net
-      - testbed-net
     ports:
       - "${KAFKA_TOPICS_UI_PORT}:8000"
     environment:
@@ -89,39 +76,21 @@ services:
       MAX_BYTES: 5000000
       RELATIVE_PROXY_URL: 'true'
       RECORD_POLL_TIMEOUT: 10000
-    deploy:
-      labels:
-        - "traefik.port=8000"
-        - "traefik.enable=true"
-        - "traefik.docker.network=traefik-net"
-        - "traefik.frontend.rule=Host:${TESTBED_HOST};PathPrefixStrip:/topics-ui/"
 
   kafka_schema_registry_ui:
     image: drivereu/schema-registry-ui:0.0.1
     depends_on:
       - schema_registry
-    networks:
-      - traefik-net
-      - testbed-net
     ports:
       - "${SCHEMA_REGISTRY_UI_PORT}:8000"
     environment:
       SCHEMAREGISTRY_URL: 'http://schema_registry:${SCHEMA_REGISTRY_PORT}'
       RELATIVE_PROXY_URL: 'true'
       PROXY: 'true'
-    deploy:
-      labels:
-        - "traefik.port=8000"
-        - "traefik.enable=true"
-        - "traefik.docker.network=traefik-net"
-        - "traefik.frontend.rule=Host:${TESTBED_HOST};PathPrefixStrip:/schema-ui/"
         
   postgres:
     image: postgres:9.6
     hostname: postgres
-    networks:
-      - traefik-net
-      - testbed-net
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
@@ -136,10 +105,6 @@ services:
       - postgres
       - broker
       - schema_registry
-    networks:
-      - traefik-net
-      - testbed-net
-     # As a temporary workaround for the AdminTool frontend not working behind traefik (non-secure WebSocket over HTTPS issue), we open the AdminTool port to the outside (not secure!) directly like for the schema registry
     ports: 
       - "${ADMINTOOL_PORT}:8090"
     environment:
@@ -156,79 +121,26 @@ services:
       # Unused
       security_rest_path_group: https://authorization_service:8443
       security_rest_path_topic: https://authorization_service:8443
-    deploy:
-      labels:
-        - "traefik.port=8090"
-        - "traefik.enable=true"
-        - "traefik.docker.network=traefik-net"
-        # We should use a "PathPrefixStrip:/test-bed-admin/" but this doesn't work, probably because the webpack of the admintool frontend is not configured to handle a path prefix.
-        # One solution seems to customize the webpack configuration with the 'publicPath' property. TO BE TESTED.
-        # More info: https://stackoverflow.com/questions/54069708/how-to-host-a-webpack-app-behind-a-reverse-proxy-on-a-specific-path
-        - "traefik.frontend.rule=Host:${TESTBED_HOST};PathPrefixStrip:/test-bed-admin/"
-        # Using PathPrefix:/ doesn't work either. Seems the issue is attempt to use ws (non-secure websocket) over https (blocked by browser Chrome/Firefox):
-        # https://github.com/webpack/webpack-dev-server/issues/763
-        # - "traefik.frontend.rule=Host:${TESTBED_HOST};PathPrefix:/"
-        - "traefik.frontend.passHostHeader=true"
-        # https://docs.traefik.io/configuration/backends/docker/#custom-headers
-        - "traefik.frontend.headers.customRequestHeaders=X-Forwarded-Proto:https||X-Forwarded-Port:443"
 
-  afteractionreview:
-    image: drivereu/after-action-review:latest
-    depends_on:
-      - postgres
-      - broker
-      - schema_registry
-    networks:
-      - traefik-net
-      - testbed-net
-    ports:
-      - "${AARTOOL_PORT}:8095"
-    deploy:
-      labels:
-        - "traefik.port=8095"
-        - "traefik.enable=true"
-        - "traefik.docker.network=traefik-net"
-        - "traefik.frontend.rule=Host:${TESTBED_HOST};PathPrefixStrip:/after-action-review/"
-    environment:
-      KAFKA_BROKER_URL: broker:9092
-      SCHEMA_REGISTRY_URL: http://schema_registry:${SCHEMA_REGISTRY_PORT}
-  
   pgadmin:
     image: fenglc/pgadmin4
     depends_on:
       - postgres
     restart: unless-stopped
-    networks:
-      - traefik-net
     ports:
       - "${PGADMIN_PORT}:5050"
-    deploy:
-      labels:
-        - "traefik.port=5050"
-        - "traefik.enable=true"
-        - "traefik.docker.network=traefik-net"
-        - "traefik.frontend.rule=Host:${TESTBED_HOST};PathPrefixStrip:/pgadmin/"
     
   time_service:
     image: drivereu/test-bed-time-service:latest
     depends_on:
       - broker
       - schema_registry
-    networks:
-      - traefik-net
-      - testbed-net
     environment:
       KAFKA_BROKER_URL: broker:9092
       SCHEMA_REGISTRY_URL: http://schema_registry:${SCHEMA_REGISTRY_PORT}
       AUTO_REGISTER_SCHEMAS: 'false'
     ports:
       - "${TIME_PORT}:8100"
-    deploy:
-      labels:
-        - "traefik.port=8100"
-        - "traefik.enable=true"
-        - "traefik.docker.network=traefik-net"
-        - "traefik.frontend.rule=Host:${TESTBED_HOST};PathPrefixStrip:/time-service/"
         
   trial_management_tool:
     image: drivereu/trial-management-tool:latest
@@ -248,56 +160,8 @@ services:
       SSL_PASSPHRASE: changeit
       SSL_CA: certs/test-ca.pem
     volumes:
-      - trial-data:/app/trials
-      
-  large_file_service:
-    image: drivereu/large-file-service:develop-latest
-    environment:
-      URL: http://${TESTBED_HOST}/large-file-service/
-    networks:
-      - traefik-net
-    deploy:
-      labels:
-        - "traefik.port=80"
-        - "traefik.enable=true"
-        - "traefik.docker.network=traefik-net"
-        - "traefik.frontend.rule=Host:${TESTBED_HOST};PathPrefix:/large-file-service/"
+      - trial-data:/app/trials      
 
-  ost_db:
-    image: janbalbierzitti/ost_database:1.0.19938
-    ports:
-    - "${OST_DB_PORT}:5432"
-    volumes:
-    - database-OST:/var/lib/postgresql/${DB_NAME}/data
-    restart: unless-stopped
-
-  ost_web:
-    image: janbalbierzitti/ost_frontend:1.0.19938
-    links:
-    - ost_api
-    ports:
-    - "${OST_WEB_PORT}:80"
-    - "${OST_WEB_SEC_PORT}:443"
-    restart: unless-stopped
-
-  ost_api:
-    image: janbalbierzitti/ost_backend:1.0.19938
-    links:
-    - ost_db
-    ports:
-    - "${OST_API_PORT}:8080"
-    environment:
-      KAFKA_BROKER_URL: broker:9092
-      SCHEMA_REGISTRY_URL: http://schema_registry:${SCHEMA_REGISTRY_PORT}
-    restart: unless-stopped
-
-networks:
-  traefik-net:
-    external: true
-  testbed-net:
-    driver: overlay
-    
 volumes:
-  database-OST:
   postgres-data:
   trial-data:
