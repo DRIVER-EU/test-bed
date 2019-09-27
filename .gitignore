@@ -1,3 +1,4 @@
 /.project
 /driver-test-bed.iml
 /.idea/
+.env
