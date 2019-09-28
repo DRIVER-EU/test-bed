@@ -30,4 +30,4 @@ RUN cd /opt/jboss/keycloak/standalone/deployments &&\
 RUN yum install -y certbot &&\
     yum clean all
 
-USER 1000
+#USER 1000

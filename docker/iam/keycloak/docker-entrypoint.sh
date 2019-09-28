@@ -32,7 +32,7 @@ function setup_tls() {
         # Letsencrypt usage enabled
         echo "Checking local Letsencrypt certificates ( if /etc/letsencrypt/live/${CERT_CN}/privkey.pem exist )."
         if [[ ! -e "/etc/letsencrypt/live/${CERT_CN}/privkey.pem" ]]; then
-                certbot -vv -n certonly ${LETS_ENCRYPT_TEST_FLAG} --standalone --no-self-upgrade --agree-tos -m "${LETS_ENCRYPT_EMAIL}" -d ${CERT_CN}
+                certbot -vv -n certonly ${LETS_ENCRYPT_CERTBOT_FLAGS} --standalone --no-self-upgrade --agree-tos -m "${LETS_ENCRYPT_EMAIL}" -d ${CERT_CN}
                 ln -s /etc/letsencrypt/live/${SERVER_NAME} /etc/letsencrypt/certs
         else
                 certbot renew --no-random-sleep-on-renew --no-self-upgrade
