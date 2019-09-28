@@ -71,6 +71,6 @@ This example is for https://tb1.driver-testbed.eu. Only the broker and schema re
 
 # Identity and Access Management Service
 This security service is meant to provide central Identity and Access Management (IAM), including authentication and SSO for the Web User Interfaces (Admin Tool, AAR Tool, Trial Management Tool, etc.)  on one or more test-beds. It relies on OpenID Connect (OIDC) as standard SSO protocol, and plays the role of OpenID Connect Provider in this context. 
-* Run with Docker Compose in `idp` folder.
+* Run with Docker Compose in `iam` folder.
 The `proxy` service run with Docker Compose from `homepage` folder provides a reverse-proxy that is designed to handle all the authentication and SSO (OpenID Connect) interaction with this OIDC Provider for the backend applications. Those applications receive the authentication context info (claims from OIDC tokens) from the reverse-proxy as HTTP headers: authenticated username, email, display name, roles, etc. 
 

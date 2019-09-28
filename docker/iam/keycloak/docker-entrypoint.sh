@@ -7,10 +7,11 @@ function import_realm() {
     if [ -f "${KEYCLOAK_IMPORTED_REALM}" ]; then
         realm_name=$(jq -r ".id" ${KEYCLOAK_IMPORTED_REALM})
         echo "Waiting for server to be running before realm import"
-        /opt/wtfc.sh --progress --timeout=600 --interval=10 --status=0 curl --verbose --max-time 5 http://127.0.0.1:8080/auth 
+	# Assuming only one public interface IP address (in Docker container)
+	BIND_IP=$(hostname --all-ip-addresses | tr -d '\n ')
+        /opt/wtfc.sh --progress --timeout=600 --interval=10 --status=0 curl --verbose --max-time 5 http://${BIND_IP}:8080/auth 
         echo "Importing realm ${realm_name} into Keycloak from ${KEYCLOAK_IMPORTED_REALM}"
-        /opt/jboss/keycloak/bin/kcadm.sh config credentials --server http://127.0.0.1:8080/auth --realm master --user ${KEYCLOAK_USER} --password ${KEYCLOAK_PASSWORD} --client admin-cli
-        # /opt/jboss/keycloak/bin/kcadm.sh config credentials --server http://iam.corp-demo.com:8080/auth --realm master --user admin --password changeit --client admin-cli
+        /opt/jboss/keycloak/bin/kcadm.sh config credentials --server http://${BIND_IP}:8080/auth --realm master --user ${KEYCLOAK_USER} --password ${KEYCLOAK_PASSWORD} --client admin-cli
         if /opt/jboss/keycloak/bin/kcadm.sh get realms/${realm_name}; then
             echo "Realm ${realm_name} already present. Skipping."
         else
@@ -20,12 +21,13 @@ function import_realm() {
     fi
 }
 
-function get_cert() {
+function setup_tls() {
    rm -rf /etc/x509/https/tls.{crt,key}
    if [[ "x${LETS_ENCRYPT_EMAIL}" == "x" ]]; then
         # No letsencrypt, use default key & cert provided with the docker image
-        CERT_PATH="/etc/x509/https/default-tls.crt"
-        KEY_PATH="/etc/x509/https/default-tls.key"
+	echo "Let's Encrypt.org certificate usage disabled. Using Keycloak default auto-generated key and certificate"
+        #CERT_PATH="/etc/x509/https/default-tls.crt"
+        #KEY_PATH="/etc/x509/https/default-tls.key"
    else
         # Letsencrypt usage enabled
         echo "Checking local Letsencrypt certificates ( if /etc/letsencrypt/live/${CERT_CN}/privkey.pem exist )."
@@ -37,17 +39,15 @@ function get_cert() {
         fi
         CERT_PATH="/etc/letsencrypt/live/${CERT_CN}/cert.pem"
         KEY_PATH="/etc/letsencrypt/live/${CERT_CN}/privkey.pem"
+        ln -s ${CERT_PATH} /etc/x509/https/tls.crt
+        ln -s ${KEY_PATH} /etc/x509/https/tls.key
    fi
-
-   ln -s ${CERT_PATH} /etc/x509/https/tls.crt
-   ln -s ${KEY_PATH} /etc/x509/https/tls.key
 }
 
 # Call the entrypoint script from parent Keycloak Docker image
 echo "Entering custom entrypoint"
-get_cert
+setup_tls
 /opt/jboss/tools/docker-entrypoint.sh &
 import_realm
 # Move jboss process back to foreground
-jobs
 fg 1

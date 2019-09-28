@@ -16,13 +16,12 @@ services:
   keycloak:
       build:
         context: ./keycloak
-        #args:
-        #  WEBAUTHN_PLUGIN_VERSION: "0.3.RELEASE"
-      image: drivereu/keycloak:6.0.1-2
+        args:
+          WEBAUTHN_PLUGIN_VERSION: "0.3.RELEASE"
+      image: drivereu/keycloak:7.0.0-0
       hostname: driver-testbed.eu
       # Workaround for container failing to resolve domain names required by redbird to get certificate from Letsencrypt on-the-fly
       extra_hosts:
-        - "mirrorlist.centos.org:85.236.43.108"
         - "acme-v02.api.letsencrypt.org:104.66.96.217"
         - "acme-staging-v02.api.letsencrypt.org:172.65.46.172"
         - "driver-testbed.eu:134.221.20.200"
@@ -31,25 +30,24 @@ services:
       depends_on:
         - postgres
       volumes:
-        - ./keycloak/test-ca-crt.pem:/tmp/test-ca-crt.pem
+        # - ./keycloak/test-ca-crt.pem:/tmp/test-ca-crt.pem
         # - ./keycloak/themes/thales:/opt/jboss/keycloak/themes/thales
-        # The realm must have been exported with instructions from: https://github.com/jboss-dockerfiles/keycloak/tree/master/server#exporting-a-realm
+        # If you need to import a realm with volume below, the realm must have been exported with instructions from: https://github.com/jboss-dockerfiles/keycloak/tree/master/server#exporting-a-realm
         # $ docker exec -it docker_keycloak_1 sh -c "keycloak/bin/standalone.sh -Djboss.socket.binding.port-offset=100 -Dkeycloak.migration.action=export -Dkeycloak.migration.provider=singleFile -Dkeycloak.migration.realmName=driver -Dkeycloak.migration.usersExportStrategy=REALM_FILE -Dkeycloak.migration.file=/tmp/driver-realm.json"
         - ./keycloak/l3-realm.json:/tmp/l3-realm.json
         - etcletsencrypt:/etc/letsencrypt
         - varletsencrypt:/var/lib/letsencrypt
 
       environment:
-        X509_CA_BUNDLE: /tmp/test-ca-crt.pem
+        # X509_CA_BUNDLE: /etc/x509/https/tls-ca-crt.pem
         DB_VENDOR: postgres
         DB_ADDR: postgres
         DB_DATABASE: keycloak
         DB_USER: keycloak
         DB_SCHEMA: public
         DB_PASSWORD: ${KEYCLOAK_PASSWORD}
-        KEYCLOAK_HOSTNAME: driver-testbed.eu
         KEYCLOAK_USER: admin
-        # Use uuidgen command to generate the initial password
+        # Use uuidgen command to generate the password and set the variable in a .env file 
         KEYCLOAK_PASSWORD: ${KEYCLOAK_PASSWORD}
 
         # KEYCLOAK_IMPORT cannot be used here because refers to objects from Webauthn plugin which is deployed after attempt to import the realm from KEYCLOAK_IMPORT -> fail
@@ -73,8 +71,8 @@ services:
        
       ports:
         - 8443:8443
-      entrypoint: sh "/opt/jboss/tools/docker-entrypoint-override.sh"
-      command: ["-b", "0.0.0.0"] 
+      entrypoint: sh "/opt/jboss/tools/docker-entrypoint-wrapper.sh"
+      # command: ["-b", "0.0.0.0", "-bmanagement", "0.0.0.0"] 
 
 #  letsencryptstore:
 #    image: busybox
