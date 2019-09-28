@@ -18,15 +18,8 @@ services:
         context: ./keycloak
         args:
           WEBAUTHN_PLUGIN_VERSION: "0.3.RELEASE"
-      image: drivereu/keycloak:7.0.0-1
+      image: drivereu/keycloak:7.0.0-2
       hostname: driver-testbed.eu
-      # Workaround for container failing to resolve domain names required by redbird to get certificate from Letsencrypt on-the-fly
-      extra_hosts:
-        - "acme-v02.api.letsencrypt.org:104.66.96.217"
-        - "acme-staging-v02.api.letsencrypt.org:172.65.46.172"
-        - "driver-testbed.eu:134.221.20.200"
-        - "ocsp.stg-int-x1.letsencrypt.org:95.100.96.193"
-        - "ocsp.int-x3.letsencrypt.org:95.100.96.232"
       depends_on:
         - postgres
       volumes:
@@ -71,6 +64,8 @@ services:
         LETS_ENCRYPT_CERTBOT_FLAGS: ${LETS_ENCRYPT_CERTBOT_FLAGS}
        
       ports:
+        # Port 80 required for the Letsencrypt http challenge
+        - 80:80
         - 8443:8443
       entrypoint: sh "/opt/jboss/tools/docker-entrypoint-wrapper.sh"
       # command: ["-b", "0.0.0.0", "-bmanagement", "0.0.0.0"] 

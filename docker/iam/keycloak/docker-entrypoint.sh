@@ -39,8 +39,11 @@ function setup_tls() {
         fi
         CERT_PATH="/etc/letsencrypt/live/${CERT_CN}/cert.pem"
         KEY_PATH="/etc/letsencrypt/live/${CERT_CN}/privkey.pem"
+        mkdir -p /etc/x509/https
         ln -s ${CERT_PATH} /etc/x509/https/tls.crt
         ln -s ${KEY_PATH} /etc/x509/https/tls.key
+        #ls -l /etc/x509/https
+        #ls -l /etc/letsencrypt/live/${CERT_CN}
    fi
 }
 
