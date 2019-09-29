@@ -22,6 +22,9 @@ function import_realm() {
 }
 
 function setup_tls() {
+   # If behind HTTPS/SSL reverse-proxy, nothing to do
+   if ${PROXY_ADDRESS_FORWARDING}; then return; fi
+
    rm -rf /etc/x509/https/tls.{crt,key}
    if [[ "x${LETS_ENCRYPT_EMAIL}" == "x" ]]; then
         # No letsencrypt, use default key & cert provided with the docker image
@@ -50,7 +53,7 @@ function setup_tls() {
 # Call the entrypoint script from parent Keycloak Docker image
 echo "Entering custom entrypoint"
 setup_tls
-/opt/jboss/tools/docker-entrypoint.sh &
+bash +x /opt/jboss/tools/docker-entrypoint.sh &
 import_realm
 # Move jboss process back to foreground
 fg 1
