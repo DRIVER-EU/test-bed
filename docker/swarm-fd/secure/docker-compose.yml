@@ -166,7 +166,7 @@ services:
       zookeeper_port: 32181
       schema_registry_url: http://schema_registry:${SCHEMA_REGISTRY_PORT}
       testbed_secure_mode: 'AUTHENTICATION'
-      testbed_init_auto: 'false'
+      testbed_init_auto: 'true'
       management_ca_cert_path: http://cert_mgt:8080
       cert_handler_url: https://cert_mgt:8443
       cert_pem_handler_url: https://cert_mgt:8443
@@ -175,15 +175,15 @@ services:
       security_rest_path_topic: https://authorization_service:8443
     command: sh -c "curl 'https://raw.githubusercontent.com/DRIVER-EU/test-bed/master/docker/swarm/wtfc.sh' -o '/opt/wtfc.sh' && chmod a+x /opt/wtfc.sh && /opt/wtfc.sh --progress --timeout=240 --interval=10 --status=0 curl -kv https://cert_mgt:8442/ejbca/ && /bin/sh /opt/application/run.sh"
       
-#  afteractionreview:
-#    image: drivereu/after-action-review:latest
-#    depends_on:
-#      - admintool
-#    ports:
-#      - "${AARTOOL_PORT}:8095"
-#    environment:
-#      KAFKA_BROKER_URL: broker:9092
-#      SCHEMA_REGISTRY_URL: http://schema_registry:${SCHEMA_REGISTRY_PORT}
+  afteractionreview:
+    image: drivereu/after-action-review:latest
+    depends_on:
+      - admintool
+    ports:
+      - "${AARTOOL_PORT}:8095"
+    environment:
+      KAFKA_BROKER_URL: broker:9092
+      SCHEMA_REGISTRY_URL: http://schema_registry:${SCHEMA_REGISTRY_PORT}
 
   pgadmin:
     image: fenglc/pgadmin4
