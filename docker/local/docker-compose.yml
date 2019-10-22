@@ -106,14 +106,6 @@ services:
       - schema_registry
     ports:
       - "8090:8090"
-    volumes:
-      - ./admintool-config/gateways.json:/opt/application/config/gateways.json
-      - ./admintool-config/solutions.json:/opt/application/config/solutions.json
-      - ./admintool-config/topics.json:/opt/application/config/topics.json
-      - ./admintool-config/standards.json:/opt/application/config/standards.json
-      - ./admintool-config/configurations.json:/opt/application/config/configurations.json
-      - ./admintool-config/testbed-solutions.json:/opt/application/config/testbed-solutions.json
-      - ./admintool-config/testbed-topics.json:/opt/application/config/testbed-topics.json
     environment:
       KAFKA_BROKER_URL: broker:9092
       SCHEMA_REGISTRY_URL: http://schema_registry:3502

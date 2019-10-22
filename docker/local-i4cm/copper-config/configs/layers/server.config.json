@@ -145,6 +145,88 @@
       "visible": true
     },
     {
+      "id": "chain_flood",
+      "sourceType": "geojson",
+      "version": "0.0.1",
+      "color": "lightgray",
+      "isLive": true,
+      "tags": [
+        "chain"
+      ],
+      "isEditable": false,
+      "tileSupport": false,
+      "source": "chain_flood.json",
+      "title": "Chain flood",
+      "sourceUrl": "http://localhost:4000/sources/chain_flood",
+      "style": {
+        "types": [],
+        "pointCircle": true,
+        "mapbox": {
+          "fillPaint": {
+            "fill-color": "blue",
+            "fill-opacity": 0.4
+          },
+          "circlePaint": {
+            "circle-radius": 8,
+            "circle-color": "yellow",
+            "circle-opacity": 0.6
+          }
+        }
+      }
+    },
+    {
+      "id": "chain_power",
+      "source": "chain_power.json",
+      "sourceType": "geojson",
+      "title": "Chain_power effects",
+      "sourceUrl": "http://localhost:4000/sources/chain_power",
+      "version": "0.0.1",
+      "isLive": true,
+      "style": {
+        "types": [
+          "point"
+        ],
+        "icon": "images/icons/hoogspanningsmast.png",
+        "pointCircle": true,
+        "mapbox": {
+          "symbolLayout": {
+            "icon-size": 0.6,
+            "text-allow-overlap": true,
+            "icon-allow-overlap": true,
+            "icon-ignore-placement": true
+          },
+          "fillPaint": {
+            "fill-color": "black",
+            "fill-opacity": 0.4
+          },
+          "circlePaint": {
+            "circle-radius": 8,
+            "circle-color": [
+              "match",
+              [
+                "get",
+                "state"
+              ],
+              0,
+              "yellow",
+              1,
+              "orange",
+              2,
+              "red",
+              "grey"
+            ],
+            "circle-opacity": 0.6
+          }
+        }
+      },
+      "color": "lightgray",
+      "tags": [
+        "chain"
+      ],
+      "description": "chain_power",
+      "meta": "chain_power.meta.json"
+    },
+    {
       "id": "lcms-geojson",
       "source": "lcms-geojson.json",
       "sourceType": "geojson",
@@ -237,6 +319,23 @@
       "openFeatureDetails": true,
       "visible": true,
       "meta": "drawing.meta.json"
+    },
+    {
+      "id": "chain",
+      "source": "chain.json",
+      "sourceType": "geojson",
+      "title": "Chain effects",
+      "sourceUrl": "http://localhost:4000/sources/chain",
+      "version": "0.0.1",
+      "isLive": true,
+      "style": {
+        "types": [],
+        "pointCircle": true
+      },
+      "color": "lightgray",
+      "tags": [],
+      "description": "chain",
+      "meta": "chain.meta.json"
     },
     {
       "id": "ambassades",
@@ -1106,6 +1205,57 @@
         "pointCircle": true
       },
       "externalUrl": "https://geoservice.dlr.de/eoc/zki/service/driver/wms"
+    },
+    {
+      "id": "chain_care",
+      "sourceType": "geojson",
+      "version": "0.0.1",
+      "color": "lightgray",
+      "isLive": true,
+      "tags": [
+        "chain"
+      ],
+      "source": "chain_care.json",
+      "title": "Chain_care effects",
+      "sourceUrl": "http://localhost:4000/sources/chain_care",
+      "style": {
+        "types": [
+          "point"
+        ],
+        "icon": "images/icons/ziekenhuis.png",
+        "pointCircle": true,
+        "mapbox": {
+          "symbolLayout": {
+            "icon-size": 0.3,
+            "text-allow-overlap": true,
+            "icon-allow-overlap": true,
+            "icon-ignore-placement": true
+          },
+          "fillPaint": {
+            "fill-color": "black",
+            "fill-opacity": 0.4
+          },
+          "circlePaint": {
+            "circle-radius": 13,
+            "circle-color": [
+              "match",
+              [
+                "get",
+                "state"
+              ],
+              0,
+              "purple",
+              1,
+              "orange",
+              2,
+              "red",
+              "grey"
+            ],
+            "circle-opacity": 0.7
+          }
+        }
+      },
+      "meta": "chain_care.meta.json"
     }
   ],
   "sourcePath": "./sources/",
@@ -1125,5 +1275,5 @@
   "serverUrl": "http://localhost:4000",
   "importRoot": "import/",
   "sourceRoot": "sources/",
-  "serverPath": "./configs/layers/"
+  "serverPath": "/configs/layers/"
 }
