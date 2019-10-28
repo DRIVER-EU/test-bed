@@ -1,19 +1,6 @@
-# I4CM workshop
+# Getting started with the DRIVER+ test-bed
 
-Demonstrate the capabilities of the Test-bed technical infrastructure.
-
-Configured services:
-
-- Kafka & Zookeeper
-- Kafka topics UI
-- Kafka schema registry and UI
-- Admin tool
-- After Action Review tool
-- Trial-Guidance-Tool
-- COPPER COP tool
-- LCMS connector / gateway
-- Chain Reaction Simulator
-- Silent Producer
+This folder gets you started with the DRIVER+ test-bed. It explains how to set-up the technical infrastructure, and how to run a simple scenario. This composition contains the basic required images to run the Apache Kafka messaging framework, as well as several tools that demonstrate the capabilities of how the test-bed can be used to run a scenario (e.g. several management tools and a simulator).
 
 ## Installation
 
