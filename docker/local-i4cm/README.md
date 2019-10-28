@@ -48,7 +48,15 @@ It will also start a scenario of the chain-effect simulator. When you open the [
 As the scenario will publish an update every hour, you'll either need to wait an hour to see the first update, or increase the simulation time speed. This can be done by the fast-forwarding buttons in the top right of the TMT-interface. 
 
 #### SUMO traffic simulator
-You can also connect SUMO to the test-bed. First install SUMO using [the instructions](https://github.com/DRIVER-EU/sumo-connector). After that, follow the instructions to run the [Rotterdam scenario](https://github.com/DRIVER-EU/sumo-connector/tree/master/Rotterdam).
+You can also connect SUMO to the test-bed. First install SUMO using [the instructions](https://github.com/DRIVER-EU/sumo-connector). After that, follow the instructions to run the [Rotterdam scenario](https://github.com/DRIVER-EU/sumo-connector/tree/master/Rotterdam). Run the script ```py sumo_connector.py``` before starting the trial. 
+
+#### LCMS Connector
+In order to connect the test-bed to LCMS, create a ```.env``` file in this folder (next to ```docker-compose.yml```). In that file, add your login details for LCMS: 
+```
+LCMS_CONNECTOR_USERNAME=johndoe
+LCMS_CONNECTOR_PASSWORD=1234
+```
+Additionally, you might need to change the default exercise name ```Driver+ Test``` with another LCMS-excercise in the file ```docker-compose.yml```. The parameter to change is ```LCMS_CONNECTOR_EXCERCISE```.
 
 
 ## Screenshots
