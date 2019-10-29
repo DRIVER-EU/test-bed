@@ -1,0 +1,41 @@
+{
+  "clientId": "chain-effect-sim",
+  "kafkaHost": "broker:9092",
+  "schemaRegistry": "http://schema_registry:3502",
+  "wrapUnions": "auto",
+  "heartbeatInterval": 10000,
+  "fromOffset": false,
+  "fetchAllSchemas": true,
+  "fetchAllVersions": false,
+  "ignoreTimeTopic": true,
+  "autoRegisterSchemas": true,
+  "autoRegisterDefaultSchemas": false,
+  "schemaFolder": "./data/schemas",
+  "consume": [
+    {
+      "topic": "chain_scenario"
+    },
+    {
+      "topic": "chain_power"
+    },
+    {
+      "topic": "chain_flood"
+    },
+    {
+      "topic": "chain_care"
+    },
+    {
+      "topic": "chain"
+    },
+    {
+      "topic": "system_timing"
+    },
+    {
+      "topic": "system_timing_control"
+    },
+    {
+      "topic": "standard_cap"
+    }
+  ],
+  "produce": ["system_heartbeat", "chain_scenario", "chain", "chain_power", "chain_care", "chain_flood", "standard_cap"]
+}

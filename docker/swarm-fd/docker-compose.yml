@@ -114,7 +114,7 @@ services:
       zookeeper_port: 32181
       schema_registry_url: http://schema_registry:${SCHEMA_REGISTRY_PORT}
       testbed_secure_mode: 'DEVELOP'
-      testbed_init_auto: 'false'
+      testbed_init_auto: 'true'
       # management_ca_cert_path: http://cert_mgt:8080
       # cert_handler_url: https://cert_mgt:8443
       # cert_pem_handler_url: https://cert_mgt:8443

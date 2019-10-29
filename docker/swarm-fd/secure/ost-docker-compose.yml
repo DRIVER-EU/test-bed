@@ -1,0 +1,47 @@
+---
+version: '3'
+services: 
+  ost_db:
+    hostname: ost_db
+    image: janbalbierzitti/ost_database:fddr2_8
+    ports:
+    - "${OST_DB_PORT}:5432"
+    volumes:
+    - database-OST:/var/lib/postgresql/${DB_NAME}/data
+    networks:
+      - default
+    restart: unless-stopped
+
+  ost_web:
+    hostname: ost_web
+    image: janbalbierzitti/ost_frontend:fddr2_8
+    links:
+    - ost_api
+    ports:
+    - "${OST_WEB_PORT}:80"
+    - "${OST_WEB_SEC_PORT}:443"
+    networks:
+      - default
+      - tb6-core_default
+
+  ost_api:
+    hostname: ost_api
+    image: janbalbierzitti/ost_backend:fddr2_8
+    links:
+    - ost_db
+    ports:
+    - "${OST_API_PORT}:8080"
+    networks:
+      - default
+      - tb6-core_default
+    environment:
+      CATALINA_OPTS: "-DKAFKA_BROKER_URL=${KAFKA_BROKER_URL} -DSCHEMA_REGISTRY_URL=${SCHEMA_REGISTRY_URL}"
+
+networks:
+  default:
+    driver: overlay
+  tb6-core_default:
+    external: true
+    
+volumes:
+  database-OST:
