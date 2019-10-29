@@ -34,7 +34,7 @@ fi
 export OIDC_CRYPTO_PASS=$(uuidgen)
 
 # Generating the JSON file returned on /services path (see vhost-443.conf for the URL-to-file mapping )
-cat > /var/www/services.json <<EOF
+cat > /usr/local/apache2/htdocs/services.json <<EOF
     {
         "title":"${TESTBED_TITLE}",
         "services":{
