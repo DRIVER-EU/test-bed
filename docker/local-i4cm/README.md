@@ -28,6 +28,7 @@ Once the test-bed is up-and-running using the instructions above, let's get star
 | Trial-Management-Tool | 3210 | http://localhost:3210 |
 | COPPER COP tool | 8080 | http://localhost:8080 |
 | LCMS connector / gateway | 8500 | http://localhost:8500 |
+| SUMO Traffic Simulator | - | - |
 | Chain Effect Simulator | - | - |
 | Large File Service | 9090 | http://localhost:9090 |
 | Silent Producer | - | - |
@@ -48,7 +49,25 @@ It will also start a scenario of the chain-effect simulator. When you open the [
 As the scenario will publish an update every hour, you'll either need to wait an hour to see the first update, or increase the simulation time speed. This can be done by the fast-forwarding buttons in the top right of the TMT-interface. 
 
 #### SUMO traffic simulator
-You can also connect SUMO to the test-bed. First install SUMO using [the instructions](https://github.com/DRIVER-EU/sumo-connector). After that, follow the instructions to run the [Rotterdam scenario](https://github.com/DRIVER-EU/sumo-connector/tree/master/Rotterdam).
+Another simulator included in this composition, is DLR's [SUMO](https://sumo.dlr.de/index.html) traffic simulator. In order to use it, open both the [COPPER-tool](http://localhost:8080) and the [TMT](http://localhost:3210). In COPPER, enable the map layers in the group 'simulation' (Unit transport request, unit update, and Affected area). Then start the trial in the TMT, if you hadn't already done so in the previous step. 
+![image4](https://user-images.githubusercontent.com/11523459/67871172-3a804e80-fb30-11e9-85bd-d73c6c9dde41.png)
+Most of the scenario will run automatically, however the Traffic storyline requires a manual intervention. Click on the red 'Traffic' storyline and subsequently on 'Click here when ready'. This will send an initialization to SUMO. Then repeat these steps for 'Send vehicle1 to accident_site'.
+![image](https://user-images.githubusercontent.com/11523459/67871443-a82c7a80-fb30-11e9-86f2-852262db32bb.png)
+
+If you now go to COPPER, it should display the route, Affected Area and the driving vehicle1.
+![image5](https://user-images.githubusercontent.com/11523459/67871781-2f79ee00-fb31-11e9-87da-2fd48898bde1.png)
+
+
+##### Running locally
+You can also connect your local SUMO installation to the test-bed. First install SUMO using [the instructions](https://github.com/DRIVER-EU/sumo-connector). After that, follow the instructions to run the [Rotterdam scenario](https://github.com/DRIVER-EU/sumo-connector/tree/master/Rotterdam). Run the script ```py sumo_connector.py``` before starting the trial. 
+
+#### LCMS Connector
+In order to connect the test-bed to LCMS, create a ```.env``` file in this folder (next to ```docker-compose.yml```). In that file, add your login details for LCMS: 
+```
+LCMS_CONNECTOR_USERNAME=johndoe
+LCMS_CONNECTOR_PASSWORD=1234
+```
+Additionally, you might need to change the default exercise name ```Driver+ Test``` with another LCMS-excercise in the file ```docker-compose.yml```. The parameter to change is ```LCMS_CONNECTOR_EXCERCISE```.
 
 
 ## Screenshots

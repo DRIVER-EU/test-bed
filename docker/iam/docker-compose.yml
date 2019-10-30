@@ -67,11 +67,11 @@ services:
         # Optional arguments passed to cerbot tool to request certificate from letsencrypt.org, e.g. '--test-cert' to use the staging environment instead of default Production environment which is rate-limited, therefore not recommended for development/testing.
         LETS_ENCRYPT_CERTBOT_FLAGS: ${LETS_ENCRYPT_CERTBOT_FLAGS}
        
-      #ports:
+      ports:
         # Expose port 80 if and only if Letsencrypt is used (for the http challenge).
         #- 80:80
         # Expose this port mapped to 8080 if and only if PROXY_ADDRESS_FORWARDING=true (backend port for the reverse-proxy), else expose port 8443
-        #- 58080:8080
+        - 58080:8080
         # Expose this port if and only if PROXY_ADDRESS_FORWARDING=false, i.e. Keycloak is not accessed via a reverse-proxy
         #- 8443:8443
       entrypoint: sh "/opt/jboss/tools/docker-entrypoint-wrapper.sh"
