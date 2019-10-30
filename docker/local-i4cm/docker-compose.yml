@@ -288,6 +288,16 @@ services:
       USE_ISOLINES: 'true'
     volumes:
       - ./chainsim-config/config:/chainsim/dist/config
+
+  sumo-connector:
+    image: drivereu/sumo-connector:0.0.1
+    depends_on:
+      - broker
+      - schema_registry
+      - silent-producer
+    environment:
+      KAFKA_HOST: broker:9092
+      SCHEMA_REGISTRY: http://schema_registry:3502
       
 # ost-db:
   #   image: drivereu/ost-app:ost_database
