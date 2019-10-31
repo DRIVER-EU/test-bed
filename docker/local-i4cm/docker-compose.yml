@@ -306,7 +306,7 @@ services:
       SCHEMA_REGISTRY: http://schema_registry:3502
 
   webmail:
-    image: driver-roundcube
+    image: drivereu/driver-roundcube:0.0.1
     hostname: webmail
     container_name: webmail
     environment:
@@ -325,7 +325,7 @@ services:
       - mailserver
 
   mailserver:
-    image: driver-mailserver
+    image: drivereu/driver-mailserver:0.0.1
     hostname: dockermail
     domainname: driver.eu
     container_name: mailserver
@@ -352,7 +352,7 @@ services:
     restart: always
 
   mailgateway:
-    image: driver-mailgateway
+    image: drivereu/driver-mailgateway:0.0.1
     container_name: mailgateway
     ports:
       # websocket notifications
@@ -383,7 +383,7 @@ services:
     restart: always
 
   mailmonitor:
-    image: driver-mailmonitor
+    image: drivereu/driver-mailmonitor:0.0.1
     container_name: mailmonitor
     ports:
       - '4200:4200'
