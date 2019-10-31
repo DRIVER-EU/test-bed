@@ -15,6 +15,7 @@ COPY launcher-verbose.sh /usr/local/bin/launcher-verbose.sh
 # We don't want to install libapache2-mod-auth-openidc package because it requires apache2 deb package install which is not compatible with this httpd image (not using apache2 deb package) 
 RUN apt-get update -y &&\
     apt-get install software-properties-common -y &&\
+    add-apt-repository universe -y &&\
     add-apt-repository ppa:certbot/certbot -y &&\
     apt-get install certbot libhiredis0.14 libcjose0 uuid-runtime ssl-cert -y &&\
     apt-get download libapache2-mod-auth-openidc &&\
