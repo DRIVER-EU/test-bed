@@ -218,7 +218,7 @@ services:
       KAFKA_HOST: broker:9092
       SCHEMA_REGISTRY: http://schema_registry:3502
       TRIAL_MANAGER_SERVER_PORT: 3210
-      PRODUCE: system_request_change_of_trial_stage,system_tm_phase_message,system_tm_role_player,system_tm_session_mgmt,standard_cap,simulation_request_startinject,sumo_AffectedArea,simulation_request_unittransport,sumo_SumoConfiguration
+      PRODUCE: system_request_change_of_trial_stage,system_tm_phase_message,system_tm_role_player,system_tm_session_mgmt,standard_cap,simulation_request_startinject,sumo_AffectedArea,simulation_request_unittransport,sumo_SumoConfiguration,simulation_entity_post
       SSL: 'false'
       SSL_PFX: certs/TB-TrialMgmt.p12
       SSL_PASSPHRASE: changeit
@@ -239,7 +239,12 @@ services:
       VUE_APP_COPPER_LAYER_URL: "'http://localhost:3007'"
       VUE_APP_COPPER_LOG_URL: "'http://localhost:3007/logs'"
       VUE_APP_COPPER_SOCKET_SERVER_URL: "'http://localhost:3007'"
-    command: ["sh", "-c", "echo \"var VUE_APP_COPPER_LAYER_URL=$$VUE_APP_COPPER_LAYER_URL;var VUE_APP_COPPER_LOG_URL=$$VUE_APP_COPPER_LOG_URL;var VUE_APP_COPPER_SOCKET_SERVER_URL=$$VUE_APP_COPPER_SOCKET_SERVER_URL\" > /copper/global-vars-copper.js && http-server /copper"]
+    command:
+      [
+        'sh',
+        '-c',
+        'echo "var VUE_APP_COPPER_LAYER_URL=$$VUE_APP_COPPER_LAYER_URL;var VUE_APP_COPPER_LOG_URL=$$VUE_APP_COPPER_LOG_URL;var VUE_APP_COPPER_SOCKET_SERVER_URL=$$VUE_APP_COPPER_SOCKET_SERVER_URL" > /copper/global-vars-copper.js && http-server /copper',
+      ]
 
   copper_server:
     image: drivereu/copper-server:0.0.5
@@ -269,18 +274,19 @@ services:
     environment:
       KAFKA_HOST: broker:9092
       SCHEMA_REGISTRY: http://schema_registry:3502
-      PRODUCE_TOPICS: simulation_request_unittransport,simulation_request_startinject,simulation_entity_item,lcms_plots,sumo_AffectedArea,sumo_SumoConfiguration,standard_cap,system_timing,system_topic_access_invite,chain_power,chain_care,chain_flood,chain,flood_prediction_geojson,flood_actual
+      PRODUCE_TOPICS: simulation_request_unittransport,simulation_request_startinject,simulation_entity_item,lcms_plots,sumo_AffectedArea,sumo_SumoConfiguration,standard_cap,system_timing,system_topic_access_invite,chain_power,chain_care,chain_flood,chain,flood_prediction_geojson,flood_actual,simulation_entity_post
     restart: on-failure
     volumes:
       - ./schemas:/src/schemas
 
   chain-effect-simulator:
-    image: drivereu/chain-effect-simulator:1.0.0
+    image: drivereu/chain-effect-simulator:1.0.1
     depends_on:
       - broker
       - schema_registry
     environment:
       CAP_TOPIC: standard_cap
+      MAIL_TOPIC: simulation_entity_post
       SCENARIO_TOPIC: chain_scenario
       CHAIN_TOPIC: chain
       ELECTRICITY_TOPIC: chain_power
@@ -298,38 +304,142 @@ services:
     environment:
       KAFKA_HOST: broker:9092
       SCHEMA_REGISTRY: http://schema_registry:3502
-      
+
+  webmail:
+    image: drivereu/driver-roundcube:0.0.1
+    hostname: webmail
+    container_name: webmail
+    environment:
+      - ROUNDCUBEMAIL_DEFAULT_HOST=10.5.0.5
+      - ROUNDCUBEMAIL_SMTP_SERVER=10.5.0.5
+      - ROUNDCUBEMAIL_DEFAULT_PORT=143
+      - ROUNDCUBEMAIL_SMTP_PORT=25
+    ports:
+      - '80:80'
+    networks:
+      static-network:
+        ipv4_address: 10.5.0.6
+      default:
+      backend:
+    depends_on:
+      - mailserver
+
+  mailserver:
+    image: drivereu/driver-mailserver:0.0.1
+    hostname: dockermail
+    domainname: driver.eu
+    container_name: mailserver
+    ports:
+      - '25:25'
+      - '143:143'
+      - '587:587'
+      - '993:993'
+      - '3000:3000'
+    networks:
+      static-network:
+        ipv4_address: 10.5.0.5
+      default:
+      backend:
+    volumes:
+      - maildata:/var/mail
+      - mailstate:/var/mail-state
+      - mailconfig/:/tmp/docker-mailserver/
+    environment:
+      - DMS_DEBUG=1
+    cap_add:
+      - NET_ADMIN
+      - SYS_PTRACE
+    restart: always
+
+  mailgateway:
+    image: drivereu/driver-mailgateway:0.0.1
+    container_name: mailgateway
+    ports:
+      # websocket notifications
+      - '9996:9996'
+      # REST api
+      - '7891:7891'
+    environment:
+      - ApiMailServerUrl=http://10.5.0.5:3000
+      - LargeFileServiceUrl=http://large_file_service:9090/upload
+      - SmtpHost=10.5.0.5
+      - SmtpPort=25
+      - IMapHost=10.5.0.5
+      - IMapPort=993
+      - kafka_kafkaHost=broker:9092
+      - kafka_schemaRegistryUrl=schema_registry:3502
+      - kafka_mediaTopicName=simulation_entity_post
+      - kafka_connectToKafka=true
+      - server_port=7891
+    depends_on:
+      - mailserver
+      - broker
+      - large_file_service
+      - schema_registry
+    networks:
+      static-network:
+        ipv4_address: 10.5.0.10
+      default:
+    restart: always
+
+  mailmonitor:
+    image: drivereu/driver-mailmonitor:0.0.1
+    container_name: mailmonitor
+    ports:
+      - '4200:4200'
+    links:
+      - mailgateway
+    depends_on:
+      - mailgateway
+    networks:
+      static-network:
+        ipv4_address: 10.5.0.11
+      default:
+      backend:
+    restart: always
+
 # ost-db:
-  #   image: drivereu/ost-app:ost_database
-  #   ports:
-  #   - "5437:5432"
-  #   volumes:
-  #   - database-OST:/var/lib/postgresql/data
-  #   restart: always
+#   image: drivereu/ost-app:ost_database
+#   ports:
+#   - "5437:5432"
+#   volumes:
+#   - database-OST:/var/lib/postgresql/data
+#   restart: always
 
-  # ost-web:
-  #   image: drivereu/ost-app:ost_frontend
-  #   links:
-  #   - ost-api
-  #   ports:
-  #   - "84:80"
-  #   restart: always
+# ost-web:
+#   image: drivereu/ost-app:ost_frontend
+#   links:
+#   - ost-api
+#   ports:
+#   - "84:80"
+#   restart: always
 
-  # ost-api:
-  #   image: drivereu/ost-app:ost_backend
-  #   depends_on:
-  #   - ost-db
-  #   healthcheck:
-  #       test: ["CMD", "curl", "-f", "http://127.0.0.1:5050"]
-  #       interval: 30s
-  #       timeout: 10s
-  #       retries: 5
-  #   ports:
-  #   - "8084:8080"
-  #   restart: always
+# ost-api:
+#   image: drivereu/ost-app:ost_backend
+#   depends_on:
+#   - ost-db
+#   healthcheck:
+#       test: ["CMD", "curl", "-f", "http://127.0.0.1:5050"]
+#       interval: 30s
+#       timeout: 10s
+#       retries: 5
+#   ports:
+#   - "8084:8080"
+#   restart: always
 
 volumes:
   postgres-data:
   trial-data:
-
+  maildata:
+  mailstate:
+  mailconfig:
   # database-OST:
+
+networks:
+  static-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.5.0.0/16
+  backend:
+    driver: 'bridge'

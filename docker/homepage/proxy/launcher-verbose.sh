@@ -53,15 +53,15 @@ cat > /usr/local/apache2/htdocs/services.json <<EOF
     }
 EOF
 
-a2ensite -q vhost-443
+#a2ensite -q vhost-443
 
 # Enable virtual host on port 8443 if PORT_VIA_8443 is defined non-empty string
-if [[ "x${BACKEND_URL_VIA_8443}" == "x" ]]; then
-	a2dissite -q vhost-8443
-else
-        a2ensite -q vhost-8443
-fi
+#if [[ "x${BACKEND_URL_VIA_8443}" == "x" ]]; then
+#	a2dissite -q vhost-8443
+#else
+#        a2ensite -q vhost-8443
+#fi
 
 # Launching Apache HTTP server
-apache2 -DFOREGROUND
+httpd-foreground
 

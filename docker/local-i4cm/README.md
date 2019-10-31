@@ -30,6 +30,7 @@ Once the test-bed is up-and-running using the instructions above, let's get star
 | LCMS connector / gateway | 8500 | http://localhost:8500 |
 | SUMO Traffic Simulator | - | - |
 | Chain Effect Simulator | - | - |
+| E-Mail Service | 4200 | http://localhost:4200 |
 | Large File Service | 9090 | http://localhost:9090 |
 | Silent Producer | - | - |
 
@@ -46,13 +47,23 @@ When you have done this, an 'Initialize' button appears. Clicking this button wi
 #### Chain effect simulator
 It will also start a scenario of the chain-effect simulator. When you open the [COPPER-tool](http://localhost:8080), you can view the critical infrastructure if you open the map-layers 'Chain flood', 'Chain power' and 'Chain care'. [COPPER](#copper-chain)
 
-As the scenario will publish an update every hour, you'll either need to wait an hour to see the first update, or increase the simulation time speed. This can be done by the fast-forwarding buttons in the top right of the TMT-interface. 
+As the scenario will publish an update every hour, you'll either need to wait an hour to see the first update, or increase the simulation time speed. This can be done by the fast-forwarding buttons in the top right of the TMT-interface.
+
+#### E-mail service
+The chain effect simulator will also notify the trial owner by sending an e-mail when a power station update is recalculated. This e-mail will be sent to 'admin@driver.eu'. To view these emails, go to the [email-service](http://localhost:4200). There you'll find a list of e-mail accounts.
+
+![image6](https://user-images.githubusercontent.com/11523459/67963146-6b2eb980-fbfe-11e9-942f-ca2539e92877.png). 
+
+Login to the 'admin@driver.eu' account with password 'default', to view the emails from the chain effect simulator.
+
+![image8](https://user-images.githubusercontent.com/11523459/67963550-13dd1900-fbff-11e9-894b-fdbe7cdf9834.png)
+![image9](https://user-images.githubusercontent.com/11523459/67963654-3f600380-fbff-11e9-9f32-5d120bb48421.png)
 
 #### SUMO traffic simulator
 Another simulator included in this composition, is DLR's [SUMO](https://sumo.dlr.de/index.html) traffic simulator. In order to use it, open both the [COPPER-tool](http://localhost:8080) and the [TMT](http://localhost:3210). In COPPER, enable the map layers in the group 'simulation' (Unit transport request, unit update, and Affected area). Then start the trial in the TMT, if you hadn't already done so in the previous step. 
 ![image4](https://user-images.githubusercontent.com/11523459/67871172-3a804e80-fb30-11e9-85bd-d73c6c9dde41.png)
 Most of the scenario will run automatically, however the Traffic storyline requires a manual intervention. Click on the red 'Traffic' storyline and subsequently on 'Click here when ready'. This will send an initialization to SUMO. Then repeat these steps for 'Send vehicle1 to accident_site'.
-![image](https://user-images.githubusercontent.com/11523459/67871443-a82c7a80-fb30-11e9-86f2-852262db32bb.png)
+![image7](https://user-images.githubusercontent.com/11523459/67871443-a82c7a80-fb30-11e9-86f2-852262db32bb.png)
 
 If you now go to COPPER, it should display the route, Affected Area and the driving vehicle1.
 ![image5](https://user-images.githubusercontent.com/11523459/67871781-2f79ee00-fb31-11e9-87da-2fd48898bde1.png)
@@ -77,4 +88,4 @@ Open a browser window with the [Trial Management Tool (TMT)](http://localhost:32
 ![coppert3](https://user-images.githubusercontent.com/11523459/57529350-fd7f9000-7334-11e9-82de-c413833e1b0e.jpg)
 
 ### Copper chain
-![image](https://user-images.githubusercontent.com/11523459/67581546-79855d00-f748-11e9-93bf-1a064a007f43.png)
+![coppert4](https://user-images.githubusercontent.com/11523459/67581546-79855d00-f748-11e9-93bf-1a064a007f43.png)
