@@ -33,7 +33,7 @@ services:
     volumes:
       - etcletsencrypt:/etc/letsencrypt
       - varletsencrypt:/var/lib/letsencrypt
-      - homepagestaticfiles:/var/www/html
+      - homepagestaticfiles:/usr/local/apache2/htdocs
     ports:
       # http 80 is required for the Letsencrypt challenge
       - "80:80"
