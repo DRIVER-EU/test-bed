@@ -30,6 +30,8 @@ $ portainer-cli --debug login <username> <password>
 $ portainer-cli --debug create_stack --stack-name tb6-core --endpoint-id 1 --stack-file docker-compose.yml --env-file .env
 ```
 
+Change restart policy for homepage and letsencryptstore services on the Portainer admin interface to prevent restart (nothing to execute, they just provide files for volumes).
+
 ### Re-deploy 
 If you need to re-deploy, get the ID of the previously deployed stack:
 
