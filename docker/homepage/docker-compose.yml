@@ -20,7 +20,7 @@ services:
     #  - certs:/usr/src/app/certs
       - homepagestaticfiles:/usr/src/app/public
     # Do not start the proxy.js from  as we are using the proxy service (Apache) instead
-    command: sh
+    command: "true"
 
   # HTTPS/WSS reverse-proxy based on Apache HTTP server
   proxy:
