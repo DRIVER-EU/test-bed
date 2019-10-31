@@ -16,7 +16,13 @@ $ pip3 install dist/portainer-cli-0.3.0.tar.gz
 By default, the `portainer-cli` command will be installed in `~/.local/bin`, so make sure it's included in your `PATH` shell environment variable.
 
 ## Deploy the stack
-Make sure the `.env` file passed to `--env-file` arg is formatted as a Docker .env file with all the Docker environment variables, esp. **BROKER_SECRETS_ZIP_URL**.
+Create a `.env` file (if you don't have it already) from `.env.sample` in this folder. 
+
+```
+$ cp .env.sample .env
+```
+
+Remember to define **BROKER_SECRETS_ZIP_URL** (Take the value from the Portainer manager.)
 
 ```
 $ portainer-cli --debug configure https://<driver_portainer_hostname>:<port>/

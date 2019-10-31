@@ -225,11 +225,19 @@ services:
     volumes:
       - trial-data:/app/trials    
       
+  large_file_service:
+    image: drivereu/large-file-service:latest
+    # ports:
+    #   - '9090:9090'
+    environment:
+      HOST: localhost
+      PORT: 9090
+
   homepage:
     image: drivereu/homepage
     environment:
       hostname: tb6.driver-testbed.eu
-      title: Test-bed Final Demo
+      title: ${TESTBED_TITLE} 
       # ssl: 'False'
       homepage: homepage:3050
       admin: admintool:8090
@@ -247,8 +255,7 @@ services:
   
   # HTTPS/WSS reverse-proxy based on Apache HTTP server
   proxy:
-    build: proxy
-    image: drivereu/apache2-letsencrypt-proxy:1.1.0
+    image: drivereu/apache2-letsencrypt-proxy:1.1.2
     depends_on: 
       - letsencryptstore
       - homepage 
@@ -284,7 +291,7 @@ services:
       OIDC_CLIENT_SECRET: ${OIDC_CLIENT_SECRET}
 
       # Define the backend URL where to proxy HTTPS requests on port 8443 (in which case you must EXPOSE PORT 8443 above), e.g. Keycloak URL ("http://${HOST}:8080/"); or leave undefined/empty if not required
-      BACKEND_URL_VIA_8443: ${BACKEND_URL_VIA_8443}
+      # BACKEND_URL_VIA_8443: ${BACKEND_URL_VIA_8443}
     
       TESTBED_TITLE: ${TESTBED_TITLE} 
       ADMINTOOL_HOST_PORT: admintool:8090
@@ -303,13 +310,6 @@ services:
       - etcletsencrypt:/etc/letsencrypt
       - varletsencrypt:/var/lib/letsencrypt  
 
-  large_file_service:
-    image: drivereu/large-file-service:latest
-    # ports:
-    #   - '9090:9090'
-    environment:
-      HOST: localhost
-      PORT: 9090
 
 volumes:
   postgres-data:
