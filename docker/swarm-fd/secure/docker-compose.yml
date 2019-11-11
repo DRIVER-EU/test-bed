@@ -236,7 +236,7 @@ services:
   homepage:
     image: drivereu/homepage
     environment:
-      hostname: tb6.driver-testbed.eu
+      hostname: ${TESTBED_HOST}
       title: ${TESTBED_TITLE} 
       # ssl: 'False'
       homepage: homepage:3050
@@ -251,14 +251,17 @@ services:
     #  - certs:/usr/src/app/certs
       - homepagestaticfiles:/usr/src/app/public
     # Do not start the proxy.js as we are using the proxy service (Apache) instead
-    command: "true"
+    command: sh -c "true"
+    deploy:
+      restart_policy:
+        condition: none
   
   # HTTPS/WSS reverse-proxy based on Apache HTTP server
   proxy:
-    image: drivereu/apache2-letsencrypt-proxy:1.1.2
+    image: drivereu/apache2-letsencrypt-proxy:1.2.1
     depends_on: 
       - letsencryptstore
-      - homepage 
+      - homepage
     # restart: always
     volumes:
       - etcletsencrypt:/etc/letsencrypt
@@ -272,6 +275,7 @@ services:
       # - "8443:8443"
     environment:
       # See .env.sample for examples
+      HTTPD_LOG_LEVEL: ${HTTPD_LOG_LEVEL}
 
       # SSL settings
       # Whitespace-separated list of domain names to set Apache's ServerName/ServerAlias to. If Letsencrypt usage enabled, a certificate for all those domains is requested from letsencrypt.org.
@@ -289,6 +293,7 @@ services:
       OIDC_VALIDATE_PROVIDER_CERT: ${OIDC_VALIDATE_PROVIDER_CERT}
       OIDC_CLIENT_ID: ${OIDC_CLIENT_ID}
       OIDC_CLIENT_SECRET: ${OIDC_CLIENT_SECRET}
+      OIDC_USER_INFO_REFRESH_INTERVAL_SEC: ${OIDC_USER_INFO_REFRESH_INTERVAL_SEC}
 
       # Define the backend URL where to proxy HTTPS requests on port 8443 (in which case you must EXPOSE PORT 8443 above), e.g. Keycloak URL ("http://${HOST}:8080/"); or leave undefined/empty if not required
       # BACKEND_URL_VIA_8443: ${BACKEND_URL_VIA_8443}
@@ -308,7 +313,10 @@ services:
     image: busybox
     volumes:
       - etcletsencrypt:/etc/letsencrypt
-      - varletsencrypt:/var/lib/letsencrypt  
+      - varletsencrypt:/var/lib/letsencrypt
+    deploy:
+      restart_policy:
+        condition: none
 
 
 volumes:
