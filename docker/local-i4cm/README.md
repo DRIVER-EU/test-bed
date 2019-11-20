@@ -50,8 +50,12 @@ It will also start a scenario of the chain-effect simulator. When you open the [
 As the scenario will publish an update every hour, you'll either need to wait an hour to see the first update, or increase the simulation time speed. This can be done by the fast-forwarding buttons in the top right of the TMT-interface.
 
 #### E-mail service
-The chain effect simulator will also notify the trial owner by sending an e-mail when a power station update is recalculated. This e-mail will be sent to 'admin@driver.eu'. To view these emails, go to the [email-service](http://localhost:4200). There you'll find an overview of a list of e-mail accounts. 
-![image6](https://user-images.githubusercontent.com/11523459/67963146-6b2eb980-fbfe-11e9-942f-ca2539e92877.png). Login to the 'admin@driver.eu' account with password 'default', to view the emails from the chain effect simulator.
+The chain effect simulator will also notify the trial owner by sending an e-mail when a power station update is recalculated. This e-mail will be sent to 'admin@driver.eu'. To view these emails, go to the [email-service](http://localhost:4200). There you'll find a list of e-mail accounts.
+
+![image6](https://user-images.githubusercontent.com/11523459/67963146-6b2eb980-fbfe-11e9-942f-ca2539e92877.png). 
+
+Login to the 'admin@driver.eu' account with password 'default', to view the emails from the chain effect simulator.
+
 ![image8](https://user-images.githubusercontent.com/11523459/67963550-13dd1900-fbff-11e9-894b-fdbe7cdf9834.png)
 ![image9](https://user-images.githubusercontent.com/11523459/67963654-3f600380-fbff-11e9-9f32-5d120bb48421.png)
 
