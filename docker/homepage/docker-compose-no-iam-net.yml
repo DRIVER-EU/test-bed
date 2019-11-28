@@ -260,7 +260,7 @@ services:
   # HTTPS/WSS reverse-proxy based on Apache HTTP server
   proxy:
     build: proxy
-    image: drivereu/apache2-letsencrypt-proxy:1.0.0
+    image: drivereu/apache2-letsencrypt-proxy:1.3.0-SNAPSHOT
     depends_on: 
       - letsencryptstore
       - homepage 
