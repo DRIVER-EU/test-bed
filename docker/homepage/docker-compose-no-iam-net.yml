@@ -302,6 +302,7 @@ services:
       TIME_SERVICE_HOST_PORT: time_service:8100
       SCHEMA_REGISTRY_UI_HOST_PORT: kafka_schema_registry_ui:8000
       TOPICS_UI_HOST_PORT: kafka_topics_ui:8000
+      OST_WEB_HOST_PORT: ${OST_WEB_HOST_PORT}
 
     networks:
       - testbed
