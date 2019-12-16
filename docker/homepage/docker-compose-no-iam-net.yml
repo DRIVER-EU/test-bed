@@ -260,7 +260,7 @@ services:
   # HTTPS/WSS reverse-proxy based on Apache HTTP server
   proxy:
     build: proxy
-    image: drivereu/apache2-letsencrypt-proxy:1.0.0
+    image: drivereu/apache2-letsencrypt-proxy:1.3.0-SNAPSHOT
     depends_on: 
       - letsencryptstore
       - homepage 
@@ -302,6 +302,7 @@ services:
       TIME_SERVICE_HOST_PORT: time_service:8100
       SCHEMA_REGISTRY_UI_HOST_PORT: kafka_schema_registry_ui:8000
       TOPICS_UI_HOST_PORT: kafka_topics_ui:8000
+      OST_WEB_HOST_PORT: ${OST_WEB_HOST_PORT}
 
     networks:
       - testbed
