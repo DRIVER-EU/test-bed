@@ -25,7 +25,7 @@ services:
   # HTTPS/WSS reverse-proxy based on Apache HTTP server
   proxy:
     build: proxy
-    image: drivereu/apache2-letsencrypt-proxy:1.2.1
+    image: drivereu/apache2-letsencrypt-proxy:1.2.2
     depends_on: 
       - letsencryptstore
       - homepage 
