@@ -33,6 +33,11 @@ fi
 # OpenID Connect setting(s)
 export OIDC_CRYPTO_PASS=$(uuidgen)
 
+# Enable OIDC-based access control (authn/authz) iff OIDC_PROVIDER_METADATA_URL variable defined (non-empty)
+if [[ "x${OIDC_PROVIDER_METADATA_URL}" != "x" ]]; then
+    HTTPD_OPTS="-DAccessControl"
+fi
+
 # Generating the JSON file returned on /services path (see vhost-443.conf for the URL-to-file mapping )
 cat > /usr/local/apache2/htdocs/services.json <<EOF
     {
@@ -63,5 +68,5 @@ EOF
 #fi
 
 # Launching Apache HTTP server
-httpd-foreground
+httpd-foreground ${HTTPD_OPTS}
 

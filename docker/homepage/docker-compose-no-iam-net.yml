@@ -268,7 +268,7 @@ services:
     volumes:
       - etcletsencrypt:/etc/letsencrypt
       - varletsencrypt:/var/lib/letsencrypt
-      - homepagestaticfiles:/var/www/html
+      - homepagestaticfiles:/usr/local/apache2/htdocs
     ports:
       # http 80 is required for the Letsencrypt challenge
       - "80:80"
@@ -277,10 +277,17 @@ services:
       - "8443:8443"
     environment:
       # See .env.sample for examples
+      HTTPD_LOG_LEVEL: ${HTTPD_LOG_LEVEL}
+
+      # SSL settings
+      # Whitespace-separated list of domain names to set Apache's ServerName/ServerAlias to. If Letsencrypt usage enabled, a certificate for all those domains is requested from letsencrypt.org.
+      DOMAIN_NAMES: ${TESTBED_HOST} 
       # Certificates from letsencrypt.org are used unless this variable value is left empty or undefined; in which case the key and certificate in 'proxy' folder are used (for development/testing only!)
       LETS_ENCRYPT_EMAIL: ${LETS_ENCRYPT_EMAIL}
       # Optional arguments passed to cerbot tool to request certificate from letsencrypt.org, e.g. '--test-cert' to use the staging environment instead of default Production environment which is rate-limited, therefore not recommended for development/testing.
       LETS_ENCRYPT_CERTBOT_FLAGS: ${LETS_ENCRYPT_CERTBOT_FLAGS}
+      # Apache SSLUseStapling On|Off
+      SSL_USE_STAPLING: ${SSL_USE_STAPLING}
 
       # Define the backend URL where to proxy HTTPS requests on port 8443 (in which case you must EXPOSE PORT 8443 above), e.g. Keycloak URL ("http://${HOST}:8080/"); or leave undefined/empty if not required
       BACKEND_URL_VIA_8443: ${BACKEND_URL_VIA_8443}
@@ -291,9 +298,11 @@ services:
       OIDC_VALIDATE_PROVIDER_CERT: ${OIDC_VALIDATE_PROVIDER_CERT}
       OIDC_CLIENT_ID: ${OIDC_CLIENT_ID}
       OIDC_CLIENT_SECRET: ${OIDC_CLIENT_SECRET}  
+      OIDC_USER_INFO_REFRESH_INTERVAL_SEC: ${OIDC_USER_INFO_REFRESH_INTERVAL_SEC}
     
-      # Whitespace-separated list of domain names to set Apache's ServerName/ServerAlias to. If Letsencrypt usage enabled, a certificate for all those domains is requested from letsencrypt.org.
-      DOMAIN_NAMES: ${DOMAIN_NAMES} 
+      # Define the backend URL where to proxy HTTPS requests on port 8443 (in which case you must EXPOSE PORT 8443 above), e.g. Keycloak URL ("http://${HOST}:8080/"); or leave undefined/empty if not required
+      #BACKEND_URL_VIA_8443: ${BACKEND_URL_VIA_8443}
+
       TESTBED_TITLE: ${TESTBED_TITLE} 
       ADMINTOOL_HOST_PORT: admintool:8090
       TMT_HOST_PORT: trial_management_tool:3210
