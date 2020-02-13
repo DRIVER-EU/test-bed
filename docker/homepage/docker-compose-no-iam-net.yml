@@ -269,6 +269,7 @@ services:
       - etcletsencrypt:/etc/letsencrypt
       - varletsencrypt:/var/lib/letsencrypt
       - homepagestaticfiles:/usr/local/apache2/htdocs
+      - ./proxy/httpd-ssl.conf:/usr/local/apache2/conf/extra/httpd-ssl.conf
     ports:
       # http 80 is required for the Letsencrypt challenge
       - "80:80"

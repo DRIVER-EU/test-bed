@@ -34,6 +34,7 @@ services:
       - etcletsencrypt:/etc/letsencrypt
       - varletsencrypt:/var/lib/letsencrypt
       - homepagestaticfiles:/usr/local/apache2/htdocs
+      - ./proxy/httpd-ssl.conf:/usr/local/apache2/conf/extra/httpd-ssl.conf
     ports:
       # http 80 is required for the Letsencrypt challenge
       - "80:80"
@@ -53,6 +54,9 @@ services:
       LETS_ENCRYPT_CERTBOT_FLAGS: ${LETS_ENCRYPT_CERTBOT_FLAGS}
       # Apache SSLUseStapling On|Off
       SSL_USE_STAPLING: ${SSL_USE_STAPLING}
+
+      # Define the backend URL where to proxy HTTPS requests on port 8443 (in which case you must EXPOSE PORT 8443 above), e.g. Keycloak URL ("http://${HOST}:8080/"); or leave undefined/empty if not required
+      # BACKEND_URL_VIA_8443: ${BACKEND_URL_VIA_8443}
 
       # OpenID Connect client settings
       OIDC_PROVIDER_METADATA_URL: ${OIDC_PROVIDER_METADATA_URL}
