@@ -31,7 +31,7 @@ If you want to test locally without (OpenID Connect) authentication/authorizatio
 1. With your local browser (tested with Chrome), go to: https://driver-testbed.localdomain/
 You should get a security warning because it is using a self-signed certificate, just for testing.
 
-# Adding new application
+# Adding access control for new applications
 If you want to add a new application behind the proxy, you need to know this app's base URL when running in the backend, and the public URL path on which you want to expose it on proxy, i.e. which path on the proxy it will be mapped to. Let's assume for example that this path is `/mynewapp/` and the backend URL is `http://mynewapp.example.com:8080/` and the required roles to access this app is `mynewapp_user` as defined in Keycloak (OIDC Provider) realm roles, then what you need to do is to insert these lines before the last in [proxy/httpd-ssl.conf](proxy/httpd-ssl.conf):
 
 ```
