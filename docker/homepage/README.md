@@ -44,7 +44,8 @@ If you want to add a new application behind the proxy, you need to know this app
   ProxyPass "http://mynewapp.example.com:8080/"
 </Location>
 ```
-*The directives in the IfDefine section apply if and only if Access Control is enabled, i.e. if `OIDC_PROVIDER_METADATA_URL` is defined. Besides if you want finer-grained authorization, please refer to `mod_authz_core` [documentation](https://httpd.apache.org/docs/2.4/mod/mod_authz_core.html). *
+
+*The directives in the IfDefine section apply if and only if Access Control is enabled, i.e. if `OIDC_PROVIDER_METADATA_URL` is defined. Besides if you want finer-grained authorization, please refer to `mod_authz_core` [documentation](https://httpd.apache.org/docs/2.4/mod/mod_authz_core.html).*
 
 Then restart the container, e.g. with:
 
