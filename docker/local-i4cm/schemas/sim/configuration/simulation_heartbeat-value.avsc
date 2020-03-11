@@ -1,7 +1,7 @@
 {
   "type": "record",
   "name": "Heartbeat",
-  "namespace": "eu.driver.model.core",
+  "namespace": "eu.driver.model.sim.config",
   "doc": "A heartbeat message is used to derive the state of responsiveness of a connected application",
   "fields": [
     {
