@@ -12,7 +12,7 @@ docker-compose up -d
 If you want to test locally without (OpenID Connect) authentication/authorization, proceed as follows:
 
 1. Add the hostname `driver-testbed.localdomain` to your `/etc/hosts` file (or Windows equivalent) with a local IP address, e.g. 127.0.0.2, so that the hostname is resolved locally (but do not use `localhost` name, else the test is not realistic enough)
-1. Add the environment variables as follows 
+1. Add the environment variables as follows in your `.env` file:
     ```
     ...
     DOMAIN_NAMES=driver-testbed.localdomain
@@ -46,6 +46,17 @@ If you want to add a new application behind the proxy, you need to know this app
 ```
 
 *The directives in the IfDefine section apply if and only if Access Control is enabled, i.e. if `OIDC_PROVIDER_METADATA_URL` is defined. Besides if you want finer-grained authorization, please refer to `mod_authz_core` [documentation](https://httpd.apache.org/docs/2.4/mod/mod_authz_core.html).*
+
+Then set the OIDC environment variables as follows in your `.env` file:
+```
+# This is given as example but the actual valid URL is provided by test-bed staff
+OIDC_PROVIDER_METADATA_URL=https://keycloak.example.net/auth/realms/Testrealm/.well-known/openid-configuration
+...
+OIDC_CLIENT_ID=proxy_443
+
+# This is given as example but the actual Client Secret is provided by test-bed staff. If you are member of the test-bed staff, you can find it in Keycloak admin console for the realm, then Clients > proxy_443 > Credentials tab
+OIDC_CLIENT_SECRET=8e08b628-205c-4573-a4a0-00ebf4c3a929
+```
 
 Then restart the container, e.g. with:
 
