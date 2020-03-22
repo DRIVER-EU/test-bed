@@ -206,7 +206,7 @@ services:
       - trial-data:/app/trials
 
   silent-producer:
-    image: drivereu/silent-producer:v2.0.1
+    image: drivereu/silent-producer:v2.0.4
     depends_on:
       - broker
       - schema_registry
