@@ -1,0 +1,45 @@
+---
+version: '3'
+services: 
+  ost_db:
+    hostname: ost_db
+    image: janbalbierzitti/ost_database:latest
+    ports:
+    - "5437:5432"
+    volumes:
+    - database-OST:/var/lib/postgresql/${DB_NAME}/data
+    networks:
+      - testbed-net
+    restart: unless-stopped
+
+  ost_web:
+    hostname: ost_web
+    image: janbalbierzitti/ost_frontend:latest
+    links:
+    - ost_api
+    ports:
+    - "80:80"
+    - "443:443"
+    networks:
+      - testbed-net
+
+  ost_api:
+    hostname: ost_api
+    image: janbalbierzitti/ost_backend:latest
+    links:
+    - ost_db
+    ports:
+    - "8080:8080"
+    networks:
+      - testbed-net
+    environment:
+      CATALINA_OPTS: "-DKAFKA_BROKER_URL=localhost:3501 -DSCHEMA_REGISTRY_URL=http://localhost:3502"
+
+networks:
+  traefik-net:
+    external: true
+  testbed-net:
+    driver: overlay
+    
+volumes:
+  database-OST:
