@@ -3,7 +3,7 @@ version: '3'
 services: 
   ost_db:
     hostname: ost_db
-    image: janbalbierzitti/ost_database:latest
+    image: janbalbierzitti/ost_database:20200318
     ports:
     - "5437:5432"
     volumes:
@@ -14,7 +14,7 @@ services:
 
   ost_web:
     hostname: ost_web
-    image: janbalbierzitti/ost_frontend:latest
+    image: janbalbierzitti/ost_frontend:20200318
     links:
     - ost_api
     ports:
@@ -25,7 +25,7 @@ services:
 
   ost_api:
     hostname: ost_api
-    image: janbalbierzitti/ost_backend:latest
+    image: janbalbierzitti/ost_backend:20200318
     links:
     - ost_db
     ports:
