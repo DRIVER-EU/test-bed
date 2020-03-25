@@ -145,7 +145,8 @@ services:
   #   restart: unless-stopped
 
   time_service:
-    image: drivereu/test-bed-time-service:latest
+    # image: test-bed-time-service:latest
+    image: drivereu/test-bed-time-service:v2.0.7
     depends_on:
       - broker
       - schema_registry
@@ -206,7 +207,7 @@ services:
       - trial-data:/app/trials
 
   silent-producer:
-    image: drivereu/silent-producer:v2.0.4
+    image: drivereu/silent-producer:v2.0.7
     depends_on:
       - broker
       - schema_registry
