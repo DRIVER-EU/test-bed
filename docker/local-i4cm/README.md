@@ -22,7 +22,7 @@ Once the test-bed is up-and-running using the instructions above, let's get star
 | Kafka topics UI | 3600 | http://localhost:3600 |
 | Kafka schema registry and UI | 3601 | http://localhost:3601 |
 | Postgres & PGAdmin | - | http://localhost:5050 |
-| Time service | 8100 | http://localhost:8100/time-service |
+| Time service | 8100 | http://localhost:8100 |
 | Admin tool | 8090 | http://localhost:8090 |
 | After Action Review tool | 8095 | http://localhost:8095 |
 | Trial-Management-Tool | 3210 | http://localhost:3210 |

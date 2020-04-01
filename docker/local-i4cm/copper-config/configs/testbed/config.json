@@ -1,7 +1,7 @@
 {
   "enabled": true,
   "topics": [
-    { "id": "simulation_request_transport", "type": "request-unittransport", "title": "request-unittransport", "offset": 0 },
+    { "id": "simulation_request_move", "type": "request-unittransport", "title": "request-unittransport", "offset": 0 },
     { "id": "simulation_request_startinject", "type": "request-startinject", "title": "request-startinject", "offset": 0 },
     { "id": "simulation_entity_item", "type": "entity-item", "title": "entity-item", "offset": 0 },
     { "id": "simulation_affected_area", "type": "affected-area", "title": "affected-area", "offset": 0 },
@@ -16,7 +16,7 @@
     {"id": "lcms_plots", "type": "geojson", "title": "lcms-plots", "offset": 0},
     {"id": "flood_actual", "type": "geojson-external", "tags": ["flooding"], "title": "flood actual"}
   ],
-  "produce": ["system_logging", "system_timing", "system_topic_access_invite"],
+  "produce": ["system_logging", "simulation_time_mgmt", "system_topic_access_invite"],
   "clientId": "ConsumerCOP3",
   "fromOffset": false,
   "autoRegisterSchemas": false,
