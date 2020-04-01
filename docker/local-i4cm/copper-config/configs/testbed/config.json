@@ -5,10 +5,10 @@
     { "id": "simulation_request_startinject", "type": "request-startinject", "title": "request-startinject", "offset": 0 },
     { "id": "simulation_entity_item", "type": "entity-item", "title": "entity-item", "offset": 0 },
     { "id": "simulation_affected_area", "type": "affected-area", "title": "affected-area", "offset": 0 },
-    { "id": "chain", "type": "geojson-data", "tags": ["chain"], "title": "chain", "offset": 0},
-    { "id": "chain_power", "type": "geojson-data", "tags": ["chain"], "title": "chain_power", "offset": 0},
-    { "id": "chain_care", "type": "geojson-data", "tags": ["chain"], "title": "chain_care", "offset": 0},
-    { "id": "chain_flood", "type": "geojson-data", "tags": ["chain"], "title": "chain_flood", "offset": 0},
+    { "id": "simulation_chain", "type": "geojson-data", "tags": ["chain"], "title": "chain", "offset": 0},
+    { "id": "simulation_chain_power", "type": "geojson-data", "tags": ["chain"], "title": "simulation_chain_power", "offset": 0},
+    { "id": "simulation_chain_care", "type": "geojson-data", "tags": ["chain"], "title": "simulation_chain_care", "offset": 0},
+    { "id": "simulation_chain_flood", "type": "geojson-data", "tags": ["chain"], "title": "simulation_chain_flood", "offset": 0},
     { "id": "standard_cap", "type": "cap", "title": "lcms-cap", "offset": 0}
   ],
   "oldtopics": [

@@ -145,19 +145,19 @@
       "visible": true
     },
     {
-      "id": "chain_flood",
+      "id": "simulation_chain_flood",
       "sourceType": "geojson",
       "version": "0.0.1",
       "color": "lightgray",
       "isLive": true,
       "tags": [
-        "chain"
+        "Chain effect simulator"
       ],
       "isEditable": false,
       "tileSupport": false,
-      "source": "chain_flood.json",
+      "source": "simulation_chain_flood.json",
       "title": "Chain flood",
-      "sourceUrl": "http://localhost:4000/sources/chain_flood",
+      "sourceUrl": "http://localhost:4000/sources/simulation_chain_flood",
       "style": {
         "types": [],
         "pointCircle": true,
@@ -175,11 +175,11 @@
       }
     },
     {
-      "id": "chain_power",
-      "source": "chain_power.json",
+      "id": "simulation_chain_power",
+      "source": "simulation_chain_power.json",
       "sourceType": "geojson",
-      "title": "Chain_power effects",
-      "sourceUrl": "http://localhost:4000/sources/chain_power",
+      "title": "simulation_chain_power effects",
+      "sourceUrl": "http://localhost:4000/sources/simulation_chain_power",
       "version": "0.0.1",
       "isLive": true,
       "style": {
@@ -221,10 +221,10 @@
       },
       "color": "lightgray",
       "tags": [
-        "chain"
+        "Chain effect simulator"
       ],
-      "description": "chain_power",
-      "meta": "chain_power.meta.json"
+      "description": "simulation_chain_power",
+      "meta": "simulation_chain_power.meta.json"
     },
     {
       "id": "lcms-geojson",
@@ -321,11 +321,11 @@
       "meta": "drawing.meta.json"
     },
     {
-      "id": "chain",
-      "source": "chain.json",
+      "id": "simulation_chain",
+      "source": "simulation_chain.json",
       "sourceType": "geojson",
       "title": "Chain effects",
-      "sourceUrl": "http://localhost:4000/sources/chain",
+      "sourceUrl": "http://localhost:4000/sources/simulation_chain",
       "version": "0.0.1",
       "isLive": true,
       "style": {
@@ -334,8 +334,8 @@
       },
       "color": "lightgray",
       "tags": [],
-      "description": "chain",
-      "meta": "chain.meta.json"
+      "description": "simulation_chain",
+      "meta": "simulation_chain.meta.json"
     },
     {
       "id": "ambassades",
@@ -1207,17 +1207,17 @@
       "externalUrl": "https://geoservice.dlr.de/eoc/zki/service/driver/wms"
     },
     {
-      "id": "chain_care",
+      "id": "simulation_chain_care",
       "sourceType": "geojson",
       "version": "0.0.1",
       "color": "lightgray",
       "isLive": true,
       "tags": [
-        "chain"
+        "Chain effect simulator"
       ],
-      "source": "chain_care.json",
-      "title": "Chain_care effects",
-      "sourceUrl": "http://localhost:4000/sources/chain_care",
+      "source": "simulation_chain_care.json",
+      "title": "simulation_chain_care effects",
+      "sourceUrl": "http://localhost:4000/sources/simulation_chain_care",
       "style": {
         "types": [
           "point"
@@ -1255,7 +1255,25 @@
           }
         }
       },
-      "meta": "chain_care.meta.json"
+      "meta": "simulation_chain_care.meta.json"
+    },
+    {
+      "id": "Search Layer",
+      "sourceType": "geojson",
+      "version": "0.0.1",
+      "color": "gray",
+      "isLive": false,
+      "tags": [],
+      "isEditable": false,
+      "tileSupport": false,
+      "title": "Search Layer",
+      "source": "people.json",
+      "types": [
+        "point"
+      ],
+      "description": "",
+      "sourceUrl": "http://localhost:4000/sources/Search Layer",
+      "style": {}
     }
   ],
   "sourcePath": "./sources/",
