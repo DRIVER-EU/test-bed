@@ -145,7 +145,8 @@ services:
   #   restart: unless-stopped
 
   time_service:
-    image: drivereu/test-bed-time-service:latest
+    # image: test-bed-time-service:latest
+    image: drivereu/test-bed-time-service:2.0.8
     depends_on:
       - broker
       - schema_registry
@@ -186,7 +187,8 @@ services:
       - schema_registry
 
   trial_management_tool:
-    image: drivereu/trial-management-tool:latest
+    # image: trial-management-tool
+    image: drivereu/trial-management-tool:2.0.8
     depends_on:
       - broker
       - schema_registry
@@ -197,7 +199,7 @@ services:
       KAFKA_HOST: broker:9092
       SCHEMA_REGISTRY: http://schema_registry:3502
       TRIAL_MANAGER_SERVER_PORT: 3210
-      PRODUCE: system_request_change_of_trial_stage,system_tm_phase_message,system_tm_role_player,system_tm_session_mgmt,standard_cap,simulation_request_startinject,sumo_AffectedArea,simulation_request_unittransport,sumo_SumoConfiguration,simulation_entity_post
+      PRODUCE: system_request_change_of_trial_stage,system_tm_phase_message,system_tm_role_player,simulation_session_mgmt,standard_cap,simulation_request_startinject,simulation_affected_area,simulation_request_move,simulation_sumo_configuration,simulation_entity_post
       SSL: "false"
       SSL_PFX: certs/TB-TrialMgmt.p12
       SSL_PASSPHRASE: changeit
@@ -206,7 +208,7 @@ services:
       - trial-data:/app/trials
 
   silent-producer:
-    image: drivereu/silent-producer:v2.0.4
+    image: drivereu/silent-producer:2.0.8
     depends_on:
       - broker
       - schema_registry

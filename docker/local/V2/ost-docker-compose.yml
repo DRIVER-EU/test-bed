@@ -1,35 +1,35 @@
 ---
-version: '3'
-services: 
+version: "3"
+services:
   ost_db:
     hostname: ost_db
-    image: janbalbierzitti/ost_database:20200318
+    image: drivereu/ost_database:20200325
     ports:
-    - "5437:5432"
+      - "5437:5432"
     volumes:
-    - database-OST:/var/lib/postgresql/${DB_NAME}/data
+      - database-OST:/var/lib/postgresql/${DB_NAME}/data
     networks:
       - testbed-net
     restart: unless-stopped
 
   ost_web:
     hostname: ost_web
-    image: janbalbierzitti/ost_frontend:20200318
+    image: drivereu/ost_frontend:20200325
     links:
-    - ost_api
+      - ost_api
     ports:
-    - "80:80"
-    - "443:443"
+      - "80:80"
+      - "443:443"
     networks:
       - testbed-net
 
   ost_api:
     hostname: ost_api
-    image: janbalbierzitti/ost_backend:20200318
+    image: drivereu/ost_backend:20200325
     links:
-    - ost_db
+      - ost_db
     ports:
-    - "8080:8080"
+      - "8080:8080"
     networks:
       - testbed-net
     environment:
@@ -40,6 +40,6 @@ networks:
     external: true
   testbed-net:
     driver: overlay
-    
+
 volumes:
   database-OST:

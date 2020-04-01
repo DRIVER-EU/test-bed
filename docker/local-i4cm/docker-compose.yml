@@ -145,7 +145,7 @@ services:
     restart: unless-stopped
 
   time_service:
-    image: drivereu/test-bed-time-service:latest
+    image: drivereu/test-bed-time-service:v2.0.8
     depends_on:
       - broker
       - schema_registry
@@ -187,7 +187,7 @@ services:
   #     - schema_registry
 
   lcms_connector:
-    image: drivereu/lcms-connector:1.0.5
+    image: drivereu/lcms-test-bed-connector:latest
     hostname: lcms_connector
     environment:
       KAFKA_BROKER_URL: broker:9092
@@ -200,6 +200,11 @@ services:
       LCMS_CONNECTOR_EXCERCISE: 'DRIVEREU'
       LCMS_CONNECTOR_USERNAME: '${LCMS_CONNECTOR_USERNAME}'
       LCMS_CONNECTOR_PASSWORD: '${LCMS_CONNECTOR_PASSWORD}'
+      LCMS_CONNECTOR_PROFILE: 'VR015'
+      LCMS_CONNECTOR_SERVER_ID: 'LCMS VR OEFEN'
+      LCMS_CONNECTOR_SERVER_ADDRESS: https://driverplus.oovapps.nl/api
+      LCMS_CONNECTOR_REFRESH_TIME_S: 30
+
     ports:
       - 8500:5000
     depends_on:
@@ -227,7 +232,7 @@ services:
       - trial-data:/app/trials
 
   copper_gui:
-    image: drivereu/copper-gui:0.0.5
+    image: drivereu/copper-gui:latest
     hostname: copper_gui
     ports:
       - 8080:8080
@@ -247,7 +252,7 @@ services:
       ]
 
   copper_server:
-    image: drivereu/copper-server:0.0.5
+    image: drivereu/copper-server:latest
     depends_on:
       - broker
       - schema_registry
@@ -267,20 +272,21 @@ services:
       - ./copper-config/configs:/configs
 
   silent-producer:
-    image: drivereu/silent-producer:0.0.1
+    image: drivereu/silent-producer:v2.0.8
     depends_on:
       - broker
       - schema_registry
     environment:
       KAFKA_HOST: broker:9092
       SCHEMA_REGISTRY: http://schema_registry:3502
-      PRODUCE_TOPICS: simulation_request_transport,simulation_request_startinject,simulation_entity_item,lcms_plots,simulation_affected_area,simulation_sumo_configuration,standard_cap,system_timing,system_topic_access_invite,chain_power,chain_care,chain_flood,chain,flood_prediction_geojson,flood_actual,simulation_entity_post
+      SCHEMA_FOLDER: /src/schemas
+      PRODUCE_TOPICS: simulation_request_move,simulation_request_startinject,simulation_entity_item,lcms_plots,simulation_affected_area,simulation_sumo_configuration,standard_cap,simulation_time_mgmt,system_topic_access_invite,chain_power,chain_care,chain_flood,chain,flood_prediction_geojson,flood_actual,simulation_entity_post
     restart: on-failure
     volumes:
       - ./schemas:/src/schemas
 
   chain-effect-simulator:
-    image: drivereu/chain-effect-simulator:1.0.1
+    image: drivereu/chain-effect-simulator:latest
     depends_on:
       - broker
       - schema_registry
@@ -296,7 +302,7 @@ services:
       - ./chainsim-config/config:/chainsim/dist/config
 
   sumo-connector:
-    image: drivereu/sumo-connector:1.0.0
+    image: drivereu/sumo-connector:latest
     depends_on:
       - broker
       - schema_registry

@@ -1,7 +1,121 @@
 {
   "featureTypes": {
     "main": {
-      "properties": {}
+      "properties": {
+        "OBJECTID": {
+          "title": "OBJECTID",
+          "description": "OBJECTID",
+          "type": "number",
+          "count": 1,
+          "unique": 1,
+          "options": [
+            1
+          ],
+          "legend": {}
+        },
+        "FUNCTIE": {
+          "title": "FUNCTIE",
+          "description": "FUNCTIE",
+          "type": "text",
+          "count": 1,
+          "unique": 1,
+          "options": [
+            "VM"
+          ]
+        },
+        "MONTAGEDATUM": {
+          "title": "MONTAGEDATUM",
+          "description": "MONTAGEDATUM",
+          "type": "number",
+          "count": 1,
+          "unique": 1,
+          "options": [
+            20080422
+          ],
+          "legend": {}
+        },
+        "STATUS": {
+          "title": "STATUS",
+          "description": "STATUS",
+          "type": "text",
+          "count": 1,
+          "unique": 1,
+          "options": [
+            "In Bedrijf"
+          ]
+        },
+        "SUBNETTYPE": {
+          "title": "SUBNETTYPE",
+          "description": "SUBNETTYPE",
+          "type": "text",
+          "count": 1,
+          "unique": 1,
+          "options": [
+            "Hoofdnet"
+          ]
+        },
+        "UITVOERING": {
+          "title": "UITVOERING",
+          "description": "UITVOERING",
+          "type": "text",
+          "count": 1,
+          "unique": 1,
+          "options": [
+            "Onbekend"
+          ]
+        },
+        "TEKST_BEHEERKAART": {
+          "title": "TEKST_BEHEERKAART",
+          "description": "TEKST_BEHEERKAART",
+          "type": "text",
+          "count": 1,
+          "unique": 1,
+          "options": [
+            "Onb"
+          ]
+        },
+        "SPLITS": {
+          "title": "SPLITS",
+          "description": "SPLITS",
+          "type": "text",
+          "count": 1,
+          "unique": 1,
+          "options": [
+            "NEE"
+          ]
+        },
+        "featureTypeId": {
+          "title": "featureTypeId",
+          "description": "featureTypeId",
+          "type": "text",
+          "count": 1,
+          "unique": 1,
+          "options": [
+            "powerstation_{state}"
+          ]
+        },
+        "Name": {
+          "title": "Name",
+          "description": "Name",
+          "type": "number",
+          "count": 1,
+          "unique": 1,
+          "options": [
+            461980369
+          ],
+          "legend": {}
+        },
+        "powerSupplyArea": {
+          "title": "powerSupplyArea",
+          "description": "powerSupplyArea",
+          "type": "longtext",
+          "count": 1,
+          "unique": 1,
+          "options": [
+            "{\"type\":\"Polygon\",\"coordinates\":[[[4.978734,52.51583],[4.978507,52.515557],[4.978092,52.515454],[4.977739,52.516911],[4.97857,52.516482],[4.978734,52.51583]]]}"
+          ]
+        }
+      }
     }
   }
 }
