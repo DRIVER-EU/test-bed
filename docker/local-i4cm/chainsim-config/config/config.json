@@ -13,19 +13,19 @@
   "schemaFolder": "./data/schemas",
   "consume": [
     {
-      "topic": "chain_scenario"
+      "topic": "simulation_chain_scenario"
     },
     {
-      "topic": "chain_power"
+      "topic": "simulation_chain_power"
     },
     {
-      "topic": "chain_flood"
+      "topic": "simulation_chain_flood"
     },
     {
-      "topic": "chain_care"
+      "topic": "simulation_chain_care"
     },
     {
-      "topic": "chain"
+      "topic": "simulation_chain"
     },
     {
       "topic": "simulation_time_mgmt"
@@ -37,5 +37,5 @@
       "topic": "simulation_entity_post"
     }
   ],
-  "produce": ["system_heartbeat", "chain_scenario", "chain", "chain_power", "chain_care", "chain_flood", "standard_cap", "simulation_entity_post"]
+  "produce": ["system_heartbeat", "simulation_chain_scenario", "simulation_chain", "simulation_chain_power", "simulation_chain_care", "simulation_chain_flood", "standard_cap", "simulation_entity_post"]
 }
