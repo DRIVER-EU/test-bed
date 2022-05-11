@@ -1,0 +1,86 @@
+{
+  "ui": [
+    {
+      "id": "messageType",
+      "value": "SEND_RSS_FEED",
+      "type": "none"
+    },
+    {
+      "id": "title",
+      "label": "Subject",
+      "icon": "title",
+      "type": "text"
+    },
+    {
+      "id": "description",
+      "label": "Description",
+      "icon": "note",
+      "type": "textarea"
+    },
+    {
+      "id": "message",
+      "label": " ",
+      "className": "col s12",
+      "type": [
+        {
+          "id": "SEND_RSS_FEED",
+          "label": " ",
+          "className": "col s12",
+          "type": [
+            {
+              "id": "id",
+              "type": "text",
+              "label": "Feed ID",
+              "disabled": true,
+              "autogenerate": "guid",
+              "className": "col s4"
+            },
+            {
+              "id": "sourceId",
+              "type": "text",
+              "label": "Source ID",
+              "className": "col s4"
+            },
+            {
+              "id": "language",
+              "type": "text",
+              "label": "Language (2 letter ISO code)",
+              "icon": "language",
+              "maxLength": 2,
+              "className": "col s4"
+            },
+            {
+              "id": "name",
+              "type": "text",
+              "label": "Name",
+              "className": "col s4"
+            },
+            {
+              "id": "type",
+              "type": "text",
+              "label": "Type",
+              "className": "col s4"
+            },
+            {
+              "id": "refresh",
+              "type": "text",
+              "label": "Refresh rate [seconds]",
+              "icon": "refresh",
+              "className": "col s4"
+            },
+            {
+              "id": "url",
+              "type": "text",
+              "label": "URL",
+              "icon": "link",
+              "className": "col s12"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "label": "Send RSS feed",
+  "icon": "rss_feed",
+  "topic": "feed_item_xx"
+}
