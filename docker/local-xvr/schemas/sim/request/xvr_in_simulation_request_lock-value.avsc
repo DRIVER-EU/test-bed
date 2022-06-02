@@ -1,0 +1,28 @@
+{
+  "name": "RequestLock",
+  "namespace": "eu.driver.model.sim.request",
+  "doc": "A lock request is a specific request for changing the locked status of a given simulation entity.",
+  "type": "record",
+  "fields": [
+    {
+      "name": "id",
+      "doc": "Unique case-insensitive identifier of the request",
+      "type": "string"
+    },
+    {
+      "name": "applicant",
+      "doc": "Unique case-insensitive identifier of the connected application sending the request",
+      "type": "string"
+    },
+    {
+      "name": "entity",
+      "doc": "Unique case-insensitive identifier of the targeted entity",
+      "type": "string"
+    },
+    {
+      "name": "locked",
+      "doc": "Boolean value directing the locked state of the targeted entity",
+      "type": "boolean"
+    }
+  ]
+}

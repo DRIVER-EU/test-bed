@@ -1,0 +1,33 @@
+{
+  "name": "RequestAnimation",
+  "namespace": "eu.driver.model.sim.request",
+  "doc": "An animation request is a specific request for changing the animation of a given simulation entity.",
+  "type": "record",
+  "fields": [
+    {
+      "name": "id",
+      "doc": "Unique case-insensitive identifier of the request",
+      "type": "string"
+    },
+    {
+      "name": "applicant",
+      "doc": "Unique case-insensitive identifier of the connected application sending the request",
+      "type": "string"
+    },
+    {
+      "name": "entity",
+      "doc": "Unique case-insensitive identifier of the targeted entity",
+      "type": "string"
+    },
+    {
+      "name": "upperAnimation",
+      "doc": "String based identifier of the upperbody animation being requested",
+      "type": "string"
+    },
+    {
+      "name": "lowerAnimation",
+      "doc": "String based identifier of the lowerbody animation being requested",
+      "type": "string"
+    }
+  ]
+}
