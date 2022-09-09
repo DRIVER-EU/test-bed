@@ -1,0 +1,30 @@
+{
+  "name": "RequestItemUpdate",
+  "namespace": "eu.driver.model.sim.request",
+  "doc": "An item update request can be used to trigger a full update for the state of relevant items. *Copyright (C) 2019-2020 XVR Simulation B.V., Delft, The Netherlands, Martijn Hendriks <hendriks @ xvrsim.com>. This file is licensed under the MIT license : https://github.com/DRIVER-EU/avro-schemas/blob/master/LICENSE*",
+  "type": "record",
+  "fields": [
+    {
+      "name": "id",
+      "doc": "Unique case-insensitive identifier of the request",
+      "type": "string"
+    },
+    {
+      "name": "applicant",
+      "doc": "Unique case-insensitive identifier of the connected application sending the request",
+      "type": "string"
+    },
+		{
+      "name": "tags",
+      "doc": "Optional map containing transport request specific information: key – unique name of the specific property; value – value of that property",
+      "type": [
+        "null",
+        {
+          "type": "map",
+          "values": "string"
+        }
+      ],
+      "default": null
+    }
+  ]
+}

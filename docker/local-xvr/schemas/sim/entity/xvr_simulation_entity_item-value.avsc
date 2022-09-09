@@ -148,6 +148,18 @@
       "type": ["null", "string"],
 			"default": null
     },
+		{
+      "name": "upperAnimation",
+      "doc": "Optional upperbody animation of the item. Only applies to people.",
+      "type": ["null", "string"],
+			"default": null
+    },
+		{
+      "name": "lowerAnimation",
+      "doc": "Optional lowerbody animation of the item. Only applies to people.",
+      "type": ["null", "string"],
+			"default": null
+    },
     {
       "name": "owner",
       "doc": "Optional unique case-insensitive identifier of the connected application owning the item",
