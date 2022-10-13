@@ -1,6 +1,6 @@
 # Local Kafka environment to interact with XVR OS
 
-The more generic schemas in the `schemas/sim` folder have been renamed to include the `xvr_` preamble. These are the messages that XVR needs to understand and support. 
+The more generic schemas in the `schemas/sim` folder have been renamed to include the `xvr_` preamble. These are the messages that XVR needs to understand and support.
 
 ## Starting the testbed
 
@@ -10,9 +10,10 @@ docker-compose up -d
 
 Useful links:
 
-- [Kafka Topics GUI](http://localhost:3600/) to view exchanged messages
-- [Schema registry GUI](http://localhost:3601/) to view the used schemas
+- [Kafka topics and schema registry](http://localhost:3600/) to view exchanged messages
 - [Trial Management Tool](http://localhost:3210/tmt) to create or run a scenario. You can use it to send inputs to XVR, e.g. an inject.
+
+NOTE that in this version, the Kafka port has been changed to 9092 from localhost, port 29092 from inside the docker. When running on a server, please change the KAFKA listener 'ALICE' to have the correct IP address.
 
 ## Configuring XVR OS
 
@@ -35,5 +36,3 @@ Useful links:
 - `xvr_simulation_entity_post`: A post is a specific entity representing a piece of writing, image or other content published. Examples of posts can range from (e-)mail to social media posts.
 - `xvr_simulation_entity_aggregation`: The entity aggregation message is a wrapper message containing a map with all entities that require an aggregated update. The values of this map would be the defined entity messages, with all described properties to be optional allowing the message to only contain the relevant changed properties. 
 - `xvr_simulation_entity_deletion`: An entity deletion message is a support messages indicating a shared entity should no longer be shared.
-
- 
