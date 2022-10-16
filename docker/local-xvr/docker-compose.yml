@@ -70,26 +70,26 @@ services:
 
   # Scenario Management
 
-  trial_management_tool:
-    image: strategyeu/trial-management-tool:naas
-    # image: strategyeu/trial-management-tool:test_image
-    depends_on:
-      - broker
-      - schema_registry
-    links:
-      - broker
-      - schema_registry
-    ports:
-      - "3210:3210"
-    environment:
-      CLIENT_ID: TB-TrialMgmt
-      KAFKA_HOST: broker:29092
-      SCHEMA_REGISTRY: schema_registry:8081
-      TRIAL_MANAGER_SERVER_PORT: 3210
-      SERVER: "http://localhost/tmt"
-      PRODUCE: xvr_simulation_request_startinject,xvr_simulation_entity_post,xvr_simulation_request_move,xvr_simulation_request_route,send_file,send_message
-    volumes:
-      - trial-data:/app/trials
+  # trial_management_tool:
+  #   image: strategyeu/trial-management-tool:naas
+  #   # image: strategyeu/trial-management-tool:test_image
+  #   depends_on:
+  #     - broker
+  #     - schema_registry
+  #   links:
+  #     - broker
+  #     - schema_registry
+  #   ports:
+  #     - "3210:3210"
+  #   environment:
+  #     CLIENT_ID: TB-TrialMgmt
+  #     KAFKA_HOST: broker:29092
+  #     SCHEMA_REGISTRY: schema_registry:8081
+  #     TRIAL_MANAGER_SERVER_PORT: 3210
+  #     SERVER: "http://localhost/tmt"
+  #     PRODUCE: xvr_simulation_request_startinject,xvr_simulation_entity_post,xvr_simulation_request_move,xvr_simulation_request_route,send_file,send_message
+  #   volumes:
+  #     - trial-data:/app/trials
 
   # Configuring the environment
 
